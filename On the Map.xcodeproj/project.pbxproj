@@ -78,9 +78,7 @@
 			isa = PBXGroup;
 			children = (
 				BE4FCDBC1BDBE6BB00488FAC /* On the Map */,
-				BE4FCDD11BDBE6BC00488FAC /* On the MapTests */,
-				BE4FCDDC1BDBE6BC00488FAC /* On the MapUITests */,
-				BE4FCDBB1BDBE6BB00488FAC /* Products */,
+				BE4FCDEB1BDBE72200488FAC /* Supporting files */,
 			);
 			sourceTree = "<group>";
 		};
@@ -123,6 +121,16 @@
 				BE4FCDDF1BDBE6BC00488FAC /* Info.plist */,
 			);
 			path = "On the MapUITests";
+			sourceTree = "<group>";
+		};
+		BE4FCDEB1BDBE72200488FAC /* Supporting files */ = {
+			isa = PBXGroup;
+			children = (
+				BE4FCDD11BDBE6BC00488FAC /* On the MapTests */,
+				BE4FCDDC1BDBE6BC00488FAC /* On the MapUITests */,
+				BE4FCDBB1BDBE6BB00488FAC /* Products */,
+			);
+			name = "Supporting files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
