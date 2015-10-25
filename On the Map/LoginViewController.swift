@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  LoginViewController.swift
 //  On the Map
 //
 //  Created by Frazer Hogg on 24/10/2015.
@@ -10,9 +10,12 @@ import UIKit
 
 class LoginViewController: UIViewController {
 
-    
+    //MARK: Properties
     let gradientLayer = CAGradientLayer()
     
+    var session: NSURLSession!
+    
+    //MARK: Outlets
     @IBOutlet var mainView: UIView!
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
@@ -20,9 +23,46 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var facebookLoginButton: UIButton!
     
     
+    //MARK: View lifecycle functions
     override func viewDidLoad() {
         super.viewDidLoad()
     
+        /* Get the shared URL session */
+        session = NSURLSession.sharedSession()
+        
+        /* Configure the look and feel of the user interface */
+        configureUI()
+    }
+
+    override func viewWillLayoutSubviews() {
+        setGradientLayerFrame()
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+    
+    //MARK: Actions
+    
+    @IBAction func logInButton(sender: UIButton) {
+        UdacityAPIClient.sharedInstance().postSession(emailTextField.text!, password: passwordTextField.text!) { (result, error) in
+           
+            guard error == nil else {
+                print("There was an error \(error)")
+                return
+            }
+            
+            print("You successfully got the Session: \(result!)")
+            
+        }
+    }
+    
+    //MARK: Helper functions
+    
+    func configureUI() {
+        
         //Add set and add gradientLayer to the view
         setGradientLayerColours()
         setGradientLayerFrame()
@@ -35,18 +75,7 @@ class LoginViewController: UIViewController {
         //Round the corners of the buttons
         roundButtonCorner(loginButton)
         roundButtonCorner(facebookLoginButton)
-        
     }
-
-    override func viewWillLayoutSubviews() {
-        setGradientLayerFrame()
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
     
     //MARK: -Gradient layer helper functions
     
@@ -60,7 +89,7 @@ class LoginViewController: UIViewController {
         
         //Light organge #FD972A
         let firstColour = UIColor(red: 0.992, green: 0.592, blue: 0.165, alpha: 1)
-        //Dark organse #FD6F21
+        //Dark organge #FD6F21
         let secondColour = UIColor(red: 0.992, green: 0.435, blue: 0.129, alpha: 1)
         gradientLayer.colors = [firstColour.CGColor,secondColour.CGColor]
     }
