@@ -46,6 +46,7 @@ class LoginViewController: UIViewController {
     
     //MARK: Actions
     
+    ///Function is called when a user presses the log in button; it authenticates with Udacity
     @IBAction func logInButton(sender: UIButton) {
         UdacityAPIClient.sharedInstance().postSession(emailTextField.text!, password: passwordTextField.text!) { (result, error) in
            
@@ -59,8 +60,17 @@ class LoginViewController: UIViewController {
         }
     }
     
+    ///Function is called when a user presses the sign up button; opens the Udacity sign in page in safari
+    @IBAction func signUpButton(sender: UIButton) {
+        
+        UIApplication.sharedApplication().openURL(NSURL(string: "https://www.udacity.com/account/auth#!/signin")!)
+        
+    }
+    
+    
     //MARK: Helper functions
     
+    ///Function sets up the user interface
     func configureUI() {
         
         //Add set and add gradientLayer to the view
