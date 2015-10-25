@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LoginViewController: UIViewController {
+class LoginViewController: UIViewController, UITextFieldDelegate {
 
     //MARK: Properties
     let gradientLayer = CAGradientLayer()
@@ -51,18 +51,26 @@ class LoginViewController: UIViewController {
         UdacityAPIClient.sharedInstance().postSession(emailTextField.text!, password: passwordTextField.text!) { (result, error) in
            
             guard error == nil else {
-                if let errorString = error?.userInfo[NSLocalizedDescriptionKey] as? String {
-                    if errorString.rangeOfString("400") != nil {
-                        print("Please enter your email address and password")
-                    } else if errorString.rangeOfString("403") != nil {
-                        print("Wrong email adress or password entered. Try again")
-                    } else if errorString.rangeOfString("1009") != nil {
-                        print("The internet connection appears to be offline. Try again")
-                    } else {
-                        print("Something went wrong! Try again")
-                    }
-                }
                 
+                /* Check to see what type of error occured */
+                if var errorString = error?.userInfo[NSLocalizedDescriptionKey] as? String {
+                    if errorString.rangeOfString("400") != nil {
+                        errorString = "Please enter your email address and password."
+                    } else if errorString.rangeOfString("403") != nil {
+                        errorString = "Wrong email adress or password entered."
+                    } else if errorString.rangeOfString("1009") != nil {
+                        errorString = "The internet connection appears to be offline."
+                    } else {
+                        errorString = "Something went wrong! Try again"
+                    }
+                    
+                    /* Display an alert to the user letting them know the authentication failed */
+                    dispatch_async(dispatch_get_main_queue(), {
+                        let alert = UIAlertController(title: "Authentication failed!", message: errorString, preferredStyle: .Alert)
+                        alert.addAction(UIAlertAction(title: "Try again", style: .Default, handler: nil))
+                        self.presentViewController(alert, animated: true, completion: nil)
+                    })
+                }
                 return
             }
             
@@ -92,6 +100,10 @@ class LoginViewController: UIViewController {
         //Configure the textFields to each have an indent
         indentTextInTextfield(emailTextField)
         indentTextInTextfield(passwordTextField)
+        
+        //Make the ViewController the delegate of the text fields
+        emailTextField.delegate = self
+        passwordTextField.delegate = self
         
         //Round the corners of the buttons
         roundButtonCorner(loginButton)
@@ -133,5 +145,12 @@ class LoginViewController: UIViewController {
         button.layer.cornerRadius = 3
         button.clipsToBounds = true
     }
+    
+    //MARK: Text field delegate functions
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
 }
 
