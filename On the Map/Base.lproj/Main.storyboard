@@ -17,10 +17,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rvg-WB-gqv" userLabel="LoginItems">
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rvg-WB-gqv" userLabel="LoginItems">
                                 <rect key="frame" x="20" y="245" width="560" height="212"/>
                                 <subviews>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ddG-sx-DjT">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ddG-sx-DjT">
                                         <rect key="frame" x="0.0" y="8" width="560" height="45"/>
                                         <animations/>
                                         <color key="backgroundColor" red="0.99607843139999996" green="0.7725490196" blue="0.58823529409999997" alpha="1" colorSpace="calibratedRGB"/>
@@ -28,7 +28,7 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Passoword" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="avk-2K-8mj">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Passoword" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="avk-2K-8mj">
                                         <rect key="frame" x="0.0" y="61" width="560" height="45"/>
                                         <animations/>
                                         <color key="backgroundColor" red="0.99607843139999996" green="0.7725490196" blue="0.58823529409999997" alpha="1" colorSpace="calibratedRGB"/>
@@ -36,7 +36,7 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
-                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eqH-jv-FYQ">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eqH-jv-FYQ">
                                         <rect key="frame" x="0.0" y="114" width="560" height="45"/>
                                         <animations/>
                                         <color key="backgroundColor" red="0.94509803921568625" green="0.33725490196078434" blue="0.11372549019607843" alpha="1" colorSpace="calibratedRGB"/>
@@ -45,7 +45,7 @@
                                             <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rgC-Ey-N1w">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rgC-Ey-N1w">
                                         <rect key="frame" x="0.0" y="167" width="560" height="45"/>
                                         <animations/>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
@@ -74,25 +74,50 @@
                                     <constraint firstAttribute="trailing" secondItem="ddG-sx-DjT" secondAttribute="trailing" id="zmP-tc-CAa"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AhO-86-E7L">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AhO-86-E7L">
                                 <rect key="frame" x="20" y="535" width="560" height="45"/>
                                 <animations/>
                                 <color key="backgroundColor" red="0.29411764705882354" green="0.42352941176470588" blue="0.70196078431372544" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="45" id="8aM-W0-ZLb"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <state key="normal" title="Log in with Facebook">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                             </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="photo" translatesAutoresizingMaskIntoConstraints="NO" id="9Lf-Vi-gCY">
+                                <rect key="frame" x="20" y="28" width="560" height="156"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="height" relation="lessThanOrEqual" constant="156" id="ldm-43-q1g"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Log into Udacity" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7TU-ju-KEd">
+                                <rect key="frame" x="20" y="192" width="560" height="45"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" red="0.99215686274509807" green="0.59215686274509804" blue="0.16470588235294117" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="AhO-86-E7L" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="5iR-Cj-Xpe"/>
+                            <constraint firstItem="9Lf-Vi-gCY" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" id="6xy-WM-r6c"/>
+                            <constraint firstItem="7TU-ju-KEd" firstAttribute="top" secondItem="9Lf-Vi-gCY" secondAttribute="bottom" constant="8" id="7vN-oF-VEO"/>
                             <constraint firstItem="AhO-86-E7L" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="8lZ-aw-Hs3"/>
                             <constraint firstItem="rvg-WB-gqv" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-5" id="AlG-Pj-A8Q"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="AhO-86-E7L" secondAttribute="bottom" constant="20" id="B29-T1-uFs"/>
+                            <constraint firstItem="7TU-ju-KEd" firstAttribute="height" secondItem="AhO-86-E7L" secondAttribute="height" id="H3s-lM-ury"/>
+                            <constraint firstItem="7TU-ju-KEd" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="Pjo-GU-iCb"/>
+                            <constraint firstItem="rvg-WB-gqv" firstAttribute="top" secondItem="7TU-ju-KEd" secondAttribute="bottom" constant="8" id="YWM-Ks-bBP"/>
+                            <constraint firstItem="9Lf-Vi-gCY" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="bIJ-8I-M8Z"/>
+                            <constraint firstItem="7TU-ju-KEd" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="cuR-dG-VaE"/>
                             <constraint firstItem="AhO-86-E7L" firstAttribute="top" relation="greaterThanOrEqual" secondItem="rvg-WB-gqv" secondAttribute="bottom" constant="20" id="eO1-t3-TIF"/>
                             <constraint firstAttribute="trailingMargin" secondItem="rvg-WB-gqv" secondAttribute="trailing" constant="5" id="oSJ-7h-2WV"/>
+                            <constraint firstItem="9Lf-Vi-gCY" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="or7-cV-Gzb"/>
                             <constraint firstItem="rgC-Ey-N1w" firstAttribute="height" secondItem="AhO-86-E7L" secondAttribute="height" id="vJk-8r-0eI"/>
                         </constraints>
                     </view>
@@ -109,4 +134,7 @@
             <point key="canvasLocation" x="444" y="474"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="photo" width="492" height="492"/>
+    </resources>
 </document>
