@@ -51,11 +51,22 @@ class LoginViewController: UIViewController {
         UdacityAPIClient.sharedInstance().postSession(emailTextField.text!, password: passwordTextField.text!) { (result, error) in
            
             guard error == nil else {
-                print("There was an error \(error)")
+                if let errorString = error?.userInfo[NSLocalizedDescriptionKey] as? String {
+                    if errorString.rangeOfString("400") != nil {
+                        print("Please enter your email address and password")
+                    } else if errorString.rangeOfString("403") != nil {
+                        print("Wrong email adress or password entered. Try again")
+                    } else if errorString.rangeOfString("1009") != nil {
+                        print("The internet connection appears to be offline. Try again")
+                    } else {
+                        print("Something went wrong! Try again")
+                    }
+                }
+                
                 return
             }
             
-            print("You successfully got the Session: \(result!)")
+            print("The session ID is : \(result)")
             
         }
     }
