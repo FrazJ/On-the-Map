@@ -57,18 +57,35 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                     if errorString.rangeOfString("400") != nil {
                         errorString = "Please enter your email address and password."
                     } else if errorString.rangeOfString("403") != nil {
-                        errorString = "Wrong email adress or password entered."
+                        errorString = "Wrong email address or password entered."
                     } else if errorString.rangeOfString("1009") != nil {
                         errorString = "The internet connection appears to be offline."
                     } else {
                         errorString = "Something went wrong! Try again"
                     }
                     
+                    /* Configure the alert view */
+                    let alert = UIAlertController(title: "Authentication failed!", message: errorString, preferredStyle: .Alert)
+                    alert.addAction(UIAlertAction(title: "Try again", style: .Default, handler: nil))
+                    
+                    /* Configure a shake animation */
+                    let shakeAnimation = CABasicAnimation(keyPath: "position")
+                    shakeAnimation.duration = 0.07
+                    shakeAnimation.repeatCount = 4
+                    shakeAnimation.autoreverses = true
+                    shakeAnimation.fromValue = NSValue(CGPoint: CGPointMake(self.mainView.center.x - 10, self.mainView.center.y - 10))
+                    shakeAnimation.toValue = NSValue(CGPoint: CGPointMake(self.mainView.center.x + 10, self.mainView.center.y + 10))
+                    
+                    
                     /* Display an alert to the user letting them know the authentication failed */
                     dispatch_async(dispatch_get_main_queue(), {
-                        let alert = UIAlertController(title: "Authentication failed!", message: errorString, preferredStyle: .Alert)
-                        alert.addAction(UIAlertAction(title: "Try again", style: .Default, handler: nil))
+                        
+                        /* Present the alert view */
                         self.presentViewController(alert, animated: true, completion: nil)
+                        
+                        /* Shake the screen */
+                        self.mainView.layer.addAnimation(shakeAnimation, forKey: "position")
+                        
                     })
                 }
                 return
