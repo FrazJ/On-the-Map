@@ -12,7 +12,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 
     //MARK: Properties
     let gradientLayer = CAGradientLayer()
-    
     var session: NSURLSession!
     
     //MARK: Outlets
@@ -38,18 +37,16 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         setGradientLayerFrame()
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
     
     //MARK: Actions
     
     ///Function is called when a user presses the log in button; it authenticates with Udacity
     @IBAction func logInButton(sender: UIButton) {
+        
+        /* POST a new session */
         UdacityAPIClient.sharedInstance().postSession(emailTextField.text!, password: passwordTextField.text!) { (result, error) in
            
+            /* GUARD: Was there an error? */
             guard error == nil else {
                 
                 /* Check to see what type of error occured */
@@ -64,7 +61,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                         errorString = "Something went wrong! Try again"
                     }
                     
-                    /* Configure the alert view */
+                    /* Configure the alert view to display the error */
                     let alert = UIAlertController(title: "Authentication failed!", message: errorString, preferredStyle: .Alert)
                     alert.addAction(UIAlertAction(title: "Try again", style: .Default, handler: nil))
                     
@@ -77,7 +74,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                     shakeAnimation.toValue = NSValue(CGPoint: CGPointMake(self.mainView.center.x + 10, self.mainView.center.y + 10))
                     
                     
-                    /* Display an alert to the user letting them know the authentication failed */
+                    /* Display an alert and shake the vie letting the user know the authentication failed */
                     dispatch_async(dispatch_get_main_queue(), {
                         
                         /* Present the alert view */
@@ -85,7 +82,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                         
                         /* Shake the screen */
                         self.mainView.layer.addAnimation(shakeAnimation, forKey: "position")
-                        
                     })
                 }
                 return
@@ -105,6 +101,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     
     //MARK: Helper functions
+    
+    //MARK: -Set up the user interface
     
     ///Function sets up the user interface
     func configureUI() {
