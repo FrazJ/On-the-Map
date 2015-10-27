@@ -1,5 +1,5 @@
 //
-//  UdacityAPIClient.swift
+//  OTMAPIClient.swift
 //  On the Map
 //
 //  Created by Frazer Hogg on 25/10/2015.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-class UdacityAPIClient : NSObject {
+class OTMAPIClient : NSObject {
     
     //MARK: Properties
     
@@ -25,6 +25,9 @@ class UdacityAPIClient : NSObject {
         session = NSURLSession.sharedSession()
         super.init()
     }
+    
+    
+    //MARK: GET
     
     
     //MARK: POST
@@ -84,7 +87,7 @@ class UdacityAPIClient : NSObject {
             let newData = data.subdataWithRange(NSMakeRange(5, data.length - 5))
             
             /* 5/6. Parse the data and use the data */
-            UdacityAPIClient.parseJSONWithCompletionHandler(newData, completionHandler: completionHandler)
+            OTMAPIClient.parseJSONWithCompletionHandler(newData, completionHandler: completionHandler)
             
         }
         
@@ -99,10 +102,10 @@ class UdacityAPIClient : NSObject {
     //MARK: Helper methods
 
     ///Function that returns a single shared instance of the session
-    class func sharedInstance() -> UdacityAPIClient {
+    class func sharedInstance() -> OTMAPIClient {
         
         struct Singleton {
-            static var sharedInstance = UdacityAPIClient()
+            static var sharedInstance = OTMAPIClient()
         }
         
         return Singleton.sharedInstance

@@ -44,7 +44,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     @IBAction func logInButton(sender: UIButton) {
         
         /* POST a new session */
-        UdacityAPIClient.sharedInstance().postSession(emailTextField.text!, password: passwordTextField.text!) { (result, error) in
+        OTMAPIClient.sharedInstance().postSession(emailTextField.text!, password: passwordTextField.text!) { (result, error) in
            
             /* GUARD: Was there an error? */
             guard error == nil else {
