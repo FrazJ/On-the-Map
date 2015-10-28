@@ -31,12 +31,14 @@ class OTMAPIClient : NSObject {
     func taskForGetMethod(method: String, parameters: [String:AnyObject], completionHandler: (result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
         
         /* 1. Set the parameters */
-        var mutableParameters = parameters
+        //Not required for getting the studentLocations
         
         /* 2/3. Build the URL and configure the request*/
-        let urlString = Constants.BaseURL + method
+        let urlString = Constants.ParseBaseURL + method
         let url = NSURL(string: urlString)!
         let request = NSMutableURLRequest(URL: url)
+        request.addValue("\(Constants.ParseApplicationID)", forHTTPHeaderField: "X-Parse-Application-Id")
+        request.addValue("\(Constants.ParseAPIKey)", forHTTPHeaderField: "X-Parse-REST-API-Key")
         
         /* 4. Make the request */
         let task = session.dataTaskWithRequest(request) { (data, response, error) in
@@ -89,10 +91,10 @@ class OTMAPIClient : NSObject {
     func taskForPostMethod(method: String, jsonBody: [String:[String:AnyObject]], completionHandler: (result: AnyObject!, error : NSError?) -> Void) -> NSURLSessionDataTask {
         
         /* 1. Set the parameters */
-        //Not required for getting the session
+        //Not required for posting the session
         
         /* 2/3. Build the URL and configure the request*/
-        let urlString = Constants.BaseURL + method
+        let urlString = Constants.UdacityBaseURL + method
         let url = NSURL(string: urlString)!
         let request = NSMutableURLRequest(URL: url)
         request.HTTPMethod = "POST"

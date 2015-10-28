@@ -25,12 +25,12 @@ extension OTMAPIClient {
     
     func postSession(username: String, password: String, completionHandler: (result: String?, error: NSError?) -> Void) {
         
-        let method = OTMAPIClient.Methods.Session
+        let method = Methods.Session
         
         let jsonBody : [String:[String:AnyObject]] = [
-            OTMAPIClient.JSONBodyKeys.Udacity : [
-                OTMAPIClient.JSONBodyKeys.Username : username,
-                OTMAPIClient.JSONBodyKeys.Password : password
+                JSONBodyKeys.Udacity : [
+                JSONBodyKeys.Username : username,
+                JSONBodyKeys.Password : password
             ],
         ]
         
@@ -39,8 +39,8 @@ extension OTMAPIClient {
             if let error = error {
                 completionHandler(result: nil, error: error)
             } else {
-                if let dictionary = JSONResult[OTMAPIClient.JSONResponseKeys.Session ] as? [String:AnyObject] {
-                    if let result = dictionary[OTMAPIClient.JSONResponseKeys.ID] as? String {
+                if let dictionary = JSONResult[JSONResponseKeys.Session ] as? [String:AnyObject] {
+                    if let result = dictionary[JSONResponseKeys.ID] as? String {
                         completionHandler(result: result, error: nil)
                     } else {
                         completionHandler(result: nil, error: NSError(domain: "postSession parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse session"]))
@@ -50,5 +50,26 @@ extension OTMAPIClient {
                 }
             }
         }
+    }
+    
+    
+    func getStudentLocations(completionHandler: (result: [[String:AnyObject]]?, error: NSError?) -> Void) {
+        
+        let parameters = [String:AnyObject]()
+        
+        taskForGetMethod(Methods.StudentLocation, parameters: parameters) {(JSONResult, error) in
+        
+            if let error = error {
+                completionHandler(result: nil, error: error)
+            } else {
+                if let results = JSONResult[JSONResponseKeys.Results] as? [[String:AnyObject]] {
+                    completionHandler(result: results, error: nil)
+                } else {
+                    completionHandler(result: nil, error: NSError(domain: "getStudentLocations", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse session"]))
+                }
+            }
+        
+        }
+        
     }
 }

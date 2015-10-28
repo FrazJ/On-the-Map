@@ -14,7 +14,9 @@ extension OTMAPIClient {
     struct Constants {
         
         static let UdacityBaseURL = "https://www.udacity.com/api/"
-        static let ParseBaseURL = ""
+        static let ParseBaseURL = "https://api.parse.com/1/classes/"
+        static let ParseApplicationID = "QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr"
+        static let ParseAPIKey = "QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY"
         
     }
     
@@ -27,6 +29,9 @@ extension OTMAPIClient {
         
         //MARK: -Public user data
         static let Users = "users/<user_id>"
+        
+        //MARK: -Student locations
+        static let StudentLocation = "StudentLocation" 
         
     }
     
@@ -58,10 +63,22 @@ extension OTMAPIClient {
         static let Registered = "registered"
         static let Key = "key"
         
-        //Mark: -Session
+        //MARK: -Session
         static let Session = "session"
         static let ID = "id"
         static let Expiration = "expiration"
+        
+        //MARK: -StudentLocations
+        static let Results = "results"
+        static let FirstName = "firstName"
+        static let LastName = "lastName"
+        static let Latitude = "latitude"
+        static let Longitude = "longitude"
+        static let MapString = "mapString"
+        static let MediaURL = "mediaURL"
+        static let ObjectID = "objectId"
+        static let UniqueKey = "uniqueKey"
+        static let UpdayedAt = "updatedAt"
         
     }
     

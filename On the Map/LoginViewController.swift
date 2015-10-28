@@ -89,6 +89,19 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             
             print("The session ID is : \(result)")
             
+            OTMAPIClient.sharedInstance().getStudentLocations {(result, error) in
+                
+                guard error == nil else {
+                    print("There was an error fetching the student locations: \(error)")
+                    return
+                }
+                
+                print("These are the results : \(result)")
+                
+            }
+            
+            
+            
         }
     }
     
