@@ -28,10 +28,65 @@ class OTMAPIClient : NSObject {
     
     
     //MARK: GET
-    
+    func taskForGetMethod(method: String, parameters: [String:AnyObject], completionHandler: (result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
+        
+        /* 1. Set the parameters */
+        var mutableParameters = parameters
+        
+        /* 2/3. Build the URL and configure the request*/
+        let urlString = Constants.BaseURL + method
+        let url = NSURL(string: urlString)!
+        let request = NSMutableURLRequest(URL: url)
+        
+        /* 4. Make the request */
+        let task = session.dataTaskWithRequest(request) { (data, response, error) in
+            
+            /* GUARD: Was there an error? */
+            guard error == nil else {
+                let userInfo = [NSLocalizedDescriptionKey: "There was an error with your request: \(error)"]
+                completionHandler(result: nil, error: NSError(domain: "taskForGetMethod", code: 1, userInfo: userInfo))
+                //print("There was an error with your request: \(error)")
+                return
+            }
+            
+            /* GUARD: Did we get a successful 2XX response? */
+            guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode where statusCode >= 200 && statusCode <= 299 else {
+                if let response = response as? NSHTTPURLResponse {
+                    let userInfo = [NSLocalizedDescriptionKey: "Your request returned an invalid response! Status code: \(response.statusCode)!"]
+                    completionHandler(result: nil, error: NSError(domain: "taskForGetMethod", code: 1, userInfo: userInfo))
+                } else if let response = response {
+                    let userInfo = [NSLocalizedDescriptionKey: "Your request returned an invalid response! Response: \(response)!"]
+                    completionHandler(result: nil, error: NSError(domain: "taskForGetMethod", code: 1, userInfo: userInfo))
+                } else {
+                    let userInfo = [NSLocalizedDescriptionKey: "Your request returned an invalid response!"]
+                    completionHandler(result: nil, error: NSError(domain: "taskForGetMethod", code: 1, userInfo: userInfo))
+                }
+                return
+            }
+            
+            /* GUARD: Was there any data returned? */
+            guard let data = data else {
+                let userInfo = [NSLocalizedDescriptionKey: "No data was returned by the request!"]
+                completionHandler(result: nil, error: NSError(domain: "taskForGetMethod", code: 1, userInfo: userInfo))
+                return
+            }
+            
+            
+            /* 5/6. Parse the data and use the data */
+            OTMAPIClient.parseJSONWithCompletionHandler(data, completionHandler: completionHandler)
+            
+        }
+        
+        /* Start the request */
+        task.resume()
+        
+        return task
+        
+        
+    }
     
     //MARK: POST
-    func taskForPost(method: String, jsonBody: [String:[String:AnyObject]], completionHandler: (result: AnyObject!, error : NSError?) -> Void) -> NSURLSessionDataTask {
+    func taskForPostMethod(method: String, jsonBody: [String:[String:AnyObject]], completionHandler: (result: AnyObject!, error : NSError?) -> Void) -> NSURLSessionDataTask {
         
         /* 1. Set the parameters */
         //Not required for getting the session
@@ -53,7 +108,7 @@ class OTMAPIClient : NSObject {
             /* GUARD: Was there an error? */
             guard error == nil else {
                 let userInfo = [NSLocalizedDescriptionKey: "There was an error with your request: \(error)"]
-                completionHandler(result: nil, error: NSError(domain: "taskForPost", code: 1, userInfo: userInfo))
+                completionHandler(result: nil, error: NSError(domain: "taskForPostMethod", code: 1, userInfo: userInfo))
                 //print("There was an error with your request: \(error)")
                 return
             }
@@ -62,16 +117,13 @@ class OTMAPIClient : NSObject {
             guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode where statusCode >= 200 && statusCode <= 299 else {
                 if let response = response as? NSHTTPURLResponse {
                     let userInfo = [NSLocalizedDescriptionKey: "Your request returned an invalid response! Status code: \(response.statusCode)!"]
-                    completionHandler(result: nil, error: NSError(domain: "taskForPost", code: 1, userInfo: userInfo))
-                    //print("Your request returned an invalid response! Status code: \(response.statusCode)!")
+                    completionHandler(result: nil, error: NSError(domain: "taskForPostMethod", code: 1, userInfo: userInfo))
                 } else if let response = response {
                     let userInfo = [NSLocalizedDescriptionKey: "Your request returned an invalid response! Response: \(response)!"]
-                    completionHandler(result: nil, error: NSError(domain: "taskForPost", code: 1, userInfo: userInfo))
-                    //print("Your request returned an invalid response! Response: \(response)!")
+                    completionHandler(result: nil, error: NSError(domain: "taskForPostMethod", code: 1, userInfo: userInfo))
                 } else {
                     let userInfo = [NSLocalizedDescriptionKey: "Your request returned an invalid response!"]
-                    completionHandler(result: nil, error: NSError(domain: "taskForPost", code: 1, userInfo: userInfo))
-                    //print("Your request returned an invalid response!")
+                    completionHandler(result: nil, error: NSError(domain: "taskForPostMethod", code: 1, userInfo: userInfo))
                 }
                 return
             }
@@ -79,8 +131,7 @@ class OTMAPIClient : NSObject {
             /* GUARD: Was there any data returned? */
             guard let data = data else {
                 let userInfo = [NSLocalizedDescriptionKey: "No data was returned by the request!"]
-                completionHandler(result: nil, error: NSError(domain: "taskForPost", code: 1, userInfo: userInfo))
-                //print("No data was returned by the request!")
+                completionHandler(result: nil, error: NSError(domain: "taskForPostMethod", code: 1, userInfo: userInfo))
                 return
             }
             

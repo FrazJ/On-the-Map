@@ -34,7 +34,7 @@ extension OTMAPIClient {
             ],
         ]
         
-        taskForPost(method, jsonBody: jsonBody) { JSONResult, error in
+        taskForPostMethod(method, jsonBody: jsonBody) { JSONResult, error in
         
             if let error = error {
                 completionHandler(result: nil, error: error)

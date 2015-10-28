@@ -13,7 +13,8 @@ extension OTMAPIClient {
     //MARK: Constants
     struct Constants {
         
-        static let BaseURL = "https://www.udacity.com/api/"
+        static let UdacityBaseURL = "https://www.udacity.com/api/"
+        static let ParseBaseURL = ""
         
     }
     
