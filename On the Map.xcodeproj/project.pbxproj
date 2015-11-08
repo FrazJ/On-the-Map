@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		BE3C4E131BDD268400D6522E /* OTMAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE3C4E121BDD268400D6522E /* OTMAPIClient.swift */; settings = {ASSET_TAGS = (); }; };
-		BE3C4E151BDD28D600D6522E /* OTMAPIConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE3C4E141BDD28D600D6522E /* OTMAPIConstants.swift */; settings = {ASSET_TAGS = (); }; };
-		BE3C4E171BDD3E0100D6522E /* OTMAPIConvenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE3C4E161BDD3E0100D6522E /* OTMAPIConvenience.swift */; settings = {ASSET_TAGS = (); }; };
+		BE3C4E131BDD268400D6522E /* OTMAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE3C4E121BDD268400D6522E /* OTMAPIClient.swift */; };
+		BE3C4E151BDD28D600D6522E /* OTMAPIConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE3C4E141BDD28D600D6522E /* OTMAPIConstants.swift */; };
+		BE3C4E171BDD3E0100D6522E /* OTMAPIConvenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE3C4E161BDD3E0100D6522E /* OTMAPIConvenience.swift */; };
 		BE4FCDBE1BDBE6BB00488FAC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4FCDBD1BDBE6BB00488FAC /* AppDelegate.swift */; };
 		BE4FCDC01BDBE6BB00488FAC /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4FCDBF1BDBE6BB00488FAC /* LoginViewController.swift */; };
 		BE4FCDC31BDBE6BB00488FAC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BE4FCDC11BDBE6BB00488FAC /* Main.storyboard */; };
@@ -17,6 +17,7 @@
 		BE4FCDC81BDBE6BB00488FAC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BE4FCDC61BDBE6BB00488FAC /* LaunchScreen.storyboard */; };
 		BE4FCDD31BDBE6BC00488FAC /* On_the_MapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4FCDD21BDBE6BC00488FAC /* On_the_MapTests.swift */; };
 		BE4FCDDE1BDBE6BC00488FAC /* On_the_MapUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4FCDDD1BDBE6BC00488FAC /* On_the_MapUITests.swift */; };
+		C96718B01BECDB6500A4A062 /* StudentInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C96718AF1BECDB6500A4A062 /* StudentInformation.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +54,7 @@
 		BE4FCDD91BDBE6BC00488FAC /* On the MapUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "On the MapUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE4FCDDD1BDBE6BC00488FAC /* On_the_MapUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = On_the_MapUITests.swift; sourceTree = "<group>"; };
 		BE4FCDDF1BDBE6BC00488FAC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C96718AF1BECDB6500A4A062 /* StudentInformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentInformation.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +88,7 @@
 				BE3C4E121BDD268400D6522E /* OTMAPIClient.swift */,
 				BE3C4E141BDD28D600D6522E /* OTMAPIConstants.swift */,
 				BE3C4E161BDD3E0100D6522E /* OTMAPIConvenience.swift */,
+				C96718AF1BECDB6500A4A062 /* StudentInformation.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -288,6 +291,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C96718B01BECDB6500A4A062 /* StudentInformation.swift in Sources */,
 				BE3C4E171BDD3E0100D6522E /* OTMAPIConvenience.swift in Sources */,
 				BE3C4E131BDD268400D6522E /* OTMAPIClient.swift in Sources */,
 				BE4FCDC01BDBE6BB00488FAC /* LoginViewController.swift in Sources */,

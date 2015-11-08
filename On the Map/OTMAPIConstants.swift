@@ -78,7 +78,8 @@ extension OTMAPIClient {
         static let MediaURL = "mediaURL"
         static let ObjectID = "objectId"
         static let UniqueKey = "uniqueKey"
-        static let UpdayedAt = "updatedAt"
+        static let UpdatedAt = "updatedAt"
+        static let CreatedAt = "createdAt"
         
     }
     
