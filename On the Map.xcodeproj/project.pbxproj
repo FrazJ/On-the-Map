@@ -42,7 +42,7 @@
 		BE3C4E141BDD28D600D6522E /* OTMAPIConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OTMAPIConstants.swift; sourceTree = "<group>"; };
 		BE3C4E161BDD3E0100D6522E /* OTMAPIConvenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OTMAPIConvenience.swift; sourceTree = "<group>"; };
 		BE4FCDBA1BDBE6BB00488FAC /* On the Map.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "On the Map.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		BE4FCDBD1BDBE6BB00488FAC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = "On the Map/AppDelegate.swift"; sourceTree = "<group>"; };
+		BE4FCDBD1BDBE6BB00488FAC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BE4FCDBF1BDBE6BB00488FAC /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		BE4FCDC21BDBE6BB00488FAC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		BE4FCDC41BDBE6BB00488FAC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = "On the Map/Assets.xcassets"; sourceTree = "<group>"; };
@@ -85,6 +85,7 @@
 		BE3C4E101BDD242D00D6522E /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				BE4FCDBD1BDBE6BB00488FAC /* AppDelegate.swift */,
 				BE3C4E121BDD268400D6522E /* OTMAPIClient.swift */,
 				BE3C4E141BDD28D600D6522E /* OTMAPIConstants.swift */,
 				BE3C4E161BDD3E0100D6522E /* OTMAPIConvenience.swift */,
@@ -150,7 +151,6 @@
 		BE4FCDEB1BDBE72200488FAC /* Supporting files */ = {
 			isa = PBXGroup;
 			children = (
-				BE4FCDBD1BDBE6BB00488FAC /* AppDelegate.swift */,
 				BE4FCDC61BDBE6BB00488FAC /* LaunchScreen.storyboard */,
 				BE4FCDC91BDBE6BB00488FAC /* Info.plist */,
 				BE4FCDC41BDBE6BB00488FAC /* Assets.xcassets */,

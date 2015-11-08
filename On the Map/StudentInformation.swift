@@ -7,8 +7,10 @@
 //
 
 import Foundation
+import UIKit
 
 struct StudentInformation {
+    
     
     let objectID : String
     let uniqueKey : String?
@@ -39,52 +41,3 @@ struct StudentInformation {
     }
     
 }
-
-extension StudentInformation {
-    
-}
-
-
-
-//OTMAPIClient.sharedInstance().getStudentLocations {(result, error) in
-//    
-//    guard error == nil else {
-//        print("There was an error fetching the student locations: \(error)")
-//        return
-//    }
-//    
-//    var studentArray = [StudentInformation]()
-//    
-//    for s in result! {
-//        
-//        let dateFormatter = NSDateFormatter()
-//        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
-//        
-//        let objectID = s[OTMAPIClient.JSONResponseKeys.ObjectID] as! String
-//        let uniqueKey = s[OTMAPIClient.JSONResponseKeys.UniqueKey] as! String?
-//        let firstName = s[OTMAPIClient.JSONResponseKeys.FirstName] as! String
-//        let lastName = s[OTMAPIClient.JSONResponseKeys.LastName] as! String
-//        let mapString = s[OTMAPIClient.JSONResponseKeys.MapString] as! String
-//        let mediaURL = s[OTMAPIClient.JSONResponseKeys.MediaURL] as! String
-//        let latitude = s[OTMAPIClient.JSONResponseKeys.Latitude] as! Double
-//        let longitude = s[OTMAPIClient.JSONResponseKeys.Latitude] as! Double
-//        let createdAt = dateFormatter.dateFromString(s[OTMAPIClient.JSONResponseKeys.CreatedAt] as! String)
-//        let updatedAt = dateFormatter.dateFromString(s[OTMAPIClient.JSONResponseKeys.UpdatedAt] as! String)
-//        
-//        let newStudent = StudentInformation(
-//            objectID: objectID,
-//            uniqueKey: uniqueKey,
-//            firstName: firstName,
-//            lastName: lastName,
-//            mapString: mapString,
-//            mediaURL: mediaURL,
-//            latitude: latitude,
-//            longitude: longitude,
-//            createdAt: createdAt!,
-//            updatedAt: updatedAt!
-//        )
-//        
-//        studentArray.append(newStudent)
-//    }
-//    
-//    print("Array: \(studentArray)")

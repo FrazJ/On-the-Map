@@ -23,6 +23,7 @@ extension OTMAPIClient {
     }
     
     
+    
     func postSession(username: String, password: String, completionHandler: (result: String?, error: NSError?) -> Void) {
         
         let method = Methods.Session

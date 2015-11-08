@@ -13,6 +13,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     //MARK: Properties
     let gradientLayer = CAGradientLayer()
     var session: NSURLSession!
+    var appDelegate : AppDelegate!
     
     //MARK: Outlets
     @IBOutlet var mainView: UIView!
@@ -28,6 +29,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
         /* Get the shared URL session */
         session = NSURLSession.sharedSession()
+    
+        /* Get the app delegate*/
+        appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         
         /* Configure the look and feel of the user interface */
         configureUI()
@@ -91,22 +95,20 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             
             OTMAPIClient.sharedInstance().getStudentLocations {(result, error) in
                 
+                var studentInformationArray = [StudentInformation]()
+                
                 guard error == nil else {
                     print("There was an error fetching the student locations: \(error)")
                     return
                 }
                 
-                var studentArray = [StudentInformation]()
-                
                 for s in result! {
-                 
-                    let newStudent = StudentInformation(dictionary: s)
-                    studentArray.append(newStudent)
                     
+                    studentInformationArray.append(StudentInformation(dictionary: s))
                 }
                 
-                print("Array: \(studentArray)")
-            
+                self.appDelegate.studentData = studentInformationArray
+                print("This is an array of Students: \(self.appDelegate.studentData)")
             }
         }
     }
