@@ -78,12 +78,19 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 }
                 
                 for s in result! {
-                    
                     studentInformationArray.append(StudentInformation(dictionary: s))
                 }
                 
                 self.appDelegate.studentData = studentInformationArray
                 print("This is an array of Students: \(self.appDelegate.studentData)")
+                
+                if self.appDelegate.studentData.count > 0 {
+                    
+                    dispatch_async(dispatch_get_main_queue(), {
+                        let mapViewControllr = self.storyboard!.instantiateViewControllerWithIdentifier("TabBarController")
+                        self.navigationController?.pushViewController(mapViewControllr, animated: true)
+                    })
+                }
             }
         }
     }
