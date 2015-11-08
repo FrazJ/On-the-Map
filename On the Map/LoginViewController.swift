@@ -54,38 +54,13 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             guard error == nil else {
                 
                 /* Check to see what type of error occured */
-                if var errorString = error?.userInfo[NSLocalizedDescriptionKey] as? String {
-                    if errorString.rangeOfString("400") != nil {
-                        errorString = "Please enter your email address and password."
-                    } else if errorString.rangeOfString("403") != nil {
-                        errorString = "Wrong email address or password entered."
-                    } else if errorString.rangeOfString("1009") != nil {
-                        errorString = "The internet connection appears to be offline."
-                    } else {
-                        errorString = "Something went wrong! Try again"
-                    }
-                    
-                    /* Configure the alert view to display the error */
-                    let alert = UIAlertController(title: "Authentication failed!", message: errorString, preferredStyle: .Alert)
-                    alert.addAction(UIAlertAction(title: "Try again", style: .Default, handler: nil))
-                    
-                    /* Configure a shake animation */
-                    let shakeAnimation = CABasicAnimation(keyPath: "position")
-                    shakeAnimation.duration = 0.07
-                    shakeAnimation.repeatCount = 4
-                    shakeAnimation.autoreverses = true
-                    shakeAnimation.fromValue = NSValue(CGPoint: CGPointMake(self.mainView.center.x - 10, self.mainView.center.y - 10))
-                    shakeAnimation.toValue = NSValue(CGPoint: CGPointMake(self.mainView.center.x + 10, self.mainView.center.y + 10))
-                    
+                if let errorString = error?.userInfo[NSLocalizedDescriptionKey] as? String {
                     
                     /* Display an alert and shake the vie letting the user know the authentication failed */
                     dispatch_async(dispatch_get_main_queue(), {
                         
-                        /* Present the alert view */
-                        self.presentViewController(alert, animated: true, completion: nil)
-                        
-                        /* Shake the screen */
-                        self.mainView.layer.addAnimation(shakeAnimation, forKey: "position")
+                        self.showAlert(errorString)
+                        self.shakeScreen()
                     })
                 }
                 return
@@ -186,6 +161,46 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
+    }
+    
+    //MARK: -login failed helper functions
+    
+    ///Function that presents an alert to the reason with a reason as to why their login failed
+    func showAlert(errorString : String) {
+        
+        var errorString = errorString
+        
+        if errorString.rangeOfString("400") != nil {
+            errorString = "Please enter your email address and password."
+        } else if errorString.rangeOfString("403") != nil {
+            errorString = "Wrong email address or password entered."
+        } else if errorString.rangeOfString("1009") != nil {
+            errorString = "The internet connection appears to be offline."
+        } else {
+            errorString = "Something went wrong! Try again"
+        }
+        
+        /* Configure the alert view to display the error */
+        let alert = UIAlertController(title: "Authentication failed!", message: errorString, preferredStyle: .Alert)
+        alert.addAction(UIAlertAction(title: "Try again", style: .Default, handler: nil))
+        
+        /* Present the alert view */
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    ///Function that animates the screen to show login has failed
+    func shakeScreen() {
+        
+        /* Configure a shake animation */
+        let shakeAnimation = CABasicAnimation(keyPath: "position")
+        shakeAnimation.duration = 0.07
+        shakeAnimation.repeatCount = 4
+        shakeAnimation.autoreverses = true
+        shakeAnimation.fromValue = NSValue(CGPoint: CGPointMake(self.mainView.center.x - 10, self.mainView.center.y - 10))
+        shakeAnimation.toValue = NSValue(CGPoint: CGPointMake(self.mainView.center.x + 10, self.mainView.center.y + 10))
+        
+        /* Shake the screen */
+        self.mainView.layer.addAnimation(shakeAnimation, forKey: "position")
     }
     
 }
