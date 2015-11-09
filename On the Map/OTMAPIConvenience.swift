@@ -66,7 +66,7 @@ extension OTMAPIClient {
                 if let results = JSONResult[JSONResponseKeys.Results] as? [[String:AnyObject]] {
                     completionHandler(result: results, error: nil)
                 } else {
-                    completionHandler(result: nil, error: NSError(domain: "getStudentLocations", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse session"]))
+                    completionHandler(result: nil, error: NSError(domain: "getStudentLocations", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse student data"]))
                 }
             }
         

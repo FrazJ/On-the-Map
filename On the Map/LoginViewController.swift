@@ -41,17 +41,21 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         setGradientLayerFrame()
     }
     
+    override func viewDidAppear(animated: Bool) {
+        hideNavigationBar()
+    }
+    
     override func viewWillDisappear(animated: Bool) {
-        
         //Show the navigation bar 
-        navigationController?.navigationBar.hidden = false 
-        
+        navigationController?.navigationBar.hidden = false
     }
     
     //MARK: Actions
     
     ///Function is called when a user presses the log in button; it authenticates with Udacity
     @IBAction func logInButton(sender: UIButton) {
+        
+        disableLoginButton()
         
         /* POST a new session */
         OTMAPIClient.sharedInstance().postSession(emailTextField.text!, password: passwordTextField.text!) { (result, error) in
@@ -65,8 +69,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                     /* Display an alert and shake the vie letting the user know the authentication failed */
                     dispatch_async(dispatch_get_main_queue(), {
                         
-                        self.showAlert(errorString)
+                        self.showAuthenticationAlert(errorString)
                         self.shakeScreen()
+                        self.enableLoginButton()
+                        
                     })
                 }
                 return
@@ -79,6 +85,15 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 var studentInformationArray = [StudentInformation]()
                 
                 guard error == nil else {
+                    
+                    if let errorString = error?.userInfo[NSLocalizedDescriptionKey] as? String {
+                    
+                        dispatch_async(dispatch_get_main_queue(), {
+                            self.showStudentDataDownloadAlert(errorString)
+                            self.enableLoginButton()
+                        })
+                    }
+                    
                     print("There was an error fetching the student locations: \(error)")
                     return
                 }
@@ -88,15 +103,13 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 }
                 
                 self.appDelegate.studentData = studentInformationArray
-                print("This is an array of Students: \(self.appDelegate.studentData)")
                 
-                if self.appDelegate.studentData.count > 0 {
                     
-                    dispatch_async(dispatch_get_main_queue(), {
-                        let mapViewControllr = self.storyboard!.instantiateViewControllerWithIdentifier("TabBarController")
-                        self.navigationController?.pushViewController(mapViewControllr, animated: true)
-                    })
-                }
+                dispatch_async(dispatch_get_main_queue(), {
+                    let mapViewController = self.storyboard!.instantiateViewControllerWithIdentifier("TabBarController")
+                    self.navigationController?.pushViewController(mapViewController, animated: true)
+                    self.enableLoginButton()
+                })
             }
         }
     }
@@ -134,7 +147,25 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         roundButtonCorner(facebookLoginButton)
         
         //Hide the navigation bar
+        hideNavigationBar()
+        
+    }
+    
+    ///Function to hide the navigation controller
+    func hideNavigationBar() {
         navigationController?.navigationBar.hidden = true
+    }
+    
+    ///Function to enable the login button
+    func enableLoginButton() {
+        loginButton.enabled = true
+        loginButton.alpha = 1.0
+    }
+    
+    ///Function to disable the login button to prevent it from being pressed multiple times 
+    func disableLoginButton() {
+        loginButton.enabled = false
+        loginButton.alpha = 0.5
     }
     
     //MARK: -Gradient layer helper functions
@@ -179,10 +210,17 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         return true
     }
     
-    //MARK: -login failed helper functions
+    //MARK: - Error helper functions
     
-    ///Function that presents an alert to the reason with a reason as to why their login failed
-    func showAlert(errorString : String) {
+    ///Function that presents a alert to notify the user that a download of the student data has failed
+    func showStudentDataDownloadAlert(errorString: String) {
+        showAlert("Download failed", errorString: errorString)
+    }
+    
+    ///Function that presents an alert to the user with a reason as to why their login failed
+    func showAuthenticationAlert(errorString : String) {
+        
+        let titleString = "Authentication failed!"
         
         var errorString = errorString
         
@@ -196,12 +234,20 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             errorString = "Something went wrong! Try again"
         }
         
+        showAlert(titleString, errorString: errorString)
+        
+    }
+    
+    ///Function that configures and shows an alert
+    func showAlert(titleString: String, errorString: String) {
+        
         /* Configure the alert view to display the error */
-        let alert = UIAlertController(title: "Authentication failed!", message: errorString, preferredStyle: .Alert)
+        let alert = UIAlertController(title: titleString , message: errorString, preferredStyle: .Alert)
         alert.addAction(UIAlertAction(title: "Try again", style: .Default, handler: nil))
         
         /* Present the alert view */
         self.presentViewController(alert, animated: true, completion: nil)
+
     }
     
     ///Function that animates the screen to show login has failed
