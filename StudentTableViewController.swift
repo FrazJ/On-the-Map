@@ -10,42 +10,37 @@ import UIKit
 
 class StudentTableViewController: UITableViewController {
 
+    //MARK: Properties
+    
+    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        //Adjust the tableView so that it's not covered by the tab bar
+        let adjustForTabBar = UIEdgeInsetsMake(0, 0, CGRectGetHeight(tabBarController!.tabBar.frame), 0)
+        tableView.contentInset = adjustForTabBar
+        
     }
 
     // MARK: - Table view data source
 
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
-    }
-
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
+        return appDelegate.studentData.count
     }
 
-    /*
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath)
-
-        // Configure the cell...
+        
+        let cell = tableView.dequeueReusableCellWithIdentifier("studentCell")!
+        
+        let student = appDelegate.studentData[indexPath.row]
+        
+        cell.textLabel?.text = student.firstName + " " + student.lastName
+        cell.detailTextLabel!.text = student.mediaURL
 
         return cell
     }
-    */
 
     /*
     // Override to support conditional editing of the table view.

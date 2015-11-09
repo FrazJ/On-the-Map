@@ -41,6 +41,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         setGradientLayerFrame()
     }
     
+    override func viewWillDisappear(animated: Bool) {
+        
+        //Show the navigation bar 
+        navigationController?.navigationBar.hidden = false 
+        
+    }
     
     //MARK: Actions
     
@@ -126,6 +132,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         //Round the corners of the buttons
         roundButtonCorner(loginButton)
         roundButtonCorner(facebookLoginButton)
+        
+        //Hide the navigation bar
+        navigationController?.navigationBar.hidden = true
     }
     
     //MARK: -Gradient layer helper functions
