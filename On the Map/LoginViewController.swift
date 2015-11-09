@@ -10,20 +10,20 @@ import UIKit
 
 class LoginViewController: UIViewController, UITextFieldDelegate {
 
-    //MARK: Properties
+    //MARK: - Properties
     let gradientLayer = CAGradientLayer()
     var session: NSURLSession!
     var appDelegate : AppDelegate!
     
-    //MARK: Outlets
+    //MARK: - Outlets
     @IBOutlet var mainView: UIView!
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var facebookLoginButton: UIButton!
+    @IBOutlet weak var signUpButton: UIButton!
     
-    
-    //MARK: View lifecycle functions
+    //MARK: - View lifecycle functions
     override func viewDidLoad() {
         super.viewDidLoad()
     
@@ -38,24 +38,34 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
 
     override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
         setGradientLayerFrame()
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(true)
         hideNavigationBar()
     }
     
     override func viewWillDisappear(animated: Bool) {
-        //Show the navigation bar 
+        super.viewWillDisappear(true)
+        //Show the navigation bar
         navigationController?.navigationBar.hidden = false
     }
     
-    //MARK: Actions
+    //MARK: - Actions
     
     ///Function is called when a user presses the log in button; it authenticates with Udacity
     @IBAction func logInButton(sender: UIButton) {
         
-        disableLoginButton()
+        /* Disable the buttons in the UI once the Login button has been pressed */
+        disableButtons()
+        
+        /* Show activity to show the app is processing data*/
+        let activityView = UIActivityIndicatorView.init(activityIndicatorStyle: UIActivityIndicatorViewStyle.WhiteLarge)
+        activityView.center = view.center
+        activityView.startAnimating()
+        view.addSubview(activityView)
         
         /* POST a new session */
         OTMAPIClient.sharedInstance().postSession(emailTextField.text!, password: passwordTextField.text!) { (result, error) in
@@ -66,12 +76,15 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 /* Check to see what type of error occured */
                 if let errorString = error?.userInfo[NSLocalizedDescriptionKey] as? String {
                     
-                    /* Display an alert and shake the vie letting the user know the authentication failed */
+                    /* Display an alert and shake the view letting the user know the authentication failed */
                     dispatch_async(dispatch_get_main_queue(), {
                         
                         self.showAuthenticationAlert(errorString)
                         self.shakeScreen()
-                        self.enableLoginButton()
+                        
+                        /* Enable the buttons and stop the activity spinner */
+                        self.enableButtons()
+                        activityView.stopAnimating()
                         
                     })
                 }
@@ -88,27 +101,36 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                     
                     if let errorString = error?.userInfo[NSLocalizedDescriptionKey] as? String {
                     
+                        /* Display an alert to the user to let them know that there was an error getting the student data */
                         dispatch_async(dispatch_get_main_queue(), {
+                            
                             self.showStudentDataDownloadAlert(errorString)
-                            self.enableLoginButton()
+                            
+                            /* Enable the buttons and stop the activity spinner */
+                            self.enableButtons()
+                            activityView.stopAnimating()
                         })
                     }
                     
-                    print("There was an error fetching the student locations: \(error)")
                     return
                 }
                 
+                /* For each student in the return results add it to the array */
                 for s in result! {
                     studentInformationArray.append(StudentInformation(dictionary: s))
                 }
                 
                 self.appDelegate.studentData = studentInformationArray
                 
-                    
+                /* Present the next ViewController showing the student data */
                 dispatch_async(dispatch_get_main_queue(), {
+                    
                     let mapViewController = self.storyboard!.instantiateViewControllerWithIdentifier("TabBarController")
                     self.navigationController?.pushViewController(mapViewController, animated: true)
-                    self.enableLoginButton()
+                    
+                    /* Enable the buttons and stop the activity spinner */
+                    self.enableButtons()
+                    activityView.stopAnimating()
                 })
             }
         }
@@ -122,7 +144,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     
-    //MARK: Helper functions
+    //MARK: - Helper functions
     
     //MARK: -Set up the user interface
     
@@ -156,19 +178,28 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         navigationController?.navigationBar.hidden = true
     }
     
+    ///Function that rounds the corners of the button
+    func roundButtonCorner(button: UIButton) {
+        button.layer.cornerRadius = 3
+        button.clipsToBounds = true
+    }
+    
     ///Function to enable the login button
-    func enableLoginButton() {
+    func enableButtons() {
         loginButton.enabled = true
+        facebookLoginButton.enabled = true
+        signUpButton.enabled = true
         loginButton.alpha = 1.0
+        
     }
     
     ///Function to disable the login button to prevent it from being pressed multiple times 
-    func disableLoginButton() {
+    func disableButtons() {
         loginButton.enabled = false
+        facebookLoginButton.enabled = false
+        signUpButton.enabled = false
         loginButton.alpha = 0.5
     }
-    
-    //MARK: -Gradient layer helper functions
     
     ///Function that sets the frame of the gradient layer to the bounds of the mainView
     func setGradientLayerFrame() {
@@ -195,22 +226,14 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         textField.leftView = spacerView
     }
     
-    
-    //MARK: -Button helper functions
-    
-    ///Function that rounds the corners of the button
-    func roundButtonCorner(button: UIButton) {
-        button.layer.cornerRadius = 3
-        button.clipsToBounds = true
-    }
-    
+
     //MARK: Text field delegate functions
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
     }
     
-    //MARK: - Error helper functions
+    //MARK: -Error helper functions
     
     ///Function that presents a alert to notify the user that a download of the student data has failed
     func showStudentDataDownloadAlert(errorString: String) {
