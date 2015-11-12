@@ -142,10 +142,10 @@
             </objects>
             <point key="canvasLocation" x="444" y="474"/>
         </scene>
-        <!--Item-->
+        <!--StudentTableViewController-->
         <scene sceneID="l4I-ox-kJo">
             <objects>
-                <tableViewController storyboardIdentifier="StudentTableViewController" id="V5f-PL-oh7" customClass="StudentTableViewController" customModule="On_the_Map" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="StudentTableViewController" title="StudentTableViewController" id="V5f-PL-oh7" customClass="StudentTableViewController" customModule="On_the_Map" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="6AU-hQ-j9v">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -231,8 +231,8 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </tabBar>
                     <connections>
-                        <segue destination="V5f-PL-oh7" kind="relationship" relationship="viewControllers" id="NuN-6N-rVL"/>
-                        <segue destination="w6w-jW-G9n" kind="relationship" relationship="viewControllers" id="Jts-kj-JlA"/>
+                        <segue destination="w6w-jW-G9n" kind="relationship" relationship="viewControllers" id="GdA-Tg-h3G"/>
+                        <segue destination="V5f-PL-oh7" kind="relationship" relationship="viewControllers" id="4Id-nY-VoJ"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7fj-SP-aEa" userLabel="First Responder" sceneMemberID="firstResponder"/>
