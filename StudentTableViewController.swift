@@ -10,7 +10,7 @@ import UIKit
 
 class StudentTableViewController: UITableViewController {
 
-    //MARK: Properties
+    //MARK: - Properties
     
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     

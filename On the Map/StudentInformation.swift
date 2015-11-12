@@ -34,7 +34,7 @@ struct StudentInformation {
         self.mapString = dictionary[OTMAPIClient.JSONResponseKeys.MapString] as! String
         self.mediaURL = dictionary[OTMAPIClient.JSONResponseKeys.MediaURL] as! String
         self.latitude = dictionary[OTMAPIClient.JSONResponseKeys.Latitude] as! Double
-        self.longitude = dictionary[OTMAPIClient.JSONResponseKeys.Latitude] as! Double
+        self.longitude = dictionary[OTMAPIClient.JSONResponseKeys.Longitude] as! Double
         self.createdAt = dateFormatter.dateFromString(dictionary[OTMAPIClient.JSONResponseKeys.CreatedAt] as! String)!
         self.updatedAt = dateFormatter.dateFromString(dictionary[OTMAPIClient.JSONResponseKeys.UpdatedAt] as! String)!
     }
