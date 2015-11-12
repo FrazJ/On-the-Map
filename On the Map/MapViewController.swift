@@ -33,22 +33,16 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         /* For each student in the data... */
         for s in studentData {
             
-            print("This is the student: \(s)")
-            
             /* Get the lat and lon values to create a coordiante */
             let lat = CLLocationDegrees(s.latitude)
             let lon = CLLocationDegrees(s.longitude)
             let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: lon)
-            
-            print("This is the coordinate: \(coordinate)")
             
             /* Make the map annotation with the coordinate and other student data */
             let annotation = MKPointAnnotation()
             annotation.coordinate = coordinate
             annotation.title = "\(s.firstName) \(s.lastName)"
             annotation.subtitle = s.mediaURL
-            
-            print("This is the annotation: \(annotation)")
             
             /* Add the annotation to the array */
             annotations.append(annotation)
@@ -57,7 +51,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         mapView.addAnnotations(annotations)
     }
     
-
+    ///Function that adds pins to the map
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
         
         let reuseId = "pin"
@@ -77,6 +71,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         
     }
     
+    ///Function that opens the URL a student has provided when the pin detail is clicked
     func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         
         if control == view.rightCalloutAccessoryView {
