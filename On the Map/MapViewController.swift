@@ -49,6 +49,18 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         }
         
         mapView.addAnnotations(annotations)
+        
+        var mapViewConstraint = NSLayoutConstraint(item: mapView, attribute: .Top, relatedBy: .Equal, toItem: view, attribute: .Top, multiplier: 1, constant: CGRectGetHeight(navigationController!.navigationBar.frame))
+        
+        view.addConstraint(mapViewConstraint)
+        
+        let tabBarHeight = CGRectGetHeight(tabBarController!.tabBar.frame)
+        
+        mapViewConstraint = NSLayoutConstraint(item: mapView, attribute: .Bottom, relatedBy: .Equal, toItem: view, attribute: .Bottom, multiplier: 1, constant: -tabBarHeight)
+        
+        view.addConstraint(mapViewConstraint)
+        
+        
     }
     
     ///Function that adds pins to the map

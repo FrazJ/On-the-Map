@@ -199,7 +199,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="qGp-Qy-hA3">
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="qGp-Qy-hA3">
                                 <rect key="frame" x="0.0" y="20" width="600" height="531"/>
                                 <connections>
                                     <outlet property="delegate" destination="w6w-jW-G9n" id="cgF-Ao-Zu5"/>
@@ -208,10 +208,8 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="qGp-Qy-hA3" firstAttribute="top" secondItem="DHv-ad-TJq" secondAttribute="bottom" id="BWR-Qh-6oj"/>
-                            <constraint firstItem="qGp-Qy-hA3" firstAttribute="leading" secondItem="hXK-gn-hQ1" secondAttribute="leadingMargin" constant="-20" id="Ndq-71-Jrk"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="qGp-Qy-hA3" secondAttribute="trailing" constant="-20" id="jnB-kt-WiR"/>
-                            <constraint firstItem="1Hj-T4-9he" firstAttribute="top" secondItem="qGp-Qy-hA3" secondAttribute="bottom" id="vdB-Uu-KyB"/>
+                            <constraint firstItem="qGp-Qy-hA3" firstAttribute="leading" secondItem="hXK-gn-hQ1" secondAttribute="leadingMargin" constant="-20" id="gnt-6H-oCV"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="qGp-Qy-hA3" secondAttribute="trailing" constant="-20" id="oI6-sv-Hbn"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Item 1" id="ZtD-Ah-Ejt"/>
