@@ -19,9 +19,28 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     //MARK: - Oulets
     @IBOutlet weak var mapView: MKMapView!
     
-    //MARK: - View Life cycle functions
+    //MARK: - View life cycle functions
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        populateMapWithStudentData()
+        setupMapViewConstraints()
+        
+        /* Set the back button to be logout */
+        let customLeftBarButton = UIBarButtonItem(title: "Logout", style: UIBarButtonItemStyle.Plain, target: self, action: "logout")
+        tabBarController!.navigationItem.setLeftBarButtonItem(customLeftBarButton, animated: false)
+        
+    }
+    
+    ///Function that is called when the logout button is pressed
+    func logout() {
+        print("This will log you out")
+    }
+    
+    //MARK: Helper functions
+    
+    //Function that populates the map with data
+    func populateMapWithStudentData() {
         
         /* Get the student data */
         appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
@@ -48,20 +67,31 @@ class MapViewController: UIViewController, MKMapViewDelegate {
             annotations.append(annotation)
         }
         
+        /* Add the annotations to the map */
         mapView.addAnnotations(annotations)
+    }
+    
+    
+    //MARK: -User interface helper functions
+    
+    ///Function that configures the map view contraints
+    func setupMapViewConstraints() {
         
+        /* Setup the top constraint */
         var mapViewConstraint = NSLayoutConstraint(item: mapView, attribute: .Top, relatedBy: .Equal, toItem: view, attribute: .Top, multiplier: 1, constant: CGRectGetHeight(navigationController!.navigationBar.frame))
         
         view.addConstraint(mapViewConstraint)
         
+        /* Setup the bottom constraint */
         let tabBarHeight = CGRectGetHeight(tabBarController!.tabBar.frame)
         
         mapViewConstraint = NSLayoutConstraint(item: mapView, attribute: .Bottom, relatedBy: .Equal, toItem: view, attribute: .Bottom, multiplier: 1, constant: -tabBarHeight)
         
         view.addConstraint(mapViewConstraint)
-        
-        
     }
+    
+    
+    //MARK: -Map delegate helper functions
     
     ///Function that adds pins to the map
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {

@@ -146,7 +146,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     //MARK: - Helper functions
     
-    //MARK: -Set up the user interface
+    //MARK: -User interface helper functions
     
     ///Function sets up the user interface
     func configureUI() {
