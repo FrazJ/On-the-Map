@@ -181,7 +181,7 @@
                             <outlet property="delegate" destination="V5f-PL-oh7" id="2qZ-Ad-I7b"/>
                         </connections>
                     </tableView>
-                    <tabBarItem key="tabBarItem" title="Item" id="aCu-32-VmF"/>
+                    <tabBarItem key="tabBarItem" title="" image="list" selectedImage="list" id="aCu-32-VmF"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="o8j-V7-ppo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -212,7 +212,7 @@
                             <constraint firstAttribute="trailingMargin" secondItem="qGp-Qy-hA3" secondAttribute="trailing" constant="-20" id="oI6-sv-Hbn"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item 1" id="ZtD-Ah-Ejt"/>
+                    <tabBarItem key="tabBarItem" title="" image="map" selectedImage="map" id="ZtD-Ah-Ejt"/>
                     <connections>
                         <outlet property="mapView" destination="qGp-Qy-hA3" id="U34-2d-ijS"/>
                     </connections>
@@ -258,5 +258,7 @@
     </scenes>
     <resources>
         <image name="UdacityLogo" width="246" height="246"/>
+        <image name="list" width="32" height="32"/>
+        <image name="map" width="32" height="32"/>
     </resources>
 </document>
