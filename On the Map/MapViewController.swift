@@ -26,14 +26,27 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         populateMapWithStudentData()
         setupMapViewConstraints()
         
-        /* Set the back button to be logout */
-        let customLeftBarButton = UIBarButtonItem(title: "Logout", style: UIBarButtonItemStyle.Plain, target: self, action: "logout")
+        /* Set the back button on the navigation bar to be log out */
+        let customLeftBarButton = UIBarButtonItem(title: "Log out", style: .Plain, target: self, action: "logOut")
         tabBarController!.navigationItem.setLeftBarButtonItem(customLeftBarButton, animated: false)
+        
+        /* Set the tile of the navigation bar to be On The Map */
+        tabBarController!.navigationItem.title = "On The Map"
+        
+        /* Set the pin button to be in the right corner of the navigation bar */
+        let pinImage = UIImage(named: "pin")
+        let customRightBarButton = UIBarButtonItem(image: pinImage, style: .Plain, target: self, action: "presentInformationPostingViewController")
+        tabBarController!.navigationItem.setRightBarButtonItem(customRightBarButton, animated: false)
         
     }
     
+    ///Function that presents the Information Posting View Controller
+    func presentInformationPostingViewController() {
+        print("This will present the information posting view controller")
+    }
+    
     ///Function that is called when the logout button is pressed
-    func logout() {
+    func logOut() {
         print("This will log you out")
     }
     

@@ -43,6 +43,18 @@ class StudentTableViewController: UITableViewController {
         cell.textLabel?.text = student.firstName + " " + student.lastName
         cell.detailTextLabel!.text = student.mediaURL
 
+
         return cell
+    }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        let app = UIApplication.sharedApplication()
+        
+        if let cell = tableView.cellForRowAtIndexPath(indexPath) {
+            if let toOpen = cell.detailTextLabel?.text {
+                app.openURL(NSURL(string: toOpen)!)
+            }
+        }
     }
 }

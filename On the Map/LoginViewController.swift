@@ -91,7 +91,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 return
             }
             
-            print("The session ID is : \(result)")
             
             OTMAPIClient.sharedInstance().getStudentLocations {(result, error) in
                 
@@ -252,7 +251,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         } else if errorString.rangeOfString("403") != nil {
             errorString = "Wrong email address or password entered."
         } else if errorString.rangeOfString("1009") != nil {
-            errorString = "The internet connection appears to be offline."
+            errorString = "Something is wrong with the network connection."
         } else {
             errorString = "Something went wrong! Try again"
         }
