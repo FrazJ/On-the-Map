@@ -42,7 +42,9 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     
     ///Function that presents the Information Posting View Controller
     func presentInformationPostingViewController() {
-        print("This will present the information posting view controller")
+        
+        let informationPostViewController = storyboard!.instantiateViewControllerWithIdentifier("InformationPostingViewController")
+        presentViewController(informationPostViewController, animated: true, completion: nil)
     }
     
     ///Function that is called when the logout button is pressed
