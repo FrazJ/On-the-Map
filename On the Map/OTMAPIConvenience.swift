@@ -86,9 +86,7 @@ extension OTMAPIClient {
     
     func getStudentLocations(completionHandler: (result: [[String:AnyObject]]?, error: NSError?) -> Void) {
         
-        let parameters = [String:AnyObject]()
-        
-        taskForGetMethod(Methods.StudentLocation, parameters: parameters) {(JSONResult, error) in
+        taskForGetMethod(Methods.StudentLocation) {(JSONResult, error) in
         
             /* GUARD: Was there an error? */
             guard error == nil else {

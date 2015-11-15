@@ -29,7 +29,7 @@ class OTMAPIClient : NSObject {
     
     //MARK: - GET
     
-    func taskForGetMethod(method: String, parameters: [String:AnyObject], completionHandler: (result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
+    func taskForGetMethod(method: String, completionHandler: (result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
         
         /* 1. Set the parameters */
         //Not required for getting the studentLocations
