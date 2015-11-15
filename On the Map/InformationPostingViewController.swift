@@ -8,14 +8,20 @@
 
 import UIKit
 
-class InformationPostingViewController: UIViewController {
+class InformationPostingViewController: UIViewController, UITextFieldDelegate {
 
+    @IBOutlet weak var locationTextField: UITextField!
     
-    //MARK - View life cycle functions
+    //MARK: - View life cycle functions
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        let attributedString = NSAttributedString(string: "Enter your location here", attributes: [NSForegroundColorAttributeName:UIColor.whiteColor()])
+        locationTextField.attributedPlaceholder = attributedString
+        locationTextField.delegate = self
+        
+        
         // Do any additional setup after loading the view.
     }
 
@@ -25,7 +31,7 @@ class InformationPostingViewController: UIViewController {
     }
     
     
-    //MARK - Actions
+    //MARK: - Actions
     
     ///Function dismisses the informatio posting view controller when 'Cancel' button is pressed.
     @IBAction func cancel(sender: UIButton) {

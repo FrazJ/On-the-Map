@@ -242,7 +242,7 @@ today?</string>
                             <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3FW-lu-sk7">
                                 <rect key="frame" x="0.0" y="205" width="600" height="282"/>
                                 <subviews>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Enter your location here" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="yY0-Va-rUc">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter your location here" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="yY0-Va-rUc">
                                         <rect key="frame" x="8" y="8" width="584" height="30"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -271,6 +271,9 @@ today?</string>
                             <constraint firstItem="eHW-13-KcT" firstAttribute="top" secondItem="3FW-lu-sk7" secondAttribute="bottom" constant="36" id="sNK-lc-I7o"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="locationTextField" destination="yY0-Va-rUc" id="tTO-Xb-qOW"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fcf-K0-3Em" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
