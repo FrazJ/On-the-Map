@@ -20,6 +20,7 @@
 		C93900941BEFC37900A432E7 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93900931BEFC37900A432E7 /* MapViewController.swift */; };
 		C93900981BEFC57300A432E7 /* StudentTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93900971BEFC57300A432E7 /* StudentTableViewController.swift */; };
 		C96718B01BECDB6500A4A062 /* StudentInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C96718AF1BECDB6500A4A062 /* StudentInformation.swift */; };
+		C971F8B11BF8E15900909439 /* InformationPostingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C971F8B01BF8E15900909439 /* InformationPostingViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +60,7 @@
 		C93900931BEFC37900A432E7 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		C93900971BEFC57300A432E7 /* StudentTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StudentTableViewController.swift; path = ../StudentTableViewController.swift; sourceTree = "<group>"; };
 		C96718AF1BECDB6500A4A062 /* StudentInformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentInformation.swift; sourceTree = "<group>"; };
+		C971F8B01BF8E15900909439 /* InformationPostingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InformationPostingViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +106,7 @@
 				BE4FCDBF1BDBE6BB00488FAC /* LoginViewController.swift */,
 				C93900931BEFC37900A432E7 /* MapViewController.swift */,
 				C93900971BEFC57300A432E7 /* StudentTableViewController.swift */,
+				C971F8B01BF8E15900909439 /* InformationPostingViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -303,6 +306,7 @@
 				BE3C4E131BDD268400D6522E /* OTMAPIClient.swift in Sources */,
 				BE4FCDC01BDBE6BB00488FAC /* LoginViewController.swift in Sources */,
 				BE3C4E151BDD28D600D6522E /* OTMAPIConstants.swift in Sources */,
+				C971F8B11BF8E15900909439 /* InformationPostingViewController.swift in Sources */,
 				BE4FCDBE1BDBE6BB00488FAC /* AppDelegate.swift in Sources */,
 				C93900941BEFC37900A432E7 /* MapViewController.swift in Sources */,
 			);

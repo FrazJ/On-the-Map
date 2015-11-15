@@ -194,7 +194,7 @@
         <!--Information Posting View Controller-->
         <scene sceneID="2CJ-Be-Lge">
             <objects>
-                <viewController storyboardIdentifier="InformationPostingViewController" title="Information Posting View Controller" id="bNB-Zu-DDo" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="InformationPostingViewController" title="Information Posting View Controller" id="bNB-Zu-DDo" customClass="InformationPostingViewController" customModule="On_the_Map" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="sch-6x-cQN"/>
                         <viewControllerLayoutGuide type="bottom" id="pm6-6B-Y5Q"/>
@@ -212,6 +212,9 @@
                                 <state key="normal" title="Cancel">
                                     <color key="titleColor" red="0.062745098040000002" green="0.18823529410000001" blue="0.36862745099999999" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
+                                <connections>
+                                    <action selector="cancel:" destination="bNB-Zu-DDo" eventType="touchUpInside" id="sks-S5-xJl"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eHW-13-KcT">
                                 <rect key="frame" x="182" y="521" width="236" height="42"/>
@@ -238,7 +241,20 @@ today?</string>
                             </label>
                             <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3FW-lu-sk7">
                                 <rect key="frame" x="0.0" y="205" width="600" height="282"/>
+                                <subviews>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Enter your location here" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="yY0-Va-rUc">
+                                        <rect key="frame" x="8" y="8" width="584" height="30"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                </subviews>
                                 <color key="backgroundColor" red="0.25490196079999999" green="0.45882352939999999" blue="0.64313725489999995" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstItem="yY0-Va-rUc" firstAttribute="leading" secondItem="3FW-lu-sk7" secondAttribute="leading" constant="8" id="Gph-8s-0TO"/>
+                                    <constraint firstAttribute="trailing" secondItem="yY0-Va-rUc" secondAttribute="trailing" constant="8" id="rOm-Hb-1iA"/>
+                                    <constraint firstItem="yY0-Va-rUc" firstAttribute="top" secondItem="3FW-lu-sk7" secondAttribute="top" constant="8" id="tYZ-L4-8OY"/>
+                                </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" red="0.85098039219999999" green="0.85098039219999999" blue="0.83529411760000005" alpha="1" colorSpace="calibratedRGB"/>
