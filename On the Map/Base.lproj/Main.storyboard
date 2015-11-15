@@ -202,7 +202,58 @@
                     <view key="view" contentMode="scaleToFill" id="nA0-O5-vnV">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gz4-5a-LDO">
+                                <rect key="frame" x="532" y="28" width="48" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="7dA-9O-4fe"/>
+                                    <constraint firstAttribute="width" constant="48" id="NLq-gJ-1NO"/>
+                                </constraints>
+                                <state key="normal" title="Cancel">
+                                    <color key="titleColor" red="0.062745098040000002" green="0.18823529410000001" blue="0.36862745099999999" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eHW-13-KcT">
+                                <rect key="frame" x="182" y="521" width="236" height="42"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="236" id="fbJ-bw-zHM"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <state key="normal" title="Find on the Map">
+                                    <color key="titleColor" red="0.32156862745098042" green="0.47058823529411764" blue="0.63921568627450975" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oW3-hD-qod">
+                                <rect key="frame" x="182" y="68" width="236" height="121"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="236" id="1YT-re-M2k"/>
+                                </constraints>
+                                <string key="text">Where are you
+studying
+today?</string>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-UltraLight" family="Helvetica Neue" pointSize="25"/>
+                                <color key="textColor" red="0.062745098040000002" green="0.18823529410000001" blue="0.36862745099999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3FW-lu-sk7">
+                                <rect key="frame" x="0.0" y="205" width="600" height="282"/>
+                                <color key="backgroundColor" red="0.25490196079999999" green="0.45882352939999999" blue="0.64313725489999995" alpha="1" colorSpace="calibratedRGB"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="0.85098039219999999" green="0.85098039219999999" blue="0.83529411760000005" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="pm6-6B-Y5Q" firstAttribute="top" secondItem="eHW-13-KcT" secondAttribute="bottom" constant="37" id="1v5-f7-Ygb"/>
+                            <constraint firstItem="3FW-lu-sk7" firstAttribute="top" secondItem="oW3-hD-qod" secondAttribute="bottom" constant="8" id="3Z6-Er-q3L"/>
+                            <constraint firstItem="oW3-hD-qod" firstAttribute="centerX" secondItem="nA0-O5-vnV" secondAttribute="centerX" id="DuH-KH-Dtu"/>
+                            <constraint firstItem="gz4-5a-LDO" firstAttribute="trailing" secondItem="nA0-O5-vnV" secondAttribute="trailingMargin" id="N7b-kF-zkJ"/>
+                            <constraint firstItem="eHW-13-KcT" firstAttribute="centerX" secondItem="nA0-O5-vnV" secondAttribute="centerX" id="UeD-Gi-42y"/>
+                            <constraint firstItem="oW3-hD-qod" firstAttribute="top" secondItem="sch-6x-cQN" secondAttribute="bottom" constant="48" id="ama-pp-Ldf"/>
+                            <constraint firstItem="gz4-5a-LDO" firstAttribute="top" secondItem="sch-6x-cQN" secondAttribute="bottom" constant="8" id="bA5-Ad-AYQ"/>
+                            <constraint firstItem="3FW-lu-sk7" firstAttribute="leading" secondItem="nA0-O5-vnV" secondAttribute="leadingMargin" constant="-20" id="bYv-ho-O4w"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="3FW-lu-sk7" secondAttribute="trailing" constant="-20" id="qRw-Yb-faX"/>
+                            <constraint firstItem="eHW-13-KcT" firstAttribute="top" secondItem="3FW-lu-sk7" secondAttribute="bottom" constant="36" id="sNK-lc-I7o"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fcf-K0-3Em" userLabel="First Responder" sceneMemberID="firstResponder"/>

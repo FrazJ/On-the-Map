@@ -74,7 +74,6 @@ class OTMAPIClient : NSObject {
                 return
             }
             
-            
             /* 5/6. Parse the data and use the data */
             OTMAPIClient.parseJSONWithCompletionHandler(data, completionHandler: completionHandler)
             
@@ -84,9 +83,8 @@ class OTMAPIClient : NSObject {
         task.resume()
         
         return task
-        
-        
     }
+    
     
     //MARK: - POST
     
@@ -214,7 +212,6 @@ class OTMAPIClient : NSObject {
         
         task.resume()
         return task
-        
     }
     
     //MARK: - Helper methods
@@ -246,4 +243,5 @@ class OTMAPIClient : NSObject {
         
     }
     
+
 }
