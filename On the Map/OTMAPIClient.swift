@@ -27,7 +27,8 @@ class OTMAPIClient : NSObject {
     }
     
     
-    //MARK: GET
+    //MARK: - GET
+    
     func taskForGetMethod(method: String, parameters: [String:AnyObject], completionHandler: (result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
         
         /* 1. Set the parameters */
@@ -87,7 +88,8 @@ class OTMAPIClient : NSObject {
         
     }
     
-    //MARK: POST
+    //MARK: - POST
+    
     func taskForPostMethod(method: String, jsonBody: [String:[String:AnyObject]], completionHandler: (result: AnyObject!, error : NSError?) -> Void) -> NSURLSessionDataTask {
         
         /* 1. Set the parameters */
@@ -152,7 +154,70 @@ class OTMAPIClient : NSObject {
     }
     
     
-    //MARK: Helper methods
+    //MARK: - DELETE
+    
+    func taskForDeleteMethod(method: String, completionHandler: (result: AnyObject!, error: NSError?) -> Void) ->NSURLSessionDataTask {
+        
+        let urlString = Constants.UdacityBaseURL + method
+        let url = NSURL(string: urlString)!
+        let request = NSMutableURLRequest(URL: url)
+        request.HTTPMethod = "DELETE"
+        var xsrfCookie : NSHTTPCookie? = nil
+        let sharedCookieStorage = NSHTTPCookieStorage.sharedHTTPCookieStorage()
+        
+        for cookie in sharedCookieStorage.cookies as [NSHTTPCookie]! {
+            if cookie.name == "XSRF-TOKEN" { xsrfCookie = cookie }
+        }
+        
+        if let xsrfCookie = xsrfCookie {
+            request.setValue(xsrfCookie.value, forHTTPHeaderField: "X-XSRF-TOKEN")
+        }
+        
+        let task = session.dataTaskWithRequest(request) {data, response, error in
+            
+            /* GUARD: Was there an error? */
+            guard error == nil else {
+                let userInfo = [NSLocalizedDescriptionKey: "There was an error with your request: \(error)"]
+                completionHandler(result: nil, error: NSError(domain: "taskForDeleteMethod", code: 1, userInfo: userInfo))
+                //print("There was an error with your request: \(error)")
+                return
+            }
+            
+            /* GUARD: Did we get a successful 2XX response? */
+            guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode where statusCode >= 200 && statusCode <= 299 else {
+                if let response = response as? NSHTTPURLResponse {
+                    let userInfo = [NSLocalizedDescriptionKey: "Your request returned an invalid response! Status code: \(response.statusCode)!"]
+                    completionHandler(result: nil, error: NSError(domain: "taskForDeleteMethod", code: 1, userInfo: userInfo))
+                } else if let response = response {
+                    let userInfo = [NSLocalizedDescriptionKey: "Your request returned an invalid response! Response: \(response)!"]
+                    completionHandler(result: nil, error: NSError(domain: "taskForDeleteMethod", code: 1, userInfo: userInfo))
+                } else {
+                    let userInfo = [NSLocalizedDescriptionKey: "Your request returned an invalid response!"]
+                    completionHandler(result: nil, error: NSError(domain: "taskForDeleteMethod", code: 1, userInfo: userInfo))
+                }
+                return
+            }
+            
+            /* GUARD: Was there any data returned? */
+            guard let data = data else {
+                let userInfo = [NSLocalizedDescriptionKey: "No data was returned by the request!"]
+                completionHandler(result: nil, error: NSError(domain: "taskForDeleteMethod", code: 1, userInfo: userInfo))
+                return
+            }
+            
+            let newData = data.subdataWithRange(NSMakeRange(5, data.length - 5))
+            print(NSString(data: newData, encoding: NSUTF8StringEncoding))
+            
+            /* 5/6. Parse the data and use the data */
+            OTMAPIClient.parseJSONWithCompletionHandler(newData, completionHandler: completionHandler)
+        }
+        
+        task.resume()
+        return task
+        
+    }
+    
+    //MARK: - Helper methods
 
     ///Function that returns a single shared instance of the session
     class func sharedInstance() -> OTMAPIClient {

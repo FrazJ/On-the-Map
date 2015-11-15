@@ -25,36 +25,44 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         
         populateMapWithStudentData()
         setupMapViewConstraints()
-        
-        /* Set the back button on the navigation bar to be log out */
-        let customLeftBarButton = UIBarButtonItem(title: "Log out", style: .Plain, target: self, action: "logOut")
-        tabBarController!.navigationItem.setLeftBarButtonItem(customLeftBarButton, animated: false)
-        
-        /* Set the tile of the navigation bar to be On The Map */
-        tabBarController!.navigationItem.title = "On The Map"
-        
-        /* Set the pin button to be in the right corner of the navigation bar */
-        let pinImage = UIImage(named: "pin")
-        let customRightBarButton = UIBarButtonItem(image: pinImage, style: .Plain, target: self, action: "presentInformationPostingViewController")
-        tabBarController!.navigationItem.setRightBarButtonItem(customRightBarButton, animated: false)
-        
+        setupNavigationBar()
     }
     
     ///Function that presents the Information Posting View Controller
     func presentInformationPostingViewController() {
         
+        /* instantiate and then present the view controller */
         let informationPostViewController = storyboard!.instantiateViewControllerWithIdentifier("InformationPostingViewController")
         presentViewController(informationPostViewController, animated: true, completion: nil)
     }
     
     ///Function that is called when the logout button is pressed
     func logOut() {
-        print("This will log you out")
+        
+        OTMAPIClient.sharedInstance().deleteSession() {(result, error) in
+            
+            guard error == nil else {
+                
+                /* Configure the alert view to display the error */
+                let errorString = error?.userInfo[NSLocalizedDescriptionKey] as? String
+                let alert = UIAlertController(title: "Couldn't log out!" , message: errorString, preferredStyle: .Alert)
+                alert.addAction(UIAlertAction(title: "Try again", style: .Default, handler: nil))
+                
+                dispatch_async(dispatch_get_main_queue(), {
+                    
+                        self.presentViewController(alert, animated: true, completion: nil)
+                    
+                    })
+                return
+            }
+        }
+        
+        navigationController!.popToRootViewControllerAnimated(true)
     }
     
     //MARK: Helper functions
     
-    //Function that populates the map with data
+    ///Function that populates the map with data
     func populateMapWithStudentData() {
         
         /* Get the student data */
@@ -103,6 +111,24 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         mapViewConstraint = NSLayoutConstraint(item: mapView, attribute: .Bottom, relatedBy: .Equal, toItem: view, attribute: .Bottom, multiplier: 1, constant: -tabBarHeight)
         
         view.addConstraint(mapViewConstraint)
+    }
+    
+    
+    ///Function that configures the navigation bar
+    func setupNavigationBar() {
+        
+        /* Set the back button on the navigation bar to be log out */
+        let customLeftBarButton = UIBarButtonItem(title: "Log out", style: .Plain, target: self, action: "logOut")
+        tabBarController!.navigationItem.setLeftBarButtonItem(customLeftBarButton, animated: false)
+        
+        /* Set the tile of the navigation bar to be On The Map */
+        tabBarController!.navigationItem.title = "On The Map"
+        
+        /* Set the pin button to be in the right corner of the navigation bar */
+        let pinImage = UIImage(named: "pin")
+        let customRightBarButton = UIBarButtonItem(image: pinImage, style: .Plain, target: self, action: "presentInformationPostingViewController")
+        tabBarController!.navigationItem.setRightBarButtonItem(customRightBarButton, animated: false)
+        
     }
     
     
