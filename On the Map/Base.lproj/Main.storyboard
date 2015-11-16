@@ -24,7 +24,7 @@
                                         <rect key="frame" x="0.0" y="8" width="560" height="45"/>
                                         <animations/>
                                         <color key="backgroundColor" red="0.99607843139999996" green="0.7725490196" blue="0.58823529409999997" alpha="1" colorSpace="calibratedRGB"/>
-                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="textColor" red="0.93333333333333335" green="0.24313725490196078" blue="0.027450980392156862" alpha="1" colorSpace="calibratedRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
@@ -32,7 +32,7 @@
                                         <rect key="frame" x="0.0" y="61" width="560" height="45"/>
                                         <animations/>
                                         <color key="backgroundColor" red="0.99607843139999996" green="0.7725490196" blue="0.58823529409999997" alpha="1" colorSpace="calibratedRGB"/>
-                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="textColor" red="0.93333333330000001" green="0.24313725489999999" blue="0.027450980390000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                         <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                     </textField>

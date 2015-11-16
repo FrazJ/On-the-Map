@@ -17,19 +17,11 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let attributedString = NSAttributedString(string: "Enter your location here", attributes: [NSForegroundColorAttributeName:UIColor.whiteColor()])
-        locationTextField.attributedPlaceholder = attributedString
         locationTextField.delegate = self
         
+        configurePlaceHolderText()
         
-        // Do any additional setup after loading the view.
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
     
     //MARK: - Actions
     
@@ -38,4 +30,16 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate {
         dismissViewControllerAnimated(true, completion: nil)
         
     }
+    
+    
+    //MARK: - Helper functions
+    
+    //MARK: -User interface helper functions
+    
+    ///Function that sets the colour and placeholder text for locationTextField
+    func configurePlaceHolderText() {
+        let attributedString = NSAttributedString(string: "Enter your location here", attributes: [NSForegroundColorAttributeName:UIColor.whiteColor()])
+        locationTextField.attributedPlaceholder = attributedString
+    }
+    
 }

@@ -159,6 +159,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         indentTextInTextfield(emailTextField)
         indentTextInTextfield(passwordTextField)
         
+        //Configure the placeholder text in the textfields to be white
+        configurePlaceHolderText()
+        
         //Make the ViewController the delegate of the text fields
         emailTextField.delegate = self
         passwordTextField.delegate = self
@@ -230,6 +233,16 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
+    }
+    
+    ///Function that sets the colour and placeholder text for locationTextField
+    func configurePlaceHolderText() {
+        
+        var attributedString = NSAttributedString(string: "Email", attributes: [NSForegroundColorAttributeName:UIColor.whiteColor()])
+        emailTextField.attributedPlaceholder = attributedString
+        
+        attributedString = NSAttributedString(string: "Password", attributes: [NSForegroundColorAttributeName:UIColor.whiteColor()])
+        passwordTextField.attributedPlaceholder = attributedString
     }
     
     //MARK: -Error helper functions
