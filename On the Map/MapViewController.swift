@@ -28,6 +28,11 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         setupNavigationBar()
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        setupMapViewConstraints()
+    }
+    
     ///Function that presents the Information Posting View Controller
     func presentInformationPostingViewController() {
         
