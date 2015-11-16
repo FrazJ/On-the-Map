@@ -50,6 +50,7 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate, M
         
         studyingLabel.hidden = true
         locationPromptView.hidden = true
+        findOnTheMapButton.hidden = true
         
         configurePlaceholderText("Enter a link to share here", textField: urlTextField)
         
@@ -59,6 +60,7 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate, M
         submitButton.hidden = false
         roundButtonCorner(submitButton)
         
+        mapView.hidden = false
         
         view.backgroundColor = UIColor(red: 65.0/255.0, green: 117.0/255, blue: 164.0/255.0, alpha: 1)
         

@@ -208,6 +208,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <mapView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="cm8-PF-Btr">
+                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                <animations/>
+                                <variation key="widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="0.0" y="162" width="400" height="438"/>
+                                </variation>
+                            </mapView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gz4-5a-LDO">
                                 <rect key="frame" x="532" y="28" width="48" height="30"/>
                                 <animations/>
@@ -221,6 +228,28 @@
                                 <connections>
                                     <action selector="cancel:" destination="bNB-Zu-DDo" eventType="touchUpInside" id="sks-S5-xJl"/>
                                 </connections>
+                            </button>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0uJ-Od-3co">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <animations/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="183" id="Kp3-B2-A0P"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <state key="normal" title="Submit">
+                                    <color key="titleColor" red="0.32156862749999998" green="0.47058823529999999" blue="0.63921568630000003" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="Kp3-B2-A0P"/>
+                                    </mask>
+                                </variation>
+                                <variation key="widthClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="Kp3-B2-A0P"/>
+                                    </mask>
+                                </variation>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eHW-13-KcT">
                                 <rect key="frame" x="182" y="521" width="236" height="42"/>
@@ -278,35 +307,6 @@ today?</string>
                                     <rect key="frame" x="20" y="72" width="360" height="30"/>
                                 </variation>
                             </textField>
-                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0uJ-Od-3co">
-                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
-                                <animations/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="183" id="Kp3-B2-A0P"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <state key="normal" title="Submit">
-                                    <color key="titleColor" red="0.32156862749999998" green="0.47058823529999999" blue="0.63921568630000003" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="Kp3-B2-A0P"/>
-                                    </mask>
-                                </variation>
-                                <variation key="widthClass=compact">
-                                    <mask key="constraints">
-                                        <include reference="Kp3-B2-A0P"/>
-                                    </mask>
-                                </variation>
-                            </button>
-                            <mapView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="cm8-PF-Btr">
-                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                                <animations/>
-                                <variation key="widthClass=compact" misplaced="YES">
-                                    <rect key="frame" x="0.0" y="162" width="400" height="438"/>
-                                </variation>
-                            </mapView>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" red="0.85098039219999999" green="0.85098039219999999" blue="0.83529411760000005" alpha="1" colorSpace="calibratedRGB"/>
@@ -334,9 +334,9 @@ today?</string>
                         </constraints>
                         <variation key="default">
                             <mask key="subviews">
-                                <exclude reference="yTz-rb-Fo1"/>
-                                <exclude reference="0uJ-Od-3co"/>
                                 <exclude reference="cm8-PF-Btr"/>
+                                <exclude reference="0uJ-Od-3co"/>
+                                <exclude reference="yTz-rb-Fo1"/>
                             </mask>
                             <mask key="constraints">
                                 <exclude reference="I62-40-QF3"/>
@@ -353,9 +353,9 @@ today?</string>
                         </variation>
                         <variation key="widthClass=compact">
                             <mask key="subviews">
-                                <include reference="yTz-rb-Fo1"/>
-                                <include reference="0uJ-Od-3co"/>
                                 <include reference="cm8-PF-Btr"/>
+                                <include reference="0uJ-Od-3co"/>
+                                <include reference="yTz-rb-Fo1"/>
                             </mask>
                             <mask key="constraints">
                                 <include reference="I62-40-QF3"/>
