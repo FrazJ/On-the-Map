@@ -58,20 +58,20 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate {
     
     func boldText() {
         
-        //TODO: Fix bold text issue 
+        /* Get the text from the label */
+        let text = studyingLabel.text!
+    
+        /* Create an NSMutableAttributeString from the label text */
+        let attributedText = NSMutableAttributedString(string: text)
         
-        let text = studyingLabel.text! as NSString
-        let rangeOfStringToBold = text.rangeOfString("studying")
+        /* Font to make the word bold */
+        let font = UIFont(name: "HelveticaNeue-Medium", size: 25)
         
-        let attributedText = NSMutableAttributedString(string: text as String)
+        /* Make only the word "studying" bold from the text */
+        attributedText.addAttributes([NSFontAttributeName: font!], range: NSRange.init(location: 14, length: 8))
         
-        let font = UIFont(name: "HelveticaNeue-Bold", size: 25)
-        
-        attributedText.addAttributes([NSFontAttributeName: font!], range: rangeOfStringToBold)
-        
-        let newString = String(attributedText)
-        
-        studyingLabel.text = newString
+        /* Update the label text */
+        studyingLabel.attributedText = attributedText
         
     }
     
