@@ -272,7 +272,9 @@ today?</string>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="findOnTheMapButton" destination="eHW-13-KcT" id="jGL-9b-xnj"/>
                         <outlet property="locationTextField" destination="yY0-Va-rUc" id="tTO-Xb-qOW"/>
+                        <outlet property="studyingLabel" destination="oW3-hD-qod" id="tLq-JX-fSj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fcf-K0-3Em" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -228,12 +228,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         textField.leftView = spacerView
     }
     
-
-    //MARK: Text field delegate functions
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        return true
-    }
     
     ///Function that sets the colour and placeholder text for locationTextField
     func configurePlaceHolderText() {
@@ -298,6 +292,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
         /* Shake the screen */
         self.mainView.layer.addAnimation(shakeAnimation, forKey: "position")
+    }
+    
+    //MARK: - Text field delegate functions
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
     
 }
