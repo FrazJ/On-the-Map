@@ -97,6 +97,10 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate, M
                 let annotation = MKPointAnnotation()
                 annotation.coordinate = placemarkToPlace.coordinate
                 
+                
+                /* Centre the map */
+                //TODO: Make map centre around pin
+                
                 dispatch_async(dispatch_get_main_queue(), {
                     /* Add the annotation to the map */
                     self.mapView.addAnnotation(annotation)
