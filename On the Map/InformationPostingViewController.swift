@@ -22,6 +22,10 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate, M
     @IBOutlet weak var submitButton: UIButton!
     @IBOutlet weak var mapView: MKMapView!
     
+    
+    //MARK: Properties
+    var userLocation = [CLPlacemark]()
+    
     //MARK: - View life cycle functions
     
     override func viewDidLoad() {
@@ -46,24 +50,83 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate, M
     
     @IBAction func findOnTheMap(sender: UIButton) {
         
-        cancelButton.titleLabel?.textColor = UIColor.whiteColor()
+        let geocoder = CLGeocoder()
         
-        studyingLabel.hidden = true
-        locationPromptView.hidden = true
-        findOnTheMapButton.hidden = true
-        
-        configurePlaceholderText("Enter a link to share here", textField: urlTextField)
-        
-        
-        urlTextField.hidden = false
-        
-        submitButton.hidden = false
-        roundButtonCorner(submitButton)
-        
-        mapView.hidden = false
-        
-        view.backgroundColor = UIColor(red: 65.0/255.0, green: 117.0/255, blue: 164.0/255.0, alpha: 1)
-        
+        if let stringToGeocode = locationTextField.text {
+            
+            /* GAURD: Did the user provide a location? */
+            guard stringToGeocode != "" else {
+                
+                /* Make the strings for the alert */
+                let alertTitle = "No location provided"
+                let alertMessage = "You must enter your location before proceeding"
+                let actionTitle = "OK"
+                
+                showAlert(alertTitle, alertMessage: alertMessage, actionTitle: actionTitle)
+                
+                return
+            }
+            
+            print("This is the string to geocode: \(stringToGeocode)")
+            
+            geocoder.geocodeAddressString(stringToGeocode) { (placemark, error) in
+                
+                /* GAURD: Was there an error while fetching the users location? */
+                guard error == nil else {
+                    
+                    /* Make the strings for the alert */
+                    let alertTitle = "Couldn't get your location"
+                    let alertMessage = "There was an error while fetching your location: \(error)"
+                    let actionTitle = "Try again"
+                    
+                    dispatch_async(dispatch_get_main_queue(), {
+                        self.showAlert(alertTitle, alertMessage: alertMessage, actionTitle: actionTitle)
+                    })
+                    
+                    return
+                }
+                
+                /* Assign the returned location to the userLocation property */
+                self.userLocation = placemark!
+                
+                print("The user location: \(self.userLocation)")
+                
+                /* Make the annotation from the placemark results */
+                let topPlacemarkResult = self.userLocation[0]
+                let placemarkToPlace = MKPlacemark(placemark: topPlacemarkResult)
+                let annotation = MKPointAnnotation()
+                annotation.coordinate = placemarkToPlace.coordinate
+                
+                dispatch_async(dispatch_get_main_queue(), {
+                    /* Add the annotation to the map */
+                    self.mapView.addAnnotation(annotation)
+                })
+            }
+            
+            
+            //Change the text colour of the cancel button
+            cancelButton.titleLabel?.textColor = UIColor.whiteColor()
+            
+            //Hide the components that arn't needed
+            studyingLabel.hidden = true
+            locationPromptView.hidden = true
+            findOnTheMapButton.hidden = true
+            
+            //Unhide the urlTextfiend and update the placeholder colour
+            configurePlaceholderText("Enter a link to share here", textField: urlTextField)
+            urlTextField.hidden = false
+            
+            //Unhide the submit button and round its corners
+            submitButton.hidden = false
+            roundButtonCorner(submitButton)
+            
+            //Unide the map view
+            mapView.hidden = false
+            
+            //Change the colour of the background
+            view.backgroundColor = UIColor(red: 65.0/255.0, green: 117.0/255, blue: 164.0/255.0, alpha: 1)
+            
+        }
     }
     
     
@@ -104,4 +167,15 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate, M
         
     }
     
+    //MARK: -Error helper functions
+    ///Function that configures and shows an alert
+    func showAlert(alertTitle: String, alertMessage: String, actionTitle: String) {
+        
+        /* Configure the alert view to display the error */
+        let alert = UIAlertController(title: alertTitle  , message: alertMessage, preferredStyle: .Alert)
+        alert.addAction(UIAlertAction(title: actionTitle, style: .Default, handler: nil))
+        
+        /* Present the alert view */
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
 }
