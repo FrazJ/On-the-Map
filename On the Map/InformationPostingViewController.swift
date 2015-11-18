@@ -99,37 +99,43 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate, M
                 
                 
                 /* Centre the map */
-                //TODO: Make map centre around pin
+                let pinLatitude = annotation.coordinate.latitude
+                let pinLongitude = annotation.coordinate.longitude
+                let pinCoordiant = CLLocationCoordinate2DMake(pinLatitude, pinLongitude)
+                
+                let span = MKCoordinateSpanMake(0.01, 0.01)
+                let region = MKCoordinateRegionMake(pinCoordiant, span)
                 
                 dispatch_async(dispatch_get_main_queue(), {
                     /* Add the annotation to the map */
                     self.mapView.addAnnotation(annotation)
+                    self.mapView.setRegion(region, animated: true)
+                    self.mapView.regionThatFits(region)
                 })
+                
+                //Change the text colour of the cancel button
+                self.cancelButton.titleLabel?.textColor = UIColor.whiteColor()
+                
+                //Hide the components that arn't needed
+                self.studyingLabel.hidden = true
+                self.locationPromptView.hidden = true
+                self.findOnTheMapButton.hidden = true
+                
+                //Unhide the urlTextfiend and update the placeholder colour
+                self.configurePlaceholderText("Enter a link to share here", textField: self.urlTextField)
+                self.urlTextField.hidden = false
+                
+                //Unhide the submit button and round its corners
+                self.submitButton.hidden = false
+                self.roundButtonCorner(self.submitButton)
+                
+                //Unide the map view
+                self.mapView.hidden = false
+                
+                //Change the colour of the background
+                self.view.backgroundColor = UIColor(red: 65.0/255.0, green: 117.0/255, blue: 164.0/255.0, alpha: 1)
+                
             }
-            
-            
-            //Change the text colour of the cancel button
-            cancelButton.titleLabel?.textColor = UIColor.whiteColor()
-            
-            //Hide the components that arn't needed
-            studyingLabel.hidden = true
-            locationPromptView.hidden = true
-            findOnTheMapButton.hidden = true
-            
-            //Unhide the urlTextfiend and update the placeholder colour
-            configurePlaceholderText("Enter a link to share here", textField: urlTextField)
-            urlTextField.hidden = false
-            
-            //Unhide the submit button and round its corners
-            submitButton.hidden = false
-            roundButtonCorner(submitButton)
-            
-            //Unide the map view
-            mapView.hidden = false
-            
-            //Change the colour of the background
-            view.backgroundColor = UIColor(red: 65.0/255.0, green: 117.0/255, blue: 164.0/255.0, alpha: 1)
-            
         }
     }
     
