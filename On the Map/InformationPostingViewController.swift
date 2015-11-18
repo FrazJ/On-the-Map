@@ -67,7 +67,18 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate, M
                 return
             }
             
-            print("This is the string to geocode: \(stringToGeocode)")
+            /* Show activity to show the app is processing data*/
+            let activityView = UIActivityIndicatorView.init(activityIndicatorStyle: UIActivityIndicatorViewStyle.WhiteLarge)
+            activityView.center = view.center
+            activityView.startAnimating()
+            view.addSubview(activityView)
+
+            
+            /* Make the user interface appear disabled */
+            let views = [cancelButton!, studyingLabel!, locationTextField!, locationPromptView!, findOnTheMapButton!]
+            changeAlphaFor(views, alpha: 0.5)
+            
+            /* Geocode the provided string */
             
             geocoder.geocodeAddressString(stringToGeocode) { (placemark, error) in
                 
@@ -81,6 +92,8 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate, M
                     
                     dispatch_async(dispatch_get_main_queue(), {
                         self.showAlert(alertTitle, alertMessage: alertMessage, actionTitle: actionTitle)
+                        self.changeAlphaFor(views, alpha: 1.0)
+                        activityView.stopAnimating()
                     })
                     
                     return
@@ -88,8 +101,6 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate, M
                 
                 /* Assign the returned location to the userLocation property */
                 self.userLocation = placemark!
-                
-                print("The user location: \(self.userLocation)")
                 
                 /* Make the annotation from the placemark results */
                 let topPlacemarkResult = self.userLocation[0]
@@ -113,8 +124,9 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate, M
                     self.mapView.regionThatFits(region)
                 })
                 
-                //Change the text colour of the cancel button
+                //Change the text colour and alpha of the cancel button
                 self.cancelButton.titleLabel?.textColor = UIColor.whiteColor()
+                self.changeAlphaFor([self.cancelButton], alpha: 1.0)
                 
                 //Hide the components that arn't needed
                 self.studyingLabel.hidden = true
@@ -131,6 +143,9 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate, M
                 
                 //Unide the map view
                 self.mapView.hidden = false
+                
+                //Stop the activity spinner 
+                activityView.stopAnimating()
                 
                 //Change the colour of the background
                 self.view.backgroundColor = UIColor(red: 65.0/255.0, green: 117.0/255, blue: 164.0/255.0, alpha: 1)
@@ -177,7 +192,16 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate, M
         
     }
     
+    ///Function that takers an array of UIView objects and alters their alpha property
+    func changeAlphaFor(views: [UIView], alpha: CGFloat) {
+        
+        for view in views {
+            view.alpha = alpha
+        }
+    }
+    
     //MARK: -Error helper functions
+    
     ///Function that configures and shows an alert
     func showAlert(alertTitle: String, alertMessage: String, actionTitle: String) {
         

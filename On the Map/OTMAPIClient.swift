@@ -48,7 +48,6 @@ class OTMAPIClient : NSObject {
             guard error == nil else {
                 let userInfo = [NSLocalizedDescriptionKey: "There was an error with your request: \(error)"]
                 completionHandler(result: nil, error: NSError(domain: "taskForGetMethod", code: 1, userInfo: userInfo))
-                //print("There was an error with your request: \(error)")
                 return
             }
             
@@ -111,7 +110,6 @@ class OTMAPIClient : NSObject {
             guard error == nil else {
                 let userInfo = [NSLocalizedDescriptionKey: "There was an error with your request: \(error)"]
                 completionHandler(result: nil, error: NSError(domain: "taskForPostMethod", code: 1, userInfo: userInfo))
-                //print("There was an error with your request: \(error)")
                 return
             }
             
@@ -177,7 +175,6 @@ class OTMAPIClient : NSObject {
             guard error == nil else {
                 let userInfo = [NSLocalizedDescriptionKey: "There was an error with your request: \(error)"]
                 completionHandler(result: nil, error: NSError(domain: "taskForDeleteMethod", code: 1, userInfo: userInfo))
-                //print("There was an error with your request: \(error)")
                 return
             }
             
@@ -204,7 +201,6 @@ class OTMAPIClient : NSObject {
             }
             
             let newData = data.subdataWithRange(NSMakeRange(5, data.length - 5))
-            print(NSString(data: newData, encoding: NSUTF8StringEncoding))
             
             /* 5/6. Parse the data and use the data */
             OTMAPIClient.parseJSONWithCompletionHandler(newData, completionHandler: completionHandler)

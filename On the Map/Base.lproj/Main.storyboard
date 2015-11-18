@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="5sV-hG-dvu">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9059" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="5sV-hG-dvu">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -155,11 +156,11 @@
                                 <rect key="frame" x="0.0" y="28" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="uJ7-5P-Emi" id="dZk-aa-Ecj">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="H8X-Gr-OUZ">
-                                            <rect key="frame" x="62" y="6" width="31.5" height="19.5"/>
+                                            <rect key="frame" x="62" y="5" width="32" height="20"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <animations/>
                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -167,7 +168,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="j7a-jq-buZ">
-                                            <rect key="frame" x="62" y="25.5" width="40.5" height="13.5"/>
+                                            <rect key="frame" x="62" y="25" width="41" height="14"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <animations/>
                                             <fontDescription key="fontDescription" type="system" pointSize="11"/>
@@ -251,21 +252,6 @@
                                     </mask>
                                 </variation>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eHW-13-KcT">
-                                <rect key="frame" x="182" y="521" width="236" height="42"/>
-                                <animations/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="236" id="fbJ-bw-zHM"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <state key="normal" title="Find on the Map">
-                                    <color key="titleColor" red="0.32156862745098042" green="0.47058823529411764" blue="0.63921568627450975" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="findOnTheMap:" destination="bNB-Zu-DDo" eventType="touchUpInside" id="n6f-65-nss"/>
-                                </connections>
-                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oW3-hD-qod">
                                 <rect key="frame" x="182" y="68" width="236" height="121"/>
                                 <animations/>
@@ -282,8 +268,8 @@ today?</string>
                             <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3FW-lu-sk7" userLabel="Location prompt">
                                 <rect key="frame" x="0.0" y="205" width="600" height="282"/>
                                 <subviews>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter your location here" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="yY0-Va-rUc">
-                                        <rect key="frame" x="8" y="8" width="584" height="30"/>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" placeholder="Enter your location here" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="yY0-Va-rUc">
+                                        <rect key="frame" x="8" y="8" width="584" height="184"/>
                                         <animations/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -308,6 +294,21 @@ today?</string>
                                     <rect key="frame" x="20" y="72" width="360" height="30"/>
                                 </variation>
                             </textField>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eHW-13-KcT">
+                                <rect key="frame" x="182" y="521" width="236" height="42"/>
+                                <animations/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="236" id="fbJ-bw-zHM"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <state key="normal" title="Find on the Map">
+                                    <color key="titleColor" red="0.32156862745098042" green="0.47058823529411764" blue="0.63921568627450975" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="findOnTheMap:" destination="bNB-Zu-DDo" eventType="touchUpInside" id="n6f-65-nss"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" red="0.85098039219999999" green="0.85098039219999999" blue="0.83529411760000005" alpha="1" colorSpace="calibratedRGB"/>
@@ -321,6 +322,7 @@ today?</string>
                             <constraint firstItem="oW3-hD-qod" firstAttribute="centerX" secondItem="nA0-O5-vnV" secondAttribute="centerX" id="DuH-KH-Dtu"/>
                             <constraint firstItem="yTz-rb-Fo1" firstAttribute="top" secondItem="gz4-5a-LDO" secondAttribute="bottom" constant="14" id="I62-40-QF3"/>
                             <constraint firstItem="gz4-5a-LDO" firstAttribute="trailing" secondItem="nA0-O5-vnV" secondAttribute="trailingMargin" id="N7b-kF-zkJ"/>
+                            <constraint firstItem="eHW-13-KcT" firstAttribute="top" secondItem="3FW-lu-sk7" secondAttribute="bottom" constant="34" id="R2f-6I-Fql"/>
                             <constraint firstItem="cm8-PF-Btr" firstAttribute="leading" secondItem="nA0-O5-vnV" secondAttribute="leadingMargin" constant="-20" id="SHf-97-08N"/>
                             <constraint firstItem="eHW-13-KcT" firstAttribute="centerX" secondItem="nA0-O5-vnV" secondAttribute="centerX" id="UeD-Gi-42y"/>
                             <constraint firstItem="oW3-hD-qod" firstAttribute="top" secondItem="sch-6x-cQN" secondAttribute="bottom" constant="48" id="ama-pp-Ldf"/>
@@ -328,7 +330,6 @@ today?</string>
                             <constraint firstItem="3FW-lu-sk7" firstAttribute="leading" secondItem="nA0-O5-vnV" secondAttribute="leadingMargin" constant="-20" id="bYv-ho-O4w"/>
                             <constraint firstItem="yTz-rb-Fo1" firstAttribute="leading" secondItem="nA0-O5-vnV" secondAttribute="leadingMargin" id="lwH-5F-NP0"/>
                             <constraint firstAttribute="trailingMargin" secondItem="3FW-lu-sk7" secondAttribute="trailing" constant="-20" id="qRw-Yb-faX"/>
-                            <constraint firstItem="eHW-13-KcT" firstAttribute="top" secondItem="3FW-lu-sk7" secondAttribute="bottom" constant="36" id="sNK-lc-I7o"/>
                             <constraint firstItem="yTz-rb-Fo1" firstAttribute="trailing" secondItem="nA0-O5-vnV" secondAttribute="trailingMargin" id="uuD-HV-0IA"/>
                             <constraint firstItem="0uJ-Od-3co" firstAttribute="height" secondItem="eHW-13-KcT" secondAttribute="height" id="xKO-BT-rWb"/>
                             <constraint firstAttribute="trailingMargin" secondItem="cm8-PF-Btr" secondAttribute="trailing" constant="-20" id="yeI-3f-qnA"/>
@@ -343,11 +344,11 @@ today?</string>
                                 <exclude reference="I62-40-QF3"/>
                                 <exclude reference="lwH-5F-NP0"/>
                                 <exclude reference="uuD-HV-0IA"/>
+                                <exclude reference="9Wp-G8-WZq"/>
+                                <exclude reference="xKO-BT-rWb"/>
                                 <exclude reference="5PR-N3-Qek"/>
                                 <exclude reference="SHf-97-08N"/>
                                 <exclude reference="yeI-3f-qnA"/>
-                                <exclude reference="9Wp-G8-WZq"/>
-                                <exclude reference="xKO-BT-rWb"/>
                                 <exclude reference="1U1-6w-p1o"/>
                                 <exclude reference="9ci-sL-zx3"/>
                             </mask>
@@ -362,11 +363,11 @@ today?</string>
                                 <include reference="I62-40-QF3"/>
                                 <include reference="lwH-5F-NP0"/>
                                 <include reference="uuD-HV-0IA"/>
+                                <include reference="9Wp-G8-WZq"/>
+                                <include reference="xKO-BT-rWb"/>
                                 <include reference="5PR-N3-Qek"/>
                                 <include reference="SHf-97-08N"/>
                                 <include reference="yeI-3f-qnA"/>
-                                <include reference="9Wp-G8-WZq"/>
-                                <include reference="xKO-BT-rWb"/>
                                 <include reference="1U1-6w-p1o"/>
                                 <include reference="9ci-sL-zx3"/>
                             </mask>
@@ -385,7 +386,7 @@ today?</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fcf-K0-3Em" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2896.5" y="493"/>
+            <point key="canvasLocation" x="2896" y="493"/>
         </scene>
         <!--Map View Contoller-->
         <scene sceneID="D7o-fi-9aB">
