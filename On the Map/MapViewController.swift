@@ -30,11 +30,6 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         getStudentData()
     }
     
-//    override func viewWillAppear(animated: Bool) {
-//        super.viewWillAppear(true)
-//        populateMapWithStudentData()
-//    }
-    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         setupMapViewConstraints()
@@ -71,13 +66,14 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         navigationController!.popToRootViewControllerAnimated(true)
     }
     
-    //MARK: Helper functions
     
+    //MARK: Helper functions
     
     ///Function that gets the student data 
     func getStudentData() {
         
-        view.alpha = 0.5
+        /* Low the alpha of the view */
+        //TODO: Stuff
         
         /* Show activity to show the app is processing data*/
         let activityView = UIActivityIndicatorView.init(activityIndicatorStyle: UIActivityIndicatorViewStyle.WhiteLarge)
@@ -98,12 +94,11 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                         
                         self.showStudentDataDownloadAlert(errorString)
                         
-                        /* stop the activity spinner */
-                        self.view.alpha = 1.0
+                        /* Reset the view alpha and stop the activity spinner */
+                        //TODO: Stuff
                         activityView.stopAnimating()
                     })
                 }
-                
                 return
             }
             
@@ -124,7 +119,6 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                 activityView.stopAnimating()
             })
         }
-        
     }
     
     ///Function that populates the map with data
@@ -188,10 +182,22 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         /* Set the tile of the navigation bar to be On The Map */
         tabBarController!.navigationItem.title = "On The Map"
         
-        /* Set the pin button to be in the right corner of the navigation bar */
+        /* Create an array of bar button items */
+        var customButtons = [UIBarButtonItem]()
+        
+        /* Create pin button */
         let pinImage = UIImage(named: "pin")
-        let customRightBarButton = UIBarButtonItem(image: pinImage, style: .Plain, target: self, action: "presentInformationPostingViewController")
-        tabBarController!.navigationItem.setRightBarButtonItem(customRightBarButton, animated: false)
+        let pinButton = UIBarButtonItem(image: pinImage, style: .Plain, target: self, action: "presentInformationPostingViewController")
+        
+        /* Create refresh button */
+        let refreshButton = UIBarButtonItem(barButtonSystemItem: .Refresh, target: self, action: "getStudentData")
+        
+        /* Add the buttons to the array */
+        customButtons.append(refreshButton)
+        customButtons.append(pinButton)
+        
+        /* Add the buttons to the nav bar */
+        tabBarController!.navigationItem.setRightBarButtonItems(customButtons, animated: false)
         
     }
     
