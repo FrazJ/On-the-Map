@@ -91,47 +91,16 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 return
             }
             
-            
-            OTMAPIClient.sharedInstance().getStudentLocations {(result, error) in
+            dispatch_async(dispatch_get_main_queue(), {
                 
-                var studentInformationArray = [StudentInformation]()
+                //Display the tabbed view controller
+                let tabViewController = self.storyboard!.instantiateViewControllerWithIdentifier("TabBarController")
+                self.navigationController?.pushViewController(tabViewController, animated: true)
                 
-                guard error == nil else {
-                    
-                    if let errorString = error?.userInfo[NSLocalizedDescriptionKey] as? String {
-                    
-                        /* Display an alert to the user to let them know that there was an error getting the student data */
-                        dispatch_async(dispatch_get_main_queue(), {
-                            
-                            self.showStudentDataDownloadAlert(errorString)
-                            
-                            /* Enable the buttons and stop the activity spinner */
-                            self.enableButtons()
-                            activityView.stopAnimating()
-                        })
-                    }
-                    
-                    return
-                }
-                
-                /* For each student in the return results add it to the array */
-                for s in result! {
-                    studentInformationArray.append(StudentInformation(dictionary: s))
-                }
-                
-                self.appDelegate.studentData = studentInformationArray
-                
-                /* Present the next ViewController showing the student data */
-                dispatch_async(dispatch_get_main_queue(), {
-                    
-                    let mapViewController = self.storyboard!.instantiateViewControllerWithIdentifier("TabBarController")
-                    self.navigationController?.pushViewController(mapViewController, animated: true)
-                    
-                    /* Enable the buttons and stop the activity spinner */
-                    self.enableButtons()
-                    activityView.stopAnimating()
-                })
-            }
+                //Stop animating the spinner and enable buttons
+                self.enableButtons()
+                activityView.stopAnimating()
+            })
         }
     }
     
@@ -240,11 +209,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     //MARK: -Error helper functions
-    
-    ///Function that presents a alert to notify the user that a download of the student data has failed
-    func showStudentDataDownloadAlert(errorString: String) {
-        showAlert("Download failed", errorString: errorString)
-    }
     
     ///Function that presents an alert to the user with a reason as to why their login failed
     func showAuthenticationAlert(errorString : String) {

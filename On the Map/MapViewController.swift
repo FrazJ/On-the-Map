@@ -23,10 +23,17 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        populateMapWithStudentData()
+        appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        
         setupMapViewConstraints()
         setupNavigationBar()
+        getStudentData()
     }
+    
+//    override func viewWillAppear(animated: Bool) {
+//        super.viewWillAppear(true)
+//        populateMapWithStudentData()
+//    }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -54,10 +61,8 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                 alert.addAction(UIAlertAction(title: "Try again", style: .Default, handler: nil))
                 
                 dispatch_async(dispatch_get_main_queue(), {
-                    
                         self.presentViewController(alert, animated: true, completion: nil)
-                    
-                    })
+                })
                 return
             }
         }
@@ -68,11 +73,64 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     
     //MARK: Helper functions
     
+    
+    ///Function that gets the student data 
+    func getStudentData() {
+        
+        view.alpha = 0.5
+        
+        /* Show activity to show the app is processing data*/
+        let activityView = UIActivityIndicatorView.init(activityIndicatorStyle: UIActivityIndicatorViewStyle.WhiteLarge)
+        activityView.center = view.center
+        activityView.startAnimating()
+        view.addSubview(activityView)
+        
+        OTMAPIClient.sharedInstance().getStudentLocations {(result, error) in
+            
+            var studentInformationArray = [StudentInformation]()
+            
+            guard error == nil else {
+                
+                if let errorString = error?.userInfo[NSLocalizedDescriptionKey] as? String {
+                    
+                    /* Display an alert to the user to let them know that there was an error getting the student data */
+                    dispatch_async(dispatch_get_main_queue(), {
+                        
+                        self.showStudentDataDownloadAlert(errorString)
+                        
+                        /* stop the activity spinner */
+                        self.view.alpha = 1.0
+                        activityView.stopAnimating()
+                    })
+                }
+                
+                return
+            }
+            
+            /* For each student in the return results add it to the array */
+            for s in result! {
+                studentInformationArray.append(StudentInformation(dictionary: s))
+            }
+            
+            self.appDelegate.studentData = studentInformationArray
+            
+            /* Present the next ViewController showing the student data */
+            dispatch_async(dispatch_get_main_queue(), {
+                
+                self.populateMapWithStudentData()
+                
+                /* stop the activity spinner */
+                self.view.alpha = 1.0
+                activityView.stopAnimating()
+            })
+        }
+        
+    }
+    
     ///Function that populates the map with data
     func populateMapWithStudentData() {
         
         /* Get the student data */
-        appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         studentData = appDelegate.studentData
         
         /* Make an array of MKPointAnnoations */
@@ -171,4 +229,23 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         }
     }
     
+    
+    //MARK: -Error helper functions 
+    
+    ///Function that presents a alert to notify the user that a download of the student data has failed
+    func showStudentDataDownloadAlert(errorString: String) {
+        showAlert("Download failed", errorString: errorString)
+    }
+    
+    ///Function that configures and shows an alert
+    func showAlert(titleString: String, errorString: String) {
+        
+        /* Configure the alert view to display the error */
+        let alert = UIAlertController(title: titleString , message: errorString, preferredStyle: .Alert)
+        alert.addAction(UIAlertAction(title: "Try again", style: .Default, handler: nil))
+        
+        /* Present the alert view */
+        self.presentViewController(alert, animated: true, completion: nil)
+        
+    }
 }

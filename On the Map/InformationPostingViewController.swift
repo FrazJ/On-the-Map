@@ -11,8 +11,8 @@ import MapKit
 
 class InformationPostingViewController: UIViewController, UITextFieldDelegate, MKMapViewDelegate {
     
-    //MARK: - Outlets
     
+    //MARK: - Outlets
     @IBOutlet weak var studyingLabel: UILabel!
     @IBOutlet weak var locationPromptView: UIView!
     @IBOutlet weak var locationTextField: UITextField!
@@ -25,6 +25,7 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate, M
     
     //MARK: Properties
     var userLocation = [CLPlacemark]()
+    
     
     //MARK: - View life cycle functions
     
@@ -116,7 +117,6 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate, M
             }
         }
     }
-    
     
     
     //MARK: - Helper functions
@@ -218,6 +218,7 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate, M
 
         
     }
+    
     
     //MARK: -Error helper functions
     
