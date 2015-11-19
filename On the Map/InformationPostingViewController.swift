@@ -32,6 +32,7 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate, M
         super.viewDidLoad()
 
         locationTextField.delegate = self
+        urlTextField.delegate = self
         
         configurePlaceholderText("Enter your location here", textField: locationTextField)
         roundButtonCorner(findOnTheMapButton)
@@ -48,6 +49,8 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate, M
         
     }
     
+    
+    ///Function that is called after the user presses the 'Find on the Map' button, which takes the string the user has entered and locates it on a map.
     @IBAction func findOnTheMap(sender: UIButton) {
         
         let geocoder = CLGeocoder()
@@ -79,7 +82,6 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate, M
             changeAlphaFor(views, alpha: 0.5)
             
             /* Geocode the provided string */
-            
             geocoder.geocodeAddressString(stringToGeocode) { (placemark, error) in
                 
                 /* GAURD: Was there an error while fetching the users location? */
@@ -102,53 +104,14 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate, M
                 /* Assign the returned location to the userLocation property */
                 self.userLocation = placemark!
                 
-                /* Make the annotation from the placemark results */
-                let topPlacemarkResult = self.userLocation[0]
-                let placemarkToPlace = MKPlacemark(placemark: topPlacemarkResult)
-                let annotation = MKPointAnnotation()
-                annotation.coordinate = placemarkToPlace.coordinate
+                /* Setup the map with the pin cooresponding to the placemark */
+                self.configureMap()
                 
+                /* Makes the appropriate changes to the UI after getting a successful placemark */
+                self.changeUserInterface()
                 
-                /* Centre the map */
-                let pinLatitude = annotation.coordinate.latitude
-                let pinLongitude = annotation.coordinate.longitude
-                let pinCoordiant = CLLocationCoordinate2DMake(pinLatitude, pinLongitude)
-                
-                let span = MKCoordinateSpanMake(0.01, 0.01)
-                let region = MKCoordinateRegionMake(pinCoordiant, span)
-                
-                dispatch_async(dispatch_get_main_queue(), {
-                    /* Add the annotation to the map */
-                    self.mapView.addAnnotation(annotation)
-                    self.mapView.setRegion(region, animated: true)
-                    self.mapView.regionThatFits(region)
-                })
-                
-                //Change the text colour and alpha of the cancel button
-                self.cancelButton.titleLabel?.textColor = UIColor.whiteColor()
-                self.changeAlphaFor([self.cancelButton], alpha: 1.0)
-                
-                //Hide the components that arn't needed
-                self.studyingLabel.hidden = true
-                self.locationPromptView.hidden = true
-                self.findOnTheMapButton.hidden = true
-                
-                //Unhide the urlTextfiend and update the placeholder colour
-                self.configurePlaceholderText("Enter a link to share here", textField: self.urlTextField)
-                self.urlTextField.hidden = false
-                
-                //Unhide the submit button and round its corners
-                self.submitButton.hidden = false
-                self.roundButtonCorner(self.submitButton)
-                
-                //Unide the map view
-                self.mapView.hidden = false
-                
-                //Stop the activity spinner 
+                //Stop the activity spinner
                 activityView.stopAnimating()
-                
-                //Change the colour of the background
-                self.view.backgroundColor = UIColor(red: 65.0/255.0, green: 117.0/255, blue: 164.0/255.0, alpha: 1)
                 
             }
         }
@@ -195,9 +158,65 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate, M
     ///Function that takers an array of UIView objects and alters their alpha property
     func changeAlphaFor(views: [UIView], alpha: CGFloat) {
         
+        /* For each view in the array change the alpha */
         for view in views {
             view.alpha = alpha
         }
+    }
+    
+    ///Function that changes the user interface after getting a successful placemark
+    func changeUserInterface() {
+        
+        //Change the text colour and alpha of the cancel button
+        self.cancelButton.titleLabel?.textColor = UIColor.whiteColor()
+        self.changeAlphaFor([self.cancelButton], alpha: 1.0)
+        
+        //Hide the components that arn't needed
+        self.studyingLabel.hidden = true
+        self.locationPromptView.hidden = true
+        self.findOnTheMapButton.hidden = true
+        
+        //Unhide the urlTextfiend and update the placeholder colour
+        self.configurePlaceholderText("Enter a link to share here", textField: self.urlTextField)
+        self.urlTextField.hidden = false
+        
+        //Unhide the submit button and round its corners
+        self.submitButton.hidden = false
+        self.roundButtonCorner(self.submitButton)
+        
+        //Unide the map view
+        self.mapView.hidden = false
+        
+        //Change the colour of the background
+        self.view.backgroundColor = UIColor(red: 65.0/255.0, green: 117.0/255, blue: 164.0/255.0, alpha: 1)
+    }
+    
+    ///Function that configures a map view with a placemark
+    func configureMap() {
+        
+        /* Make the annotation from the placemark results */
+        let topPlacemarkResult = self.userLocation[0]
+        let placemarkToPlace = MKPlacemark(placemark: topPlacemarkResult)
+        let annotation = MKPointAnnotation()
+        annotation.coordinate = placemarkToPlace.coordinate
+        
+        
+        /* Centre the map */
+        let pinLatitude = annotation.coordinate.latitude
+        let pinLongitude = annotation.coordinate.longitude
+        let pinCoordiant = CLLocationCoordinate2DMake(pinLatitude, pinLongitude)
+        
+        let span = MKCoordinateSpanMake(0.01, 0.01)
+        let region = MKCoordinateRegionMake(pinCoordiant, span)
+        
+        dispatch_async(dispatch_get_main_queue(), {
+            /* Add the annotation to the map */
+            self.mapView.addAnnotation(annotation)
+            self.mapView.setRegion(region, animated: true)
+            self.mapView.regionThatFits(region)
+        })
+
+        
     }
     
     //MARK: -Error helper functions
@@ -211,5 +230,13 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate, M
         
         /* Present the alert view */
         self.presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    
+    //MARK: - Textfield delegate functions
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
 }
