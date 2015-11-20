@@ -60,7 +60,6 @@ class StudentTableViewController: UITableViewController {
                     
                     /* Display an alert to the user to let them know that there was an error getting the student data */
                     dispatch_async(dispatch_get_main_queue(), {
-                        
                         self.showStudentDataDownloadAlert(errorString)
                         
                         /* Show that activity has stoped */
@@ -82,7 +81,6 @@ class StudentTableViewController: UITableViewController {
             
             /* Present the next ViewController showing the student data */
             dispatch_async(dispatch_get_main_queue(), {
-                
                 /* Show that activity has stoped */
                 activityView.removeFromSuperview()
                 activitySpinner.stopAnimating()
@@ -122,6 +120,15 @@ class StudentTableViewController: UITableViewController {
         tabBarController!.navigationItem.setRightBarButtonItems(customButtons, animated: false)
     }
     
+    func getAttributedText(textToStyle: String) -> NSMutableAttributedString {
+        
+        let rangeToStyle = NSRange.init(location: 0, length: (textToStyle as NSString).length)
+        let attributedText = NSMutableAttributedString(string: textToStyle)
+        let font = UIFont(name: "HelveticaNeue-Bold", size: 16)
+        attributedText.addAttributes([NSFontAttributeName: font!], range: rangeToStyle)
+        
+        return attributedText
+    }
     
     //MARK: -Error helper functions
     
@@ -156,7 +163,9 @@ class StudentTableViewController: UITableViewController {
         
         let student = appDelegate.studentData[indexPath.row]
         
-        cell.textLabel?.text = student.firstName + " " + student.lastName
+        let textForTitle = student.firstName + " " + student.lastName
+
+        cell.textLabel?.attributedText = getAttributedText(textForTitle)
         cell.detailTextLabel!.text = student.mediaURL
 
         return cell

@@ -90,7 +90,7 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate, M
                     
                     /* Make the strings for the alert */
                     let alertTitle = "Couldn't get your location"
-                    let alertMessage = "There was an error while fetching your location: \(error)"
+                    let alertMessage = "There was an error while fetching your location."
                     let actionTitle = "Try again"
                     
                     dispatch_async(dispatch_get_main_queue(), {

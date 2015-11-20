@@ -14,7 +14,6 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     
     //MARK: - Properties
     var appDelegate : AppDelegate!
-    var studentData : [StudentInformation]!
     
     //MARK: - Oulets
     @IBOutlet weak var mapView: MKMapView!
@@ -140,14 +139,11 @@ class MapViewController: UIViewController, MKMapViewDelegate {
             mapView.removeAnnotations(mapView.annotations)
         }
         
-        /* Get the student data */
-        studentData = appDelegate.studentData
-        
         /* Make an array of MKPointAnnoations */
         var annotations = [MKPointAnnotation]()
         
         /* For each student in the data... */
-        for s in studentData {
+        for s in appDelegate.studentData {
             
             /* Get the lat and lon values to create a coordiante */
             let lat = CLLocationDegrees(s.latitude)
