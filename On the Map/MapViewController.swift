@@ -24,8 +24,12 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         super.viewDidLoad()
         
         appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        
         setupMapViewConstraints()
+        
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(true)
         setupNavigationBar()
         getStudentData()
     }
@@ -73,13 +77,18 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     func getStudentData() {
         
         /* Low the alpha of the view */
-        //TODO: Stuff
+        let activityView = UIView.init(frame: mapView.frame)
+        activityView.backgroundColor = UIColor.grayColor()
+        activityView.alpha = 0.8
+        view.addSubview(activityView)
+        
+        //mapView.alpha = 0.3
         
         /* Show activity to show the app is processing data*/
-        let activityView = UIActivityIndicatorView.init(activityIndicatorStyle: UIActivityIndicatorViewStyle.WhiteLarge)
-        activityView.center = view.center
-        activityView.startAnimating()
-        view.addSubview(activityView)
+        let activitySpinner = UIActivityIndicatorView.init(activityIndicatorStyle: UIActivityIndicatorViewStyle.WhiteLarge)
+        activitySpinner.center = view.center
+        activitySpinner.startAnimating()
+        activityView.addSubview(activitySpinner)
         
         OTMAPIClient.sharedInstance().getStudentLocations {(result, error) in
             
@@ -94,9 +103,9 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                         
                         self.showStudentDataDownloadAlert(errorString)
                         
-                        /* Reset the view alpha and stop the activity spinner */
-                        //TODO: Stuff
-                        activityView.stopAnimating()
+                        /* Show that activity has stoped */
+                        activityView.removeFromSuperview()
+                        activitySpinner.stopAnimating()
                     })
                 }
                 return
@@ -107,6 +116,8 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                 studentInformationArray.append(StudentInformation(dictionary: s))
             }
             
+            studentInformationArray = studentInformationArray.sort() {$0.updatedAt.compare($1.updatedAt) == NSComparisonResult.OrderedDescending}
+            
             self.appDelegate.studentData = studentInformationArray
             
             /* Present the next ViewController showing the student data */
@@ -114,15 +125,20 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                 
                 self.populateMapWithStudentData()
                 
-                /* stop the activity spinner */
-                self.view.alpha = 1.0
-                activityView.stopAnimating()
+                /* Show that activity has stoped */
+                activityView.removeFromSuperview()
+                activitySpinner.stopAnimating()
             })
         }
     }
     
     ///Function that populates the map with data
     func populateMapWithStudentData() {
+        
+        /* Remove any pins previously on the map to avoid duplicates */
+        if !mapView.annotations.isEmpty {
+            mapView.removeAnnotations(mapView.annotations)
+        }
         
         /* Get the student data */
         studentData = appDelegate.studentData
@@ -227,7 +243,11 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         if control == view.rightCalloutAccessoryView {
             let app = UIApplication.sharedApplication()
             if let toOpen = view.annotation?.subtitle! {
-                app.openURL(NSURL(string: toOpen)!)
+                if let url = NSURL(string: toOpen) {
+                    app.openURL(url)
+                } else {
+                    showAlert("Unable to load webpage", errorString: "Webpage couldn't be opened because the link was invalid.")
+                }
             }
         }
     }
