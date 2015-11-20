@@ -141,7 +141,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
         //Hide the navigation bar
         hideNavigationBar()
-        
     }
     
     ///Function to hide the navigation controller
@@ -161,7 +160,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         facebookLoginButton.enabled = true
         signUpButton.enabled = true
         loginButton.alpha = 1.0
-        
     }
     
     ///Function to disable the login button to prevent it from being pressed multiple times 
@@ -228,7 +226,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         }
         
         showAlert(titleString, errorString: errorString)
-        
     }
     
     ///Function that configures and shows an alert
@@ -240,7 +237,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
         /* Present the alert view */
         self.presentViewController(alert, animated: true, completion: nil)
-
     }
     
     ///Function that animates the screen to show login has failed

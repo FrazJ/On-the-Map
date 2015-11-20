@@ -147,7 +147,6 @@ class MapViewController: UIViewController, MKMapViewDelegate {
             /* Add the annotation to the array */
             annotations.append(annotation)
         }
-        
         /* Add the annotations to the map */
         mapView.addAnnotations(annotations)
     }
@@ -198,7 +197,6 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         
         /* Add the buttons to the nav bar */
         tabBarController!.navigationItem.setRightBarButtonItems(customButtons, animated: false)
-        
     }
     
     
@@ -221,7 +219,6 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         }
         
         return pinView
-        
     }
     
     ///Function that opens the URL a student has provided when the pin detail is clicked

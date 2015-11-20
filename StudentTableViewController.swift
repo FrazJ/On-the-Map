@@ -43,7 +43,6 @@ class StudentTableViewController: UITableViewController {
         cell.textLabel?.text = student.firstName + " " + student.lastName
         cell.detailTextLabel!.text = student.mediaURL
 
-
         return cell
     }
     
