@@ -32,9 +32,20 @@ extension OTMAPIClient {
     
     //MARK: JSON Body Keys
     struct JSONBodyKeys {
+        
         static let Udacity = "udacity"
         static let Username = "username"
         static let Password = "password"
+        
+        //MARK: -StudentLocation
+        static let UniqueKey = "uniqueKey"
+        static let FirstName = "firstName"
+        static let LastName = "lastName"
+        static let MapString = "mapString"
+        static let MediaURL = "mediaURL"
+        static let Latitude = "latitude"
+        static let Longitude = "longitude"
+        
     }
     
     

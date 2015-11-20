@@ -27,12 +27,31 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate, M
     var userLocation = [CLPlacemark]()
     var appDelegate : AppDelegate!
     
+    /* Student location details */
+    var studentLat = CLLocationDegrees()
+    var studentLon = CLLocationDegrees()
+    var studentLocationName = ""
+    
+    
     //MARK: - View life cycle functions
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        
+        
+        OTMAPIClient.sharedInstance().getUserData(appDelegate.userID) {(result, error) in
+            
+            guard error == nil else {
+                print(error)
+                return
+            }
+            
+            self.appDelegate.userData = result!
+            print("This is the user Data \(self.appDelegate.userData)")
+        }
+        
         
         locationTextField.delegate = self
         urlTextField.delegate = self
@@ -131,7 +150,9 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate, M
             return
         }
         
-        guard isValidURL(urlTextField.text!) else {
+        guard UIApplication.sharedApplication().canOpenURL(NSURL(string: urlTextField.text!)!) else {
+        
+        //guard isValidURL(urlTextField.text!) else {
             
             /* Make the strings for the alert */
             let alertTitle = "Invalid URL provided"
@@ -141,18 +162,17 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate, M
             return
         }
         
-        OTMAPIClient.sharedInstance().getUserData(appDelegate.userID) {(result, error) in
-        
-            guard error == nil else {
-                print(error)
-                return
-            }
-            
-            self.appDelegate.userData = result!
-            print(self.appDelegate.userData)
-        }
-        
-        OTMAPIClient.sharedInstance().postStudentLocation() {(result, error) in
+        let studentLocationArray : [String:AnyObject] = [
+            OTMAPIClient.JSONBodyKeys.UniqueKey: appDelegate.userID,
+            OTMAPIClient.JSONBodyKeys.FirstName: appDelegate.userData[0],
+            OTMAPIClient.JSONBodyKeys.LastName: appDelegate.userData[1],
+            OTMAPIClient.JSONBodyKeys.MapString: studentLocationName,
+            OTMAPIClient.JSONBodyKeys.MediaURL: urlTextField.text!,
+            OTMAPIClient.JSONBodyKeys.Latitude: studentLat,
+            OTMAPIClient.JSONBodyKeys.Longitude:studentLon
+            ]
+    
+        OTMAPIClient.sharedInstance().postStudentLocation(studentLocationArray) {(result, error) in
                 
             guard error == nil else {
                 print(error)
@@ -248,11 +268,12 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate, M
         let annotation = MKPointAnnotation()
         annotation.coordinate = placemarkToPlace.coordinate
         
+        studentLocationName = placemarkToPlace.name!
         
         /* Centre the map */
-        let pinLatitude = annotation.coordinate.latitude
-        let pinLongitude = annotation.coordinate.longitude
-        let pinCoordiant = CLLocationCoordinate2DMake(pinLatitude, pinLongitude)
+        studentLat = annotation.coordinate.latitude
+        studentLon = annotation.coordinate.longitude
+        let pinCoordiant = CLLocationCoordinate2DMake(studentLat, studentLon)
         
         let span = MKCoordinateSpanMake(0.01, 0.01)
         let region = MKCoordinateRegionMake(pinCoordiant, span)
@@ -267,16 +288,6 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate, M
         
     }
     
-    /* Referenced from http://stackoverflow.com/questions/25471114/how-to-validate-an-e-mail-address-in-swift */
-    
-    ///Function to check that the provided string is a valid URL
-    func isValidURL(testString:String) -> Bool {
-        
-        let urlRegEx = "(http|https)://((\\w)*|([0-9]*)|([-|_])*)+([\\.|/]((\\w)*|([0-9]*)|([-|_])*))+"
-        
-        let urlTest = NSPredicate(format:"SELF MATCHES %@", urlRegEx)
-        return urlTest.evaluateWithObject(testString)
-    }
     
     //MARK: -Error helper functions
     

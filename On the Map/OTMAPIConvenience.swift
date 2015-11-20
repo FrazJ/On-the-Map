@@ -102,20 +102,20 @@ extension OTMAPIClient {
         }
     }
     
-    func postStudentLocation(completionHandler: (result: AnyObject?, error: NSError?) -> Void) {
+    func postStudentLocation(jsonBody: [String:AnyObject], completionHandler: (result: AnyObject?, error: NSError?) -> Void) {
         
         let method = Methods.StudentLocation
-        let JSONBody = [
-            "uniqueKey": "1234",
-            "firstName": "John",
-            "lastName": "Doe",
-            "mapString": "Mountain View, CA",
-            "mediaURL": "https://udacity.com",
-            "latitude": 37.386052,
-            "longitude": -122.083851
-        ]
+//        let JSONBody = [
+//            "uniqueKey": "1234",
+//            "firstName": "John",
+//            "lastName": "Doe",
+//            "mapString": "Mountain View, CA",
+//            "mediaURL": "https://udacity.com",
+//            "latitude": 37.386052,
+//            "longitude": -122.083851
+//        ]
         
-        taskForPostMethod(method, jsonBody: JSONBody) { (JSONResult, error) in
+        taskForPostMethod(method, jsonBody: jsonBody) { (JSONResult, error) in
             
             /* GUARD: Was there an error? */
             guard error == nil else {

@@ -239,7 +239,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         if control == view.rightCalloutAccessoryView {
             let app = UIApplication.sharedApplication()
             if let toOpen = view.annotation?.subtitle! {
-                if isValidURL(toOpen) {
+                if UIApplication.sharedApplication().canOpenURL(NSURL(string: toOpen)!) {
                 let url = NSURL(string: toOpen)
                 app.openURL(url!)
                 } else {
@@ -267,16 +267,5 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         /* Present the alert view */
         self.presentViewController(alert, animated: true, completion: nil)
         
-    }
-    
-    /* Referenced from http://stackoverflow.com/questions/25471114/how-to-validate-an-e-mail-address-in-swift */
-    
-    ///Function to check that the provided string is a valid URL
-    func isValidURL(testString:String) -> Bool {
-        
-        let urlRegEx = "(http|https)://((\\w)*|([0-9]*)|([-|_])*)+([\\.|/]((\\w)*|([0-9]*)|([-|_])*))+"
-        
-        let urlTest = NSPredicate(format:"SELF MATCHES %@", urlRegEx)
-        return urlTest.evaluateWithObject(testString)
     }
 }
