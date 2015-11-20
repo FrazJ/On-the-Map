@@ -105,15 +105,6 @@ extension OTMAPIClient {
     func postStudentLocation(jsonBody: [String:AnyObject], completionHandler: (result: AnyObject?, error: NSError?) -> Void) {
         
         let method = Methods.StudentLocation
-//        let JSONBody = [
-//            "uniqueKey": "1234",
-//            "firstName": "John",
-//            "lastName": "Doe",
-//            "mapString": "Mountain View, CA",
-//            "mediaURL": "https://udacity.com",
-//            "latitude": 37.386052,
-//            "longitude": -122.083851
-//        ]
         
         taskForPostMethod(method, jsonBody: jsonBody) { (JSONResult, error) in
             
@@ -125,7 +116,6 @@ extension OTMAPIClient {
             
             if let result = JSONResult[JSONResponseKeys.ObjectID] as? String {
                 completionHandler(result: result, error: nil)
-                print(result)
             } else {
                 completionHandler(result: nil, error: NSError(domain: "postStudentLocation parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse student location"]))
             }

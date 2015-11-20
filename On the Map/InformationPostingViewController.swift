@@ -44,12 +44,11 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate, M
         OTMAPIClient.sharedInstance().getUserData(appDelegate.userID) {(result, error) in
             
             guard error == nil else {
-                print(error)
+                //TODO: Provide suitable error here, maybe move it to a different place. Dismiss view if cant get data
                 return
             }
             
             self.appDelegate.userData = result!
-            print("This is the user Data \(self.appDelegate.userData)")
         }
         
         
@@ -175,11 +174,10 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate, M
         OTMAPIClient.sharedInstance().postStudentLocation(studentLocationArray) {(result, error) in
                 
             guard error == nil else {
-                print(error)
+                //TODO: Provide suitable error here, maybe move it to a different place. Dismiss view if cant get data
                 return
             }
                 
-            print(":)")
             dispatch_async(dispatch_get_main_queue(), {
                 self.dismissViewControllerAnimated(true, completion: nil)
             })
@@ -284,8 +282,6 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate, M
             self.mapView.setRegion(region, animated: true)
             self.mapView.regionThatFits(region)
         })
-
-        
     }
     
     
