@@ -65,9 +65,7 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate, M
                 let alertTitle = "No location provided"
                 let alertMessage = "You must enter your location before proceeding"
                 let actionTitle = "OK"
-                
                 showAlert(alertTitle, alertMessage: alertMessage, actionTitle: actionTitle)
-                
                 return
             }
             
@@ -115,6 +113,43 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate, M
                 activityView.stopAnimating()
                 
             }
+        }
+    }
+    
+    @IBAction func sumbitStudentLocation(sender: UIButton) {
+        
+        /* GUARD: Did the user provde a URL */
+        guard urlTextField.text! != "" else{
+            
+            /* Make the strings for the alert */
+            let alertTitle = "No URL provided"
+            let alertMessage = "You must enter a URL before proceeding"
+            let actionTitle = "OK"
+            showAlert(alertTitle, alertMessage: alertMessage, actionTitle: actionTitle)
+            return
+        }
+        
+        guard isValidURL(urlTextField.text!) else {
+            
+            /* Make the strings for the alert */
+            let alertTitle = "Invalid URL provided"
+            let alertMessage = "You must enter a valid URL before proceeding. Ensure you include http:// or https://"
+            let actionTitle = "OK"
+            showAlert(alertTitle, alertMessage: alertMessage, actionTitle: actionTitle)
+            return
+        }
+        
+        OTMAPIClient.sharedInstance().postStudentLocation() {(result, error) in
+                
+            guard error == nil else {
+                print(error)
+                return
+            }
+                
+            print(":)")
+            dispatch_async(dispatch_get_main_queue(), {
+                self.dismissViewControllerAnimated(true, completion: nil)
+            })
         }
     }
     
@@ -219,6 +254,16 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate, M
         
     }
     
+    /* Referenced from http://stackoverflow.com/questions/25471114/how-to-validate-an-e-mail-address-in-swift */
+    
+    ///Function to check that the provided string is a valid URL
+    func isValidURL(testString:String) -> Bool {
+        
+        let urlRegEx = "(http|https)://((\\w)*|([0-9]*)|([-|_])*)+([\\.|/]((\\w)*|([0-9]*)|([-|_])*))+"
+        
+        let urlTest = NSPredicate(format:"SELF MATCHES %@", urlRegEx)
+        return urlTest.evaluateWithObject(testString)
+    }
     
     //MARK: -Error helper functions
     

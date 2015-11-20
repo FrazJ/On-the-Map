@@ -28,7 +28,6 @@ class OTMAPIClient : NSObject {
     
     
     //MARK: - GET
-    
     func taskForGetMethod(method: String, completionHandler: (result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
         
         /* 1. Set the parameters */
@@ -86,19 +85,33 @@ class OTMAPIClient : NSObject {
     
     
     //MARK: - POST
-    
-    func taskForPostMethod(method: String, jsonBody: [String:[String:AnyObject]], completionHandler: (result: AnyObject!, error : NSError?) -> Void) -> NSURLSessionDataTask {
+    func taskForPostMethod(method: String, jsonBody: AnyObject, completionHandler: (result: AnyObject!, error : NSError?) -> Void) -> NSURLSessionDataTask {
         
         /* 1. Set the parameters */
         //Not required for posting the session
+        var isUdacityAPI = true
         
-        /* 2/3. Build the URL and configure the request*/
-        let urlString = Constants.UdacityBaseURL + method
-        let url = NSURL(string: urlString)!
-        let request = NSMutableURLRequest(URL: url)
-        request.HTTPMethod = "POST"
-        request.addValue("application/json", forHTTPHeaderField: "Accept")
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        /* 2/3. Build the URL and configure the request */
+        var request = NSMutableURLRequest()
+        
+        if method == Methods.Session {
+            let urlString = Constants.UdacityBaseURL + method
+            let url = NSURL(string: urlString)!
+            request = NSMutableURLRequest(URL: url)
+            request.HTTPMethod = "POST"
+            request.addValue("application/json", forHTTPHeaderField: "Accept")
+            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        } else {
+            isUdacityAPI = false
+            let urlString = Constants.ParseBaseURL + method
+            let url = NSURL(string: urlString)!
+            request = NSMutableURLRequest(URL: url)
+            request.HTTPMethod = "POST"
+            request.addValue(Constants.ParseApplicationID, forHTTPHeaderField: "X-Parse-Application-Id")
+            request.addValue(Constants.ParseAPIKey, forHTTPHeaderField: "X-Parse-REST-API-Key")
+            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        }
+        
         do {
             request.HTTPBody = try! NSJSONSerialization.dataWithJSONObject(jsonBody, options: .PrettyPrinted)
         }
@@ -135,10 +148,14 @@ class OTMAPIClient : NSObject {
                 return
             }
             
-            let newData = data.subdataWithRange(NSMakeRange(5, data.length - 5))
             
             /* 5/6. Parse the data and use the data */
-            OTMAPIClient.parseJSONWithCompletionHandler(newData, completionHandler: completionHandler)
+            if  isUdacityAPI {
+                let newData = data.subdataWithRange(NSMakeRange(5, data.length - 5))
+                OTMAPIClient.parseJSONWithCompletionHandler(newData, completionHandler: completionHandler)
+            } else {
+                OTMAPIClient.parseJSONWithCompletionHandler(data, completionHandler: completionHandler)
+            }
             
         }
         

@@ -251,6 +251,9 @@
                                         <include reference="Kp3-B2-A0P"/>
                                     </mask>
                                 </variation>
+                                <connections>
+                                    <action selector="sumbitStudentLocation:" destination="bNB-Zu-DDo" eventType="touchUpInside" id="UHR-OE-rad"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oW3-hD-qod">
                                 <rect key="frame" x="182" y="68" width="236" height="121"/>
