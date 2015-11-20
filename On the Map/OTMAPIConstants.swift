@@ -24,16 +24,9 @@ extension OTMAPIClient {
         //MARK: -Authentication
         static let Session = "session"
         //MARK: -Public user data
-        static let Users = "users/<user_id>"
+        static let Users = "users/"
         //MARK: -Student locations
         static let StudentLocation = "StudentLocation"
-    }
-    
-    
-    //MARK: URL Keys
-    struct URLKeys {
-        //MARK: -UserID
-        static let UserID = "<user_id>"
     }
     
     
@@ -70,6 +63,11 @@ extension OTMAPIClient {
         static let UniqueKey = "uniqueKey"
         static let UpdatedAt = "updatedAt"
         static let CreatedAt = "createdAt"
+        
+        //MARK: -User Data
+        static let User = "user"
+        static let Last_Name = "last_name"
+        static let First_Name = "first_name"
     }
     
 }

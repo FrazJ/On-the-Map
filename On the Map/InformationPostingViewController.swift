@@ -25,13 +25,15 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate, M
     
     //MARK: Properties
     var userLocation = [CLPlacemark]()
-    
+    var appDelegate : AppDelegate!
     
     //MARK: - View life cycle functions
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        
         locationTextField.delegate = self
         urlTextField.delegate = self
         
@@ -137,6 +139,17 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate, M
             let actionTitle = "OK"
             showAlert(alertTitle, alertMessage: alertMessage, actionTitle: actionTitle)
             return
+        }
+        
+        OTMAPIClient.sharedInstance().getUserData(appDelegate.userID) {(result, error) in
+        
+            guard error == nil else {
+                print(error)
+                return
+            }
+            
+            self.appDelegate.userData = result!
+            print(self.appDelegate.userData)
         }
         
         OTMAPIClient.sharedInstance().postStudentLocation() {(result, error) in

@@ -46,8 +46,8 @@ extension OTMAPIClient {
                 return
             }
             
-            if let dictionary = JSONResult[JSONResponseKeys.Session ] as? [String:AnyObject] {
-                if let result = dictionary[JSONResponseKeys.ID] as? String {
+            if let dictionary = JSONResult[JSONResponseKeys.Account ] as? [String:AnyObject] {
+                if let result = dictionary[JSONResponseKeys.Key] as? String {
                     completionHandler(result: result, error: nil)
                 } else {
                     completionHandler(result: nil, error: NSError(domain: "postSession parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse session"]))
@@ -132,4 +132,34 @@ extension OTMAPIClient {
         }
     }
     
+    func getUserData(userID: String, completionHandler: (result: [String]?, error: NSError?) -> Void) {
+        
+        let method = Methods.Users + userID
+        
+        taskForGetMethod(method) {(JSONResult, error) in
+            
+            /* GUARD: Was there an error? */
+            guard error == nil else {
+                completionHandler(result: nil, error: error)
+                return
+            }
+            
+            if let dictionary = JSONResult[JSONResponseKeys.User] as? [String:AnyObject] {
+                
+                var result = [String]()
+                
+                if let firstName = dictionary[JSONResponseKeys.First_Name] as? String {
+                    result.append(firstName)
+                    if let lastName = dictionary[JSONResponseKeys.Last_Name] as? String {
+                        result.append(lastName)
+                        completionHandler(result: result, error: nil)
+                    } else {
+                        completionHandler(result: nil, error: NSError(domain: "getUserData parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse user data : Last name"]))
+                    }
+                } else {
+                    completionHandler(result: nil, error: NSError(domain: "getUserData parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse user data : First name"]))
+                }
+            }
+        }
+    }
 }

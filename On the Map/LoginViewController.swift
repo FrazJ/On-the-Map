@@ -91,6 +91,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 return
             }
             
+            self.appDelegate.userID = result!
+            print(self.appDelegate.userID)
+            
             dispatch_async(dispatch_get_main_queue(), {
                 
                 //Display the tabbed view controller

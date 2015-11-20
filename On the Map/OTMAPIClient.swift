@@ -34,11 +34,22 @@ class OTMAPIClient : NSObject {
         //Not required for getting the studentLocations
         
         /* 2/3. Build the URL and configure the request*/
-        let urlString = Constants.ParseBaseURL + method
-        let url = NSURL(string: urlString)!
-        let request = NSMutableURLRequest(URL: url)
-        request.addValue("\(Constants.ParseApplicationID)", forHTTPHeaderField: "X-Parse-Application-Id")
-        request.addValue("\(Constants.ParseAPIKey)", forHTTPHeaderField: "X-Parse-REST-API-Key")
+        var isUdacityAPI = true
+        var request = NSMutableURLRequest()
+        
+        if method.containsString(Methods.Users)  {
+            let urlString = Constants.UdacityBaseURL + method
+            let url = NSURL(string: urlString)!
+            request = NSMutableURLRequest(URL: url)
+        } else {
+            isUdacityAPI = false
+            let urlString = Constants.ParseBaseURL + method
+            let url = NSURL(string: urlString)!
+            request = NSMutableURLRequest(URL: url)
+            request.addValue("\(Constants.ParseApplicationID)", forHTTPHeaderField: "X-Parse-Application-Id")
+            request.addValue("\(Constants.ParseAPIKey)", forHTTPHeaderField: "X-Parse-REST-API-Key")
+        }
+        
         
         /* 4. Make the request */
         let task = session.dataTaskWithRequest(request) { (data, response, error) in
@@ -73,7 +84,12 @@ class OTMAPIClient : NSObject {
             }
             
             /* 5/6. Parse the data and use the data */
-            OTMAPIClient.parseJSONWithCompletionHandler(data, completionHandler: completionHandler)
+            if  isUdacityAPI {
+                let newData = data.subdataWithRange(NSMakeRange(5, data.length - 5))
+                OTMAPIClient.parseJSONWithCompletionHandler(newData, completionHandler: completionHandler)
+            } else {
+                OTMAPIClient.parseJSONWithCompletionHandler(data, completionHandler: completionHandler)
+            }
             
         }
         
