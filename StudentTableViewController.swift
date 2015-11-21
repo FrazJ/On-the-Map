@@ -34,17 +34,17 @@ class StudentTableViewController: UITableViewController {
     
     //MARK: - Helper functions
     
+    ///Function that fetches the student data for the table
     func getStudentData() {
         
-        /* Low the alpha of the view */
+        /* Change the look of the UI to indicate it is processing */
         let activityView = UIView.init(frame: tableView.frame)
         activityView.backgroundColor = UIColor.grayColor()
         activityView.alpha = 0.8
         view.addSubview(activityView)
         
-        //mapView.alpha = 0.3
         
-        /* Show activity to show the app is processing data*/
+        /* Show activity spinner to show the app is processing data */
         let activitySpinner = UIActivityIndicatorView.init(activityIndicatorStyle: UIActivityIndicatorViewStyle.WhiteLarge)
         activitySpinner.center = view.center
         activitySpinner.startAnimating()
@@ -54,10 +54,9 @@ class StudentTableViewController: UITableViewController {
             
             var studentInformationArray = [StudentInformation]()
             
+            /* GUARD: Was there an error fetching the student data? */
             guard error == nil else {
-                
                 if let errorString = error?.userInfo[NSLocalizedDescriptionKey] as? String {
-                    
                     /* Display an alert to the user to let them know that there was an error getting the student data */
                     dispatch_async(dispatch_get_main_queue(), {
                         self.showStudentDataDownloadAlert(errorString)
@@ -120,6 +119,7 @@ class StudentTableViewController: UITableViewController {
         tabBarController!.navigationItem.setRightBarButtonItems(customButtons, animated: false)
     }
     
+    ///Function that returns styled text from a unstyled string
     func getAttributedText(textToStyle: String) -> NSMutableAttributedString {
         
         let rangeToStyle = NSRange.init(location: 0, length: (textToStyle as NSString).length)
@@ -161,9 +161,7 @@ class StudentTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCellWithIdentifier("studentCell")!
-        
         let student = appDelegate.studentData[indexPath.row]
-        
         let textForTitle = student.firstName + " " + student.lastName
 
         cell.textLabel?.attributedText = getAttributedText(textForTitle)
@@ -172,6 +170,7 @@ class StudentTableViewController: UITableViewController {
         return cell
     }
     
+    ///Function that opens a webpage when a row is clicked
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         let app = UIApplication.sharedApplication()

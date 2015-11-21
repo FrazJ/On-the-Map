@@ -75,15 +75,14 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     ///Function that gets the student data 
     func getStudentData() {
         
-        /* Low the alpha of the view */
+        /* Change the look of the UI to indicate it is processing */
         let activityView = UIView.init(frame: mapView.frame)
         activityView.backgroundColor = UIColor.grayColor()
         activityView.alpha = 0.8
         view.addSubview(activityView)
         
-        //mapView.alpha = 0.3
         
-        /* Show activity to show the app is processing data*/
+        /* Show activity spinner to show the app is processing data*/
         let activitySpinner = UIActivityIndicatorView.init(activityIndicatorStyle: UIActivityIndicatorViewStyle.WhiteLarge)
         activitySpinner.center = view.center
         activitySpinner.startAnimating()
@@ -93,13 +92,11 @@ class MapViewController: UIViewController, MKMapViewDelegate {
             
             var studentInformationArray = [StudentInformation]()
             
+            /* GUARD: Was there an error fetching the student data? */
             guard error == nil else {
-                
                 if let errorString = error?.userInfo[NSLocalizedDescriptionKey] as? String {
-                    
                     /* Display an alert to the user to let them know that there was an error getting the student data */
                     dispatch_async(dispatch_get_main_queue(), {
-                        
                         self.showStudentDataDownloadAlert(errorString)
                         
                         /* Show that activity has stoped */
@@ -115,13 +112,13 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                 studentInformationArray.append(StudentInformation(dictionary: s))
             }
             
+            /* Sort the student data in order of last updated */
             studentInformationArray = studentInformationArray.sort() {$0.updatedAt.compare($1.updatedAt) == NSComparisonResult.OrderedDescending}
             
             self.appDelegate.studentData = studentInformationArray
             
             /* Present the next ViewController showing the student data */
             dispatch_async(dispatch_get_main_queue(), {
-                
                 self.populateMapWithStudentData()
                 
                 /* Show that activity has stoped */

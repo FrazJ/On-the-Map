@@ -43,21 +43,35 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate, M
         
         OTMAPIClient.sharedInstance().getUserData(appDelegate.userID) {(result, error) in
             
+            /* GAURD: Was their an error fetching the user data?*/
             guard error == nil else {
-                //TODO: Provide suitable error here, maybe move it to a different place. Dismiss view if cant get data
+                
+                /* Set up the strings for the error alert */
+                let alertTitle = "Could get your data"
+                let alertMessage = "The was a problem trying to fetch your name and user ID."
+                let actionTitle = "OK"
+                
+                /* Show the alert and dismiss the view controleer */
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.showAlert(alertTitle, alertMessage: alertMessage, actionTitle: actionTitle)
+                    self.dismissViewControllerAnimated(true, completion: nil)
+                })
                 return
             }
             
+            /* Store the user resulting user data in the appDelegate */
             self.appDelegate.userData = result!
         }
         
-        
+        /* Make this view controller the delegate of the text fields */
         locationTextField.delegate = self
         urlTextField.delegate = self
         
+        /* Setup the textfield and buttons */
         configurePlaceholderText("Enter your location here", textField: locationTextField)
         roundButtonCorner(findOnTheMapButton)
         
+        /* Bold the word "studying" in the label */
         boldText()
     }
 
@@ -149,10 +163,8 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate, M
             return
         }
         
+        /* GUARD: Did the user provide a valid URL? */
         guard UIApplication.sharedApplication().canOpenURL(NSURL(string: urlTextField.text!)!) else {
-        
-        //guard isValidURL(urlTextField.text!) else {
-            
             /* Make the strings for the alert */
             let alertTitle = "Invalid URL provided"
             let alertMessage = "You must enter a valid URL before proceeding. Ensure you include http:// or https://"
@@ -161,6 +173,7 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate, M
             return
         }
         
+        /* Prepare the data to POST to the Parse API */
         let studentLocationArray : [String:AnyObject] = [
             OTMAPIClient.JSONBodyKeys.UniqueKey: appDelegate.userID,
             OTMAPIClient.JSONBodyKeys.FirstName: appDelegate.userData[0],
@@ -172,9 +185,19 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate, M
             ]
     
         OTMAPIClient.sharedInstance().postStudentLocation(studentLocationArray) {(result, error) in
-                
+            
+            /* GUARD: Was the data POSTed successfully? */
             guard error == nil else {
-                //TODO: Provide suitable error here, maybe move it to a different place. Dismiss view if cant get data
+                
+                /* Make the strings for the alert */
+                let alertTitle = "Couldn't submit your location"
+                let alertMessage = "There was an error while trying to post your location to the server."
+                let actionTitle = "Try again"
+                
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.showAlert(alertTitle, alertMessage: alertMessage, actionTitle: actionTitle)
+                })
+
                 return
             }
                 
