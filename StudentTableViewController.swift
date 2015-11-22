@@ -74,6 +74,7 @@ class StudentTableViewController: UITableViewController {
                 studentInformationArray.append(StudentInformation(dictionary: s))
             }
             
+            /* Sort the student data in order of last updated */
             studentInformationArray = studentInformationArray.sort() {$0.updatedAt.compare($1.updatedAt) == NSComparisonResult.OrderedDescending}
             
             self.appDelegate.studentData = studentInformationArray

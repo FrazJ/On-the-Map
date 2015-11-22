@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FBSDKLoginKit
 
 class LoginViewController: UIViewController, UITextFieldDelegate {
 
@@ -35,6 +36,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
         /* Configure the look and feel of the user interface */
         configureUI()
+        
     }
 
     override func viewWillLayoutSubviews() {
@@ -59,7 +61,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     @IBAction func logInButton(sender: UIButton) {
         
         /* Disable the buttons in the UI once the Login button has been pressed */
-        disableButtons()
+        disableButtons(sender)
         
         /* Show activity to show the app is processing data*/
         let activityView = UIActivityIndicatorView.init(activityIndicatorStyle: UIActivityIndicatorViewStyle.WhiteLarge)
@@ -83,7 +85,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                         self.shakeScreen()
                         
                         /* Enable the buttons and stop the activity spinner */
-                        self.enableButtons()
+                        self.enableButtons(sender)
                         activityView.stopAnimating()
                         
                     })
@@ -100,7 +102,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 self.navigationController?.pushViewController(tabViewController, animated: true)
                 
                 //Stop animating the spinner and enable buttons
-                self.enableButtons()
+                self.enableButtons(sender)
                 activityView.stopAnimating()
             })
         }
@@ -157,19 +159,19 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     ///Function to enable the login button
-    func enableButtons() {
+    func enableButtons(sender: UIButton) {
         loginButton.enabled = true
         facebookLoginButton.enabled = true
         signUpButton.enabled = true
-        loginButton.alpha = 1.0
+        sender.alpha = 1.0
     }
     
     ///Function to disable the login button to prevent it from being pressed multiple times 
-    func disableButtons() {
+    func disableButtons(sender: UIButton) {
         loginButton.enabled = false
         facebookLoginButton.enabled = false
         signUpButton.enabled = false
-        loginButton.alpha = 0.5
+        sender.alpha = 0.5
     }
     
     ///Function that sets the frame of the gradient layer to the bounds of the mainView
