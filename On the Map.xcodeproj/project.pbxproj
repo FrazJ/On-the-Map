@@ -17,9 +17,6 @@
 		BE4FCDC81BDBE6BB00488FAC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BE4FCDC61BDBE6BB00488FAC /* LaunchScreen.storyboard */; };
 		BE4FCDD31BDBE6BC00488FAC /* On_the_MapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4FCDD21BDBE6BC00488FAC /* On_the_MapTests.swift */; };
 		BE4FCDDE1BDBE6BC00488FAC /* On_the_MapUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4FCDDD1BDBE6BC00488FAC /* On_the_MapUITests.swift */; };
-		BE58CCCE1C0134E50044F966 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE58CCCD1C0134E50044F966 /* FBSDKCoreKit.framework */; };
-		BE58CCD11C013A1D0044F966 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE58CCCF1C013A1D0044F966 /* Bolts.framework */; };
-		BE58CCD21C013A1D0044F966 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE58CCD01C013A1D0044F966 /* FBSDKLoginKit.framework */; };
 		C93900941BEFC37900A432E7 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93900931BEFC37900A432E7 /* MapViewController.swift */; };
 		C93900981BEFC57300A432E7 /* StudentTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93900971BEFC57300A432E7 /* StudentTableViewController.swift */; };
 		C96718B01BECDB6500A4A062 /* StudentInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C96718AF1BECDB6500A4A062 /* StudentInformation.swift */; };
@@ -60,9 +57,6 @@
 		BE4FCDD91BDBE6BC00488FAC /* On the MapUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "On the MapUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE4FCDDD1BDBE6BC00488FAC /* On_the_MapUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = On_the_MapUITests.swift; sourceTree = "<group>"; };
 		BE4FCDDF1BDBE6BC00488FAC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		BE58CCCD1C0134E50044F966 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
-		BE58CCCF1C013A1D0044F966 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
-		BE58CCD01C013A1D0044F966 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		C93900931BEFC37900A432E7 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		C93900971BEFC57300A432E7 /* StudentTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StudentTableViewController.swift; path = ../StudentTableViewController.swift; sourceTree = "<group>"; };
 		C96718AF1BECDB6500A4A062 /* StudentInformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentInformation.swift; sourceTree = "<group>"; };
@@ -74,9 +68,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BE58CCCE1C0134E50044F966 /* FBSDKCoreKit.framework in Frameworks */,
-				BE58CCD11C013A1D0044F966 /* Bolts.framework in Frameworks */,
-				BE58CCD21C013A1D0044F966 /* FBSDKLoginKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -141,7 +132,6 @@
 		BE4FCDBC1BDBE6BB00488FAC /* On the Map */ = {
 			isa = PBXGroup;
 			children = (
-				BE58CCCA1C0134820044F966 /* Frameworks */,
 				BE3C4E111BDD247D00D6522E /* Controller */,
 				BE3C4E101BDD242D00D6522E /* Model */,
 				BE4FCDC11BDBE6BB00488FAC /* Main.storyboard */,
@@ -178,17 +168,6 @@
 				BE4FCDBB1BDBE6BB00488FAC /* Products */,
 			);
 			name = "Supporting files";
-			sourceTree = "<group>";
-		};
-		BE58CCCA1C0134820044F966 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				BE58CCCF1C013A1D0044F966 /* Bolts.framework */,
-				BE58CCD01C013A1D0044F966 /* FBSDKLoginKit.framework */,
-				BE58CCCD1C0134E50044F966 /* FBSDKCoreKit.framework */,
-			);
-			name = Frameworks;
-			path = ..;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -476,6 +455,9 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 					/Users/frazerhogg/Documents/Developer/FacebookSDK,
+					"$(PROJECT_DIR)/On",
+					the,
+					Map,
 				);
 				INFOPLIST_FILE = "On the Map/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -492,6 +474,9 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 					/Users/frazerhogg/Documents/Developer/FacebookSDK,
+					"$(PROJECT_DIR)/On",
+					the,
+					Map,
 				);
 				INFOPLIST_FILE = "On the Map/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
