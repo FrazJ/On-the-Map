@@ -42,14 +42,28 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     ///Function that presents the Information Posting View Controller
     func presentInformationPostingViewController() {
         
-        /* instantiate and then present the view controller */
-        let informationPostViewController = storyboard!.instantiateViewControllerWithIdentifier("InformationPostingViewController")
-        presentViewController(informationPostViewController, animated: true, completion: nil)
+        ParseClient.sharedInstance().queryForAStudent() {(result, error) in
+        
+            guard error == nil else {
+                /* GUARD: Was there an error returned when checking for the student? */
+                let alertTitle = "Error fetching student data"
+                let alertMessage = "Something went wrong when checking to see if you have already posted your location"
+                let actionTitle = "Try again"
+                
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.showAlert(alertTitle, alertMessage: alertMessage, actionTitle: actionTitle)
+                })
+                return
+            }
+            
+            if result != nil {
+                self.showOverwriteLocationAlert()
+            }
+        }
     }
     
     ///Function that is called when the logout button is pressed
     func logOut() {
-        
         UdacityClient.sharedInstance().deleteSession() {(result, error) in
             
             guard error == nil else {
@@ -281,9 +295,34 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     
     //MARK: -Error helper functions 
     
-    ///Function that presents a alert to notify the user that a download of the student data has failed
-    func showStudentDataDownloadAlert(errorString: String) {
-        showAlert("Download failed", alertMessage: errorString, actionTitle: "Try again")
+    func showOverwriteLocationAlert() {
+        /* Prepare the strings for the alert */
+        let userFirstName = self.appDelegate.userData[0]
+        let userLastName = self.appDelegate.userData[1]
+        let alertTitle = "Overwrite location?"
+        let alertMessage = userFirstName + " " + userLastName + " do you really want to overwrite your existing location?"
+        
+        /* Prepare the overwrite for the alert */
+        let overWriteAction = UIAlertAction(title: "Overwrite", style: .Default) {(action) in
+            /* instantiate and then present the view controller */
+            let informationPostViewController = self.storyboard!.instantiateViewControllerWithIdentifier("InformationPostingViewController")
+            self.presentViewController(informationPostViewController, animated: true, completion: nil)
+        }
+        
+        /* Prepare the cancel for the alert */
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Default) {(action) in
+            self.dismissViewControllerAnimated(true, completion: nil)
+        }
+        
+        /* Configure the alert view to display the error */
+        let alert = UIAlertController(title: alertTitle  , message: alertMessage, preferredStyle: .Alert)
+        alert.addAction(overWriteAction)
+        alert.addAction(cancelAction)
+        
+        dispatch_async(dispatch_get_main_queue(), {
+            /* Present the alert view */
+            self.presentViewController(alert, animated: true, completion: nil)
+        })
     }
     
     ///Function that configures and shows an alert
