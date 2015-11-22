@@ -200,7 +200,7 @@ class UdacityClient : NSObject {
         return task
     }
     
-    //MARK: - Helper methods
+    //MARK: - Class functions
 
     ///Function that returns a single shared instance of the session
     class func sharedInstance() -> UdacityClient {

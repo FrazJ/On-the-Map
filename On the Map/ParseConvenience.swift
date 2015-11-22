@@ -7,13 +7,14 @@
 //
 
 import Foundation
+import UIKit
 
 extension ParseClient {
     
     ///Function that GETs the last 100 student locations created
     func getStudentLocations(completionHandler: (result: [[String:AnyObject]]?, error: NSError?) -> Void) {
         
-        taskForGetMethod(Methods.StudentLocation) {(JSONResult, error) in
+        taskForGetMethod(Methods.StudentLocation, parameters: nil) {(JSONResult, error) in
 
             /* GUARD: Was there an error? */
             guard error == nil else {
@@ -28,6 +29,29 @@ extension ParseClient {
             }
         }
     }
+    
+    func queryForAStudent(completionHandler: (result: [[String:AnyObject]]?, error: NSError?) -> Void) {
+        
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        
+        let parameters = [ParameterKeys.Where : "{\"\(ParameterKeys.UniqueKey)\":\"\(appDelegate.userID)\"}"]
+        
+        taskForGetMethod(Methods.StudentLocation, parameters: parameters) {(JSONResult, error) in
+            
+            /* GUARD: Was there an error? */
+            guard error == nil else {
+                completionHandler(result: nil, error: error)
+                return
+            }
+            
+            if let results = JSONResult[JSONResponseKeys.Results] as? [[String:AnyObject]] {
+                completionHandler(result: results, error: nil)
+            } else {
+                completionHandler(result: nil, error: NSError(domain: "getStudentLocations", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse student data"]))
+            }
+        }
+    }
+
     
     ///Function that POSTs a students location
     func postStudentLocation(jsonBody: [String:AnyObject], completionHandler: (result: AnyObject?, error: NSError?) -> Void) {

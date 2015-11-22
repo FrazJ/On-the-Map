@@ -50,4 +50,10 @@ extension ParseClient {
         static let UpdatedAt = "updatedAt"
         static let CreatedAt = "createdAt"
     }
+    
+    //MARK: Parameter keys
+    struct ParameterKeys {
+        static let Where = "where"
+        static let UniqueKey = "uniqueKey"
+    }
 }

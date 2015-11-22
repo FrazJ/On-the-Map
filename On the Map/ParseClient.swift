@@ -28,13 +28,18 @@ class ParseClient : NSObject {
     
     
     //MARK: - GET
-    func taskForGetMethod(method: String, completionHandler: (result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
+    func taskForGetMethod(method: String, parameters: [String:AnyObject]?, completionHandler: (result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
+        
+        var urlString = ""
         
         /* 1. Set the parameters */
-        //Not required for getting the studentLocations
+        if let parametersForUrl = parameters {
+            urlString = Constants.ParseBaseURL + method + ParseClient.escapedParameters(parametersForUrl)
+        } else {
+            urlString = Constants.ParseBaseURL + method
+        }
         
         /* 2/3. Build the URL and configure the request*/
-        let urlString = Constants.ParseBaseURL + method
         let url = NSURL(string: urlString)!
         let request = NSMutableURLRequest(URL: url)
         request.addValue("\(Constants.ParseApplicationID)", forHTTPHeaderField: "X-Parse-Application-Id")
@@ -141,11 +146,10 @@ class ParseClient : NSObject {
         
         /* Start the request */
         task.resume()
-        
         return task
     }
     
-    //MARK: - Helper methods
+    //MARK: - Class functions
     
     ///Function that returns a single shared instance of the session
     class func sharedInstance() -> ParseClient {
@@ -155,6 +159,26 @@ class ParseClient : NSObject {
         }
         return Singleton.sharedInstance
         
+    }
+    
+    ///Function that given a dictionary of parameters, convert to a string for a url */
+    class func escapedParameters(parameters: [String : AnyObject]) -> String {
+        
+        var urlVars = [String]()
+        
+        for (key, value) in parameters {
+            
+            /* Make sure that it is a string value */
+            let stringValue = "\(value)"
+            
+            /* Escape it */
+            let escapedValue = stringValue.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
+            
+            /* Append it */
+            urlVars += [key + "=" + "\(escapedValue!)"]
+            
+        }
+        return (!urlVars.isEmpty ? "?" : "") + urlVars.joinWithSeparator("&")
     }
     
     ///Function that returns a Foundation object from raw JSON

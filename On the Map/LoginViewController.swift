@@ -225,14 +225,15 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             errorString = "Something went wrong! Try again"
         }
         
-        showAlert(titleString, errorString: errorString)
+        showAlert(titleString, alertMessage: errorString, actionTitle: "Try again")
     }
     
     ///Function that configures and shows an alert
-    func showAlert(titleString: String, errorString: String) {
+    func showAlert(alertTitle: String, alertMessage: String, actionTitle: String) {
+        
         /* Configure the alert view to display the error */
-        let alert = UIAlertController(title: titleString , message: errorString, preferredStyle: .Alert)
-        alert.addAction(UIAlertAction(title: "Try again", style: .Default, handler: nil))
+        let alert = UIAlertController(title: alertTitle  , message: alertMessage, preferredStyle: .Alert)
+        alert.addAction(UIAlertAction(title: actionTitle, style: .Default, handler: nil))
         
         /* Present the alert view */
         self.presentViewController(alert, animated: true, completion: nil)

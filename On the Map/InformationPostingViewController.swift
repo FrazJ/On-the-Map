@@ -40,29 +40,6 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate, M
 
         appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         
-        
-        UdacityClient.sharedInstance().getUserData(appDelegate.userID) {(result, error) in
-            
-            /* GAURD: Was their an error fetching the user data?*/
-            guard error == nil else {
-                
-                /* Set up the strings for the error alert */
-                let alertTitle = "Could get your data"
-                let alertMessage = "The was a problem trying to fetch your name and user ID."
-                let actionTitle = "OK"
-                
-                /* Show the alert and dismiss the view controleer */
-                dispatch_async(dispatch_get_main_queue(), {
-                    self.showAlert(alertTitle, alertMessage: alertMessage, actionTitle: actionTitle)
-                    self.dismissViewControllerAnimated(true, completion: nil)
-                })
-                return
-            }
-            
-            /* Store the user resulting user data in the appDelegate */
-            self.appDelegate.userData = result!
-        }
-        
         /* Make this view controller the delegate of the text fields */
         locationTextField.delegate = self
         urlTextField.delegate = self

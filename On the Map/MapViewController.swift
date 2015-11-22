@@ -31,6 +31,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         super.viewWillAppear(true)
         setupNavigationBar()
         getStudentData()
+        getUserData()
     }
     
     override func viewDidLayoutSubviews() {
@@ -53,12 +54,12 @@ class MapViewController: UIViewController, MKMapViewDelegate {
             
             guard error == nil else {
                 /* Configure the alert view to display the error */
-                let errorString = error?.userInfo[NSLocalizedDescriptionKey] as? String
-                let alert = UIAlertController(title: "Couldn't log out!" , message: errorString, preferredStyle: .Alert)
-                alert.addAction(UIAlertAction(title: "Try again", style: .Default, handler: nil))
+                let alertTitle = "Couldn't log out!"
+                let alertMessage = error?.userInfo[NSLocalizedDescriptionKey] as? String
+                let actionTitle = "Try again"
                 
                 dispatch_async(dispatch_get_main_queue(), {
-                        self.presentViewController(alert, animated: true, completion: nil)
+                        self.showAlert(alertTitle, alertMessage: alertMessage!, actionTitle: actionTitle)
                 })
                 return
             }
@@ -70,6 +71,32 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     
     
     //MARK: Helper functions
+    
+    ///Function that gets the user data
+    func getUserData() {
+        /* GET the users first and last name */
+        UdacityClient.sharedInstance().getUserData(appDelegate.userID) {(result, error) in
+            
+            /* GAURD: Was their an error fetching the user data?*/
+            guard error == nil else {
+                
+                /* Set up the strings for the error alert */
+                let alertTitle = "Could get your data"
+                let alertMessage = "The was a problem trying to fetch your name and user ID."
+                let actionTitle = "OK"
+                
+                /* Show the alert and dismiss the view controleer */
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.showAlert(alertTitle, alertMessage: alertMessage, actionTitle: actionTitle)
+                    self.dismissViewControllerAnimated(true, completion: nil)
+                })
+                return
+            }
+            
+            /* Store the user resulting user data in the appDelegate */
+            self.appDelegate.userData = result!
+        }
+    }
     
     ///Function that gets the student data 
     func getStudentData() {
@@ -92,16 +119,18 @@ class MapViewController: UIViewController, MKMapViewDelegate {
             
             /* GUARD: Was there an error fetching the student data? */
             guard error == nil else {
-                if let errorString = error?.userInfo[NSLocalizedDescriptionKey] as? String {
+                
                     /* Display an alert to the user to let them know that there was an error getting the student data */
+                    let alertTitle = "Download failed!"
+                    let alertMessage = error?.userInfo[NSLocalizedDescriptionKey] as? String
+                    let actionTitle = "Try again"
+                    
                     dispatch_async(dispatch_get_main_queue(), {
-                        self.showStudentDataDownloadAlert(errorString)
-                        
+                        self.showAlert(alertTitle, alertMessage: alertMessage!, actionTitle: actionTitle)
                         /* Show that activity has stoped */
                         activityView.removeFromSuperview()
                         activitySpinner.stopAnimating()
                     })
-                }
                 return
             }
             
@@ -238,7 +267,12 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                 let url = NSURL(string: toOpen)
                 app.openURL(url!)
                 } else {
-                    showAlert("Unable to load webpage", errorString: "Webpage couldn't be opened because the link was invalid.")
+                    
+                    let alertTitle = "Unable to load webpage"
+                    let alertMessage = "Webpage couldn't be opened because the link was invalid."
+                    let actionTitle = "Try again"
+                    
+                    showAlert(alertTitle, alertMessage: alertMessage, actionTitle: actionTitle)
                 }
             }
         }
@@ -249,18 +283,17 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     
     ///Function that presents a alert to notify the user that a download of the student data has failed
     func showStudentDataDownloadAlert(errorString: String) {
-        showAlert("Download failed", errorString: errorString)
+        showAlert("Download failed", alertMessage: errorString, actionTitle: "Try again")
     }
     
     ///Function that configures and shows an alert
-    func showAlert(titleString: String, errorString: String) {
+    func showAlert(alertTitle: String, alertMessage: String, actionTitle: String) {
         
         /* Configure the alert view to display the error */
-        let alert = UIAlertController(title: titleString , message: errorString, preferredStyle: .Alert)
-        alert.addAction(UIAlertAction(title: "Try again", style: .Default, handler: nil))
+        let alert = UIAlertController(title: alertTitle  , message: alertMessage, preferredStyle: .Alert)
+        alert.addAction(UIAlertAction(title: actionTitle, style: .Default, handler: nil))
         
         /* Present the alert view */
         self.presentViewController(alert, animated: true, completion: nil)
-        
     }
 }
