@@ -77,16 +77,14 @@ class ParseClient : NSObject {
             ParseClient.parseJSONWithCompletionHandler(data, completionHandler: completionHandler)
             
         }
-        
         /* Start the request */
         task.resume()
-        
         return task
     }
     
     
     //MARK: - POST
-    func taskForPostMethod(method: String, jsonBody: AnyObject, completionHandler: (result: AnyObject!, error : NSError?) -> Void) -> NSURLSessionDataTask {
+    func taskForPostMethod(method: String, jsonBody: [String:AnyObject], completionHandler: (result: AnyObject!, error : NSError?) -> Void) -> NSURLSessionDataTask {
         
         /* 1. Set the parameters */
         //Not required for posting the session

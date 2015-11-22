@@ -81,7 +81,7 @@ class UdacityClient : NSObject {
     
     
     //MARK: - POST
-    func taskForPostMethod(method: String, jsonBody: AnyObject, completionHandler: (result: AnyObject!, error : NSError?) -> Void) -> NSURLSessionDataTask {
+    func taskForPostMethod(method: String, jsonBody: [String:AnyObject], completionHandler: (result: AnyObject?, error : NSError?) -> Void) -> NSURLSessionDataTask {
         
         /* 1. Set the parameters */
         //Not required for posting the session
@@ -143,7 +143,6 @@ class UdacityClient : NSObject {
     
     
     //MARK: - DELETE
-    
     func taskForDeleteMethod(method: String, completionHandler: (result: AnyObject!, error: NSError?) -> Void) ->NSURLSessionDataTask {
         
         let urlString = Constants.UdacityBaseURL + method
@@ -192,9 +191,8 @@ class UdacityClient : NSObject {
                 return
             }
             
-            let newData = data.subdataWithRange(NSMakeRange(5, data.length - 5))
-            
             /* 5/6. Parse the data and use the data */
+            let newData = data.subdataWithRange(NSMakeRange(5, data.length - 5))
             UdacityClient.parseJSONWithCompletionHandler(newData, completionHandler: completionHandler)
         }
         

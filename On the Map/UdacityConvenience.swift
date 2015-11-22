@@ -10,28 +10,12 @@ import Foundation
 
 extension UdacityClient {
     
-    
-    func authenticateWithViewController(username: String, password: String, completionHandler: (result: String?, error: NSError?) -> Void) {
-        
-        postSession(username, password: password) { (result, error) in
-            
-            /* GUARD: Was there an error? */
-            guard error == nil else {
-                completionHandler(result: nil, error: error)
-                return
-            }
-            
-            completionHandler(result: result, error: nil)
-        }
-    }
-    
-    
-    
+    ///Function that POSTs a new session
     func postSession(username: String, password: String, completionHandler: (result: String?, error: NSError?) -> Void) {
         
         let method = Methods.Session
         
-        let jsonBody : [String:[String:AnyObject]] = [
+        let jsonBody = [
                 JSONBodyKeys.Udacity : [
                 JSONBodyKeys.Username : username,
                 JSONBodyKeys.Password : password
@@ -46,7 +30,7 @@ extension UdacityClient {
                 return
             }
             
-            if let dictionary = JSONResult[JSONResponseKeys.Account ] as? [String:AnyObject] {
+            if let dictionary = JSONResult![JSONResponseKeys.Account ] as? [String:AnyObject] {
                 if let result = dictionary[JSONResponseKeys.Key] as? String {
                     completionHandler(result: result, error: nil)
                 } else {
@@ -58,7 +42,7 @@ extension UdacityClient {
         }
     }
     
-    
+    ///Function that DELETEs the current session
     func deleteSession(completionHandler: (result: AnyObject?, error: NSError?) -> Void) {
         
         let method = Methods.Session
@@ -83,45 +67,7 @@ extension UdacityClient {
         }
     }
     
-    
-    func getStudentLocations(completionHandler: (result: [[String:AnyObject]]?, error: NSError?) -> Void) {
-        
-        taskForGetMethod(Methods.StudentLocation) {(JSONResult, error) in
-        
-            /* GUARD: Was there an error? */
-            guard error == nil else {
-                completionHandler(result: nil, error: error)
-                return
-            }
-            
-            if let results = JSONResult[JSONResponseKeys.Results] as? [[String:AnyObject]] {
-                completionHandler(result: results, error: nil)
-            } else {
-                completionHandler(result: nil, error: NSError(domain: "getStudentLocations", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse student data"]))
-            }
-        }
-    }
-    
-    func postStudentLocation(jsonBody: [String:AnyObject], completionHandler: (result: AnyObject?, error: NSError?) -> Void) {
-        
-        let method = Methods.StudentLocation
-        
-        taskForPostMethod(method, jsonBody: jsonBody) { (JSONResult, error) in
-            
-            /* GUARD: Was there an error? */
-            guard error == nil else {
-                completionHandler(result: nil, error: error)
-                return
-            }
-            
-            if let result = JSONResult[JSONResponseKeys.ObjectID] as? String {
-                completionHandler(result: result, error: nil)
-            } else {
-                completionHandler(result: nil, error: NSError(domain: "postStudentLocation parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse student location"]))
-            }
-        }
-    }
-    
+    ///Function that GETs the first and last name for the user
     func getUserData(userID: String, completionHandler: (result: [String]?, error: NSError?) -> Void) {
         
         let method = Methods.Users + userID
@@ -135,7 +81,7 @@ extension UdacityClient {
             }
             
             if let dictionary = JSONResult[JSONResponseKeys.User] as? [String:AnyObject] {
-                
+                /* Array for the first and last name of the user */
                 var result = [String]()
                 
                 if let firstName = dictionary[JSONResponseKeys.First_Name] as? String {
