@@ -1,5 +1,5 @@
 //
-//  OTMAPIClient.swift
+//  UdacityClient.swift
 //  On the Map
 //
 //  Created by Frazer Hogg on 25/10/2015.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-class OTMAPIClient : NSObject {
+class UdacityClient : NSObject {
     
     //MARK: Properties
     
@@ -34,23 +34,10 @@ class OTMAPIClient : NSObject {
         //Not required for getting the studentLocations
         
         /* 2/3. Build the URL and configure the request*/
-        var isUdacityAPI = true
-        var request = NSMutableURLRequest()
-        
-        if method.containsString(Methods.Users)  {
-            let urlString = Constants.UdacityBaseURL + method
-            let url = NSURL(string: urlString)!
-            request = NSMutableURLRequest(URL: url)
-        } else {
-            isUdacityAPI = false
-            let urlString = Constants.ParseBaseURL + method
-            let url = NSURL(string: urlString)!
-            request = NSMutableURLRequest(URL: url)
-            request.addValue("\(Constants.ParseApplicationID)", forHTTPHeaderField: "X-Parse-Application-Id")
-            request.addValue("\(Constants.ParseAPIKey)", forHTTPHeaderField: "X-Parse-REST-API-Key")
-        }
-        
-        
+        let urlString = Constants.UdacityBaseURL + method
+        let url = NSURL(string: urlString)!
+        let request = NSMutableURLRequest(URL: url)
+
         /* 4. Make the request */
         let task = session.dataTaskWithRequest(request) { (data, response, error) in
             
@@ -84,18 +71,11 @@ class OTMAPIClient : NSObject {
             }
             
             /* 5/6. Parse the data and use the data */
-            if  isUdacityAPI {
-                let newData = data.subdataWithRange(NSMakeRange(5, data.length - 5))
-                OTMAPIClient.parseJSONWithCompletionHandler(newData, completionHandler: completionHandler)
-            } else {
-                OTMAPIClient.parseJSONWithCompletionHandler(data, completionHandler: completionHandler)
-            }
-            
+            let newData = data.subdataWithRange(NSMakeRange(5, data.length - 5))
+            UdacityClient.parseJSONWithCompletionHandler(newData, completionHandler: completionHandler)
         }
-        
         /* Start the request */
         task.resume()
-        
         return task
     }
     
@@ -105,28 +85,15 @@ class OTMAPIClient : NSObject {
         
         /* 1. Set the parameters */
         //Not required for posting the session
-        var isUdacityAPI = true
+
         
         /* 2/3. Build the URL and configure the request */
-        var request = NSMutableURLRequest()
-        
-        if method == Methods.Session {
-            let urlString = Constants.UdacityBaseURL + method
-            let url = NSURL(string: urlString)!
-            request = NSMutableURLRequest(URL: url)
-            request.HTTPMethod = "POST"
-            request.addValue("application/json", forHTTPHeaderField: "Accept")
-            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        } else {
-            isUdacityAPI = false
-            let urlString = Constants.ParseBaseURL + method
-            let url = NSURL(string: urlString)!
-            request = NSMutableURLRequest(URL: url)
-            request.HTTPMethod = "POST"
-            request.addValue(Constants.ParseApplicationID, forHTTPHeaderField: "X-Parse-Application-Id")
-            request.addValue(Constants.ParseAPIKey, forHTTPHeaderField: "X-Parse-REST-API-Key")
-            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        }
+        let urlString = Constants.UdacityBaseURL + method
+        let url = NSURL(string: urlString)!
+        let request = NSMutableURLRequest(URL: url)
+        request.HTTPMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         
         do {
             request.HTTPBody = try! NSJSONSerialization.dataWithJSONObject(jsonBody, options: .PrettyPrinted)
@@ -166,20 +133,12 @@ class OTMAPIClient : NSObject {
             
             
             /* 5/6. Parse the data and use the data */
-            if  isUdacityAPI {
-                let newData = data.subdataWithRange(NSMakeRange(5, data.length - 5))
-                OTMAPIClient.parseJSONWithCompletionHandler(newData, completionHandler: completionHandler)
-            } else {
-                OTMAPIClient.parseJSONWithCompletionHandler(data, completionHandler: completionHandler)
-            }
-            
+            let newData = data.subdataWithRange(NSMakeRange(5, data.length - 5))
+            UdacityClient.parseJSONWithCompletionHandler(newData, completionHandler: completionHandler)
         }
-        
         /* Start the request */
         task.resume()
-        
         return task
-        
     }
     
     
@@ -236,7 +195,7 @@ class OTMAPIClient : NSObject {
             let newData = data.subdataWithRange(NSMakeRange(5, data.length - 5))
             
             /* 5/6. Parse the data and use the data */
-            OTMAPIClient.parseJSONWithCompletionHandler(newData, completionHandler: completionHandler)
+            UdacityClient.parseJSONWithCompletionHandler(newData, completionHandler: completionHandler)
         }
         
         task.resume()
@@ -246,14 +205,12 @@ class OTMAPIClient : NSObject {
     //MARK: - Helper methods
 
     ///Function that returns a single shared instance of the session
-    class func sharedInstance() -> OTMAPIClient {
+    class func sharedInstance() -> UdacityClient {
         
         struct Singleton {
-            static var sharedInstance = OTMAPIClient()
+            static var sharedInstance = UdacityClient()
         }
-        
         return Singleton.sharedInstance
-        
     }
 
     ///Function that returns a Foundation object from raw JSON
@@ -267,10 +224,6 @@ class OTMAPIClient : NSObject {
             let userInfo = [NSLocalizedDescriptionKey : "Could not parse the data as JSON: '\(data)'"]
             completionHandler(result: nil, error: NSError(domain: "parseJSONWithCompletionHandler", code: 1, userInfo: userInfo))
         }
-        
         completionHandler(result: parsedResult, error: nil)
-        
     }
-    
-
 }

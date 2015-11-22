@@ -50,7 +50,7 @@ class StudentTableViewController: UITableViewController {
         activitySpinner.startAnimating()
         activityView.addSubview(activitySpinner)
         
-        OTMAPIClient.sharedInstance().getStudentLocations {(result, error) in
+        ParseClient.sharedInstance().getStudentLocations {(result, error) in
             
             var studentInformationArray = [StudentInformation]()
             

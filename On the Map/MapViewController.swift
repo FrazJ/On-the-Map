@@ -49,10 +49,9 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     ///Function that is called when the logout button is pressed
     func logOut() {
         
-        OTMAPIClient.sharedInstance().deleteSession() {(result, error) in
+        UdacityClient.sharedInstance().deleteSession() {(result, error) in
             
             guard error == nil else {
-                
                 /* Configure the alert view to display the error */
                 let errorString = error?.userInfo[NSLocalizedDescriptionKey] as? String
                 let alert = UIAlertController(title: "Couldn't log out!" , message: errorString, preferredStyle: .Alert)
@@ -74,7 +73,6 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     
     ///Function that gets the student data 
     func getStudentData() {
-        
         /* Change the look of the UI to indicate it is processing */
         let activityView = UIView.init(frame: mapView.frame)
         activityView.backgroundColor = UIColor.grayColor()
@@ -88,7 +86,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         activitySpinner.startAnimating()
         activityView.addSubview(activitySpinner)
         
-        OTMAPIClient.sharedInstance().getStudentLocations {(result, error) in
+        ParseClient.sharedInstance().getStudentLocations {(result, error) in
             
             var studentInformationArray = [StudentInformation]()
             

@@ -69,7 +69,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         view.addSubview(activityView)
         
         /* POST a new session */
-        OTMAPIClient.sharedInstance().postSession(emailTextField.text!, password: passwordTextField.text!) { (result, error) in
+        UdacityClient.sharedInstance().postSession(emailTextField.text!, password: passwordTextField.text!) { (result, error) in
            
             /* GUARD: Was there an error? */
             guard error == nil else {
@@ -109,9 +109,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     ///Function is called when a user presses the sign up button; opens the Udacity sign in page in safari
     @IBAction func signUpButton(sender: UIButton) {
-        
         UIApplication.sharedApplication().openURL(NSURL(string: "https://www.udacity.com/account/auth#!/signin")!)
-        
     }
     
     
@@ -121,7 +119,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     ///Function sets up the user interface
     func configureUI() {
-        
         //Add set and add gradientLayer to the view
         setGradientLayerColours()
         setGradientLayerFrame()
@@ -201,10 +198,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     ///Function that sets the colour and placeholder text for locationTextField
     func configurePlaceHolderText() {
-        
+        /* Set the style fot the Email text field */
         var attributedString = NSAttributedString(string: "Email", attributes: [NSForegroundColorAttributeName:UIColor.whiteColor()])
         emailTextField.attributedPlaceholder = attributedString
-        
+        /* Set the style fot the Password text field */
         attributedString = NSAttributedString(string: "Password", attributes: [NSForegroundColorAttributeName:UIColor.whiteColor()])
         passwordTextField.attributedPlaceholder = attributedString
     }
@@ -233,7 +230,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     ///Function that configures and shows an alert
     func showAlert(titleString: String, errorString: String) {
-        
         /* Configure the alert view to display the error */
         let alert = UIAlertController(title: titleString , message: errorString, preferredStyle: .Alert)
         alert.addAction(UIAlertAction(title: "Try again", style: .Default, handler: nil))

@@ -27,16 +27,15 @@ struct StudentInformation {
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
         
-        self.objectID = dictionary[OTMAPIClient.JSONResponseKeys.ObjectID] as! String
-        self.uniqueKey = dictionary[OTMAPIClient.JSONResponseKeys.UniqueKey] as! String?
-        self.firstName = dictionary[OTMAPIClient.JSONResponseKeys.FirstName] as! String
-        self.lastName = dictionary[OTMAPIClient.JSONResponseKeys.LastName] as! String
-        self.mapString = dictionary[OTMAPIClient.JSONResponseKeys.MapString] as! String
-        self.mediaURL = dictionary[OTMAPIClient.JSONResponseKeys.MediaURL] as! String
-        self.latitude = dictionary[OTMAPIClient.JSONResponseKeys.Latitude] as! Double
-        self.longitude = dictionary[OTMAPIClient.JSONResponseKeys.Longitude] as! Double
-        self.createdAt = dateFormatter.dateFromString(dictionary[OTMAPIClient.JSONResponseKeys.CreatedAt] as! String)!
-        self.updatedAt = dateFormatter.dateFromString(dictionary[OTMAPIClient.JSONResponseKeys.UpdatedAt] as! String)!
+        self.objectID = dictionary[ParseClient.JSONResponseKeys.ObjectID] as! String
+        self.uniqueKey = dictionary[ParseClient.JSONResponseKeys.UniqueKey] as! String?
+        self.firstName = dictionary[ParseClient.JSONResponseKeys.FirstName] as! String
+        self.lastName = dictionary[ParseClient.JSONResponseKeys.LastName] as! String
+        self.mapString = dictionary[ParseClient.JSONResponseKeys.MapString] as! String
+        self.mediaURL = dictionary[ParseClient.JSONResponseKeys.MediaURL] as! String
+        self.latitude = dictionary[ParseClient.JSONResponseKeys.Latitude] as! Double
+        self.longitude = dictionary[ParseClient.JSONResponseKeys.Longitude] as! Double
+        self.createdAt = dateFormatter.dateFromString(dictionary[ParseClient.JSONResponseKeys.CreatedAt] as! String)!
+        self.updatedAt = dateFormatter.dateFromString(dictionary[ParseClient.JSONResponseKeys.UpdatedAt] as! String)!
     }
-    
 }

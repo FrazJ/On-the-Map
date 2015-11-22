@@ -1,5 +1,5 @@
 //
-//  OTMAPIConstants.swift
+//  UdacityConstants.swift
 //  On the Map
 //
 //  Created by Frazer Hogg on 25/10/2015.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension OTMAPIClient {
+extension UdacityClient {
     
     //MARK: Constants
     struct Constants {

@@ -1,5 +1,5 @@
 //
-//  OTMAPIConvenience.swift
+//  UdacityConvenience.swift
 //  On the Map
 //
 //  Created by Frazer Hogg on 25/10/2015.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension OTMAPIClient {
+extension UdacityClient {
     
     
     func authenticateWithViewController(username: String, password: String, completionHandler: (result: String?, error: NSError?) -> Void) {

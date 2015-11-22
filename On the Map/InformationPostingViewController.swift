@@ -41,7 +41,7 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate, M
         appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         
         
-        OTMAPIClient.sharedInstance().getUserData(appDelegate.userID) {(result, error) in
+        UdacityClient.sharedInstance().getUserData(appDelegate.userID) {(result, error) in
             
             /* GAURD: Was their an error fetching the user data?*/
             guard error == nil else {
@@ -175,16 +175,16 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate, M
         
         /* Prepare the data to POST to the Parse API */
         let studentLocationArray : [String:AnyObject] = [
-            OTMAPIClient.JSONBodyKeys.UniqueKey: appDelegate.userID,
-            OTMAPIClient.JSONBodyKeys.FirstName: appDelegate.userData[0],
-            OTMAPIClient.JSONBodyKeys.LastName: appDelegate.userData[1],
-            OTMAPIClient.JSONBodyKeys.MapString: studentLocationName,
-            OTMAPIClient.JSONBodyKeys.MediaURL: urlTextField.text!,
-            OTMAPIClient.JSONBodyKeys.Latitude: studentLat,
-            OTMAPIClient.JSONBodyKeys.Longitude:studentLon
+            ParseClient.JSONBodyKeys.UniqueKey: appDelegate.userID,
+            ParseClient.JSONBodyKeys.FirstName: appDelegate.userData[0],
+            ParseClient.JSONBodyKeys.LastName: appDelegate.userData[1],
+            ParseClient.JSONBodyKeys.MapString: studentLocationName,
+            ParseClient.JSONBodyKeys.MediaURL: urlTextField.text!,
+            ParseClient.JSONBodyKeys.Latitude: studentLat,
+            ParseClient.JSONBodyKeys.Longitude:studentLon
             ]
     
-        OTMAPIClient.sharedInstance().postStudentLocation(studentLocationArray) {(result, error) in
+        ParseClient.sharedInstance().postStudentLocation(studentLocationArray) {(result, error) in
             
             /* GUARD: Was the data POSTed successfully? */
             guard error == nil else {
