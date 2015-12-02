@@ -74,4 +74,26 @@ extension ParseClient {
         }
     }
     
+    
+    ///Function that PUTs a students location
+    func putStudentLocation(parameters: String, jsonBody: [String:AnyObject], completionHandler: (result: AnyObject?, error: NSError?) -> Void) {
+        
+        let method = Methods.StudentLocation
+        
+        taskForPutMethod(method, parameters: parameters, jsonBody: jsonBody){ (JSONResult, error) in
+            
+            /* GUARD: Was there an error? */
+            guard error == nil else {
+                completionHandler(result: nil, error: error)
+                return
+            }
+            
+            if let result = JSONResult[JSONResponseKeys.UpdatedAt] as? String {
+                completionHandler(result: result, error: nil)
+            } else {
+                completionHandler(result: nil, error: NSError(domain: "postStudentLocation parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse student location"]))
+            }
+        }
+    }
+
 }

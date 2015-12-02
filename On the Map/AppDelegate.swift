@@ -15,6 +15,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var studentData = [StudentInformation]()
     var userID = ""
     var userData = [String]()
+    var objectID = ""
 
 }
 

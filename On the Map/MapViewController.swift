@@ -57,6 +57,13 @@ class MapViewController: UIViewController, MKMapViewDelegate {
             }
             
             if result != nil {
+                
+                //Get the student location information
+                let resultArray = result![0]
+                //Get the objectID and store it in the app delegate
+                let objectID = resultArray[ParseClient.JSONResponseKeys.ObjectID]
+                self.appDelegate.objectID = objectID as! String
+                //Show the overwrite alert
                 self.showOverwriteLocationAlert()
             }
         }

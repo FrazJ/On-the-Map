@@ -141,6 +141,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
         //Hide the navigation bar
         hideNavigationBar()
+        
+        //Facebook integration not implemented so hide the button
+        facebookLoginButton.hidden = true
     }
     
     ///Function to hide the navigation controller

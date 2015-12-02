@@ -161,26 +161,51 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate, M
             ParseClient.JSONBodyKeys.Longitude:studentLon
             ]
     
-        ParseClient.sharedInstance().postStudentLocation(studentLocationArray) {(result, error) in
+        if appDelegate.objectID == "" {
             
-            /* GUARD: Was the data POSTed successfully? */
-            guard error == nil else {
-                
-                /* Make the strings for the alert */
-                let alertTitle = "Couldn't submit your location"
-                let alertMessage = "There was an error while trying to post your location to the server."
-                let actionTitle = "Try again"
+            //Post the new student location
+            ParseClient.sharedInstance().postStudentLocation(studentLocationArray) {(result, error) in
+                /* GUARD: Was the data POSTed successfully? */
+                guard error == nil else {
+                    
+                    /* Make the strings for the alert */
+                    let alertTitle = "Couldn't submit your location"
+                    let alertMessage = "There was an error while trying to post your location to the server."
+                    let actionTitle = "Try again"
+                    
+                    dispatch_async(dispatch_get_main_queue(), {
+                        self.showAlert(alertTitle, alertMessage: alertMessage, actionTitle: actionTitle)
+                    })
+                    
+                    return
+                }
                 
                 dispatch_async(dispatch_get_main_queue(), {
-                    self.showAlert(alertTitle, alertMessage: alertMessage, actionTitle: actionTitle)
+                    self.dismissViewControllerAnimated(true, completion: nil)
                 })
-
-                return
             }
+            
+        } else {
+            
+            ParseClient.sharedInstance().putStudentLocation(appDelegate.objectID, jsonBody: studentLocationArray) {(result, error) in
+                /* GUARD: Was the data POSTed successfully? */
+                guard error == nil else {
+                    /* Make the strings for the alert */
+                    let alertTitle = "Couldn't update your location"
+                    let alertMessage = "There was an error while trying to update your location on the server."
+                    let actionTitle = "Try again"
+                    
+                    dispatch_async(dispatch_get_main_queue(), {
+                        self.showAlert(alertTitle, alertMessage: alertMessage, actionTitle: actionTitle)
+                    })
+                    
+                    return
+                }
                 
-            dispatch_async(dispatch_get_main_queue(), {
-                self.dismissViewControllerAnimated(true, completion: nil)
-            })
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.dismissViewControllerAnimated(true, completion: nil)
+                })
+            }
         }
     }
     
