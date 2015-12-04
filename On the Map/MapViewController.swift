@@ -56,7 +56,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                 return
             }
             
-            if result != nil {
+            if result?.count != 0 {
                 
                 //Get the student location information
                 let resultArray = result![0]

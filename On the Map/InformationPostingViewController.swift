@@ -167,7 +167,6 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate, M
             ParseClient.sharedInstance().postStudentLocation(studentLocationArray) {(result, error) in
                 /* GUARD: Was the data POSTed successfully? */
                 guard error == nil else {
-                    
                     /* Make the strings for the alert */
                     let alertTitle = "Couldn't submit your location"
                     let alertMessage = "There was an error while trying to post your location to the server."
@@ -176,7 +175,6 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate, M
                     dispatch_async(dispatch_get_main_queue(), {
                         self.showAlert(alertTitle, alertMessage: alertMessage, actionTitle: actionTitle)
                     })
-                    
                     return
                 }
                 
@@ -184,7 +182,6 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate, M
                     self.dismissViewControllerAnimated(true, completion: nil)
                 })
             }
-            
         } else {
             
             ParseClient.sharedInstance().putStudentLocation(appDelegate.objectID, jsonBody: studentLocationArray) {(result, error) in
