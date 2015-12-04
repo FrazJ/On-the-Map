@@ -56,16 +56,17 @@ class StudentTableViewController: UITableViewController {
             
             /* GUARD: Was there an error fetching the student data? */
             guard error == nil else {
-                if let errorString = error?.userInfo[NSLocalizedDescriptionKey] as? String {
-                    /* Display an alert to the user to let them know that there was an error getting the student data */
-                    dispatch_async(dispatch_get_main_queue(), {
-                        self.showStudentDataDownloadAlert(errorString)
-                        
-                        /* Show that activity has stoped */
-                        activityView.removeFromSuperview()
-                        activitySpinner.stopAnimating()
-                    })
-                }
+                let errorString = "There was a problem fetching the student data."
+                
+                /* Display an alert to the user to let them know that there was an error getting the student data */
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.showStudentDataDownloadAlert(errorString)
+                    
+                    /* Show that activity has stoped */
+                    activityView.removeFromSuperview()
+                    activitySpinner.stopAnimating()
+                })
+                
                 return
             }
             

@@ -102,7 +102,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
             guard error == nil else {
                 
                 /* Set up the strings for the error alert */
-                let alertTitle = "Could get your data"
+                let alertTitle = "Couldn't get your data"
                 let alertMessage = "The was a problem trying to fetch your name and user ID."
                 let actionTitle = "OK"
                 
@@ -143,11 +143,11 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                 
                     /* Display an alert to the user to let them know that there was an error getting the student data */
                     let alertTitle = "Download failed!"
-                    let alertMessage = error?.userInfo[NSLocalizedDescriptionKey] as? String
+                    let alertMessage = "There was a problem fetching the student data."
                     let actionTitle = "Try again"
                     
                     dispatch_async(dispatch_get_main_queue(), {
-                        self.showAlert(alertTitle, alertMessage: alertMessage!, actionTitle: actionTitle)
+                        self.showAlert(alertTitle, alertMessage: alertMessage, actionTitle: actionTitle)
                         /* Show that activity has stoped */
                         activityView.removeFromSuperview()
                         activitySpinner.stopAnimating()
