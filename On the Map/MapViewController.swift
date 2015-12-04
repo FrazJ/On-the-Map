@@ -136,7 +136,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         
         ParseClient.sharedInstance().getStudentLocations {(result, error) in
             
-            var studentInformationArray = [StudentInformation]()
+            //var studentInformationArray = [StudentInformation]()
             
             /* GUARD: Was there an error fetching the student data? */
             guard error == nil else {
@@ -155,15 +155,18 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                 return
             }
             
-            /* For each student in the return results add it to the array */
-            for s in result! {
-                studentInformationArray.append(StudentInformation(dictionary: s))
+            /* Clear any previously fetched student data */
+            if !StudentInformation.studentData.isEmpty {
+                StudentInformation.studentData.removeAll()
             }
             
+            /* For each student in the returned results add it to the StudentDataStore */
+            for s in result! {
+                StudentInformation.studentData.append(StudentInformation(dictionary: s))
+            }
+    
             /* Sort the student data in order of last updated */
-            studentInformationArray = studentInformationArray.sort() {$0.updatedAt.compare($1.updatedAt) == NSComparisonResult.OrderedDescending}
-            
-            self.appDelegate.studentData = studentInformationArray
+            StudentInformation.studentData = StudentInformation.studentData.sort() {$0.updatedAt.compare($1.updatedAt) == NSComparisonResult.OrderedDescending}
             
             /* Present the next ViewController showing the student data */
             dispatch_async(dispatch_get_main_queue(), {
@@ -188,7 +191,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         var annotations = [MKPointAnnotation]()
         
         /* For each student in the data... */
-        for s in appDelegate.studentData {
+        for s in StudentInformation.studentData {
             
             /* Get the lat and lon values to create a coordiante */
             let lat = CLLocationDegrees(s.latitude)

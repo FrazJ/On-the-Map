@@ -52,7 +52,7 @@ class StudentTableViewController: UITableViewController {
         
         ParseClient.sharedInstance().getStudentLocations {(result, error) in
             
-            var studentInformationArray = [StudentInformation]()
+            //var studentInformationArray = [StudentInformation]()
             
             /* GUARD: Was there an error fetching the student data? */
             guard error == nil else {
@@ -69,15 +69,18 @@ class StudentTableViewController: UITableViewController {
                 return
             }
             
+            /* Clear any previously fetched student data */
+            if !StudentInformation.studentData.isEmpty {
+                StudentInformation.studentData.removeAll()
+            }
+            
             /* For each student in the return results add it to the array */
             for s in result! {
-                studentInformationArray.append(StudentInformation(dictionary: s))
+                StudentInformation.studentData.append(StudentInformation(dictionary: s))
             }
             
             /* Sort the student data in order of last updated */
-            studentInformationArray = studentInformationArray.sort() {$0.updatedAt.compare($1.updatedAt) == NSComparisonResult.OrderedDescending}
-            
-            self.appDelegate.studentData = studentInformationArray
+            StudentInformation.studentData = StudentInformation.studentData.sort() {$0.updatedAt.compare($1.updatedAt) == NSComparisonResult.OrderedDescending}
             
             /* Present the next ViewController showing the student data */
             dispatch_async(dispatch_get_main_queue(), {
@@ -89,7 +92,6 @@ class StudentTableViewController: UITableViewController {
                 self.tableView.reloadData()
             })
         }
-
     }
     
     //MARK: -User interface functions
@@ -150,19 +152,22 @@ class StudentTableViewController: UITableViewController {
         
     }
     
+    //TODO: Remove junk code
     
     //MARK: - Table view data source
 
     ///Function for defining the number of rows the table should have.
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return appDelegate.studentData.count
+        return StudentInformation.studentData.count
+        //return appDelegate.studentData.count
     }
 
     ///Function for defining the contents of each row
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCellWithIdentifier("studentCell")!
-        let student = appDelegate.studentData[indexPath.row]
+        let student = StudentInformation.studentData[indexPath.row]
+        //let student = appDelegate.studentData[indexPath.row]
         let textForTitle = student.firstName + " " + student.lastName
 
         cell.textLabel?.attributedText = getAttributedText(textForTitle)

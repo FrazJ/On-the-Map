@@ -12,7 +12,6 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    var studentData = [StudentInformation]()
     var userID = ""
     var userData = [String]()
     var objectID = ""

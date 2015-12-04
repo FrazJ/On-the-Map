@@ -10,7 +10,7 @@ import Foundation
 
 struct StudentInformation {
     
-    
+    //MARK: Properties
     let objectID : String
     let uniqueKey : String?
     let firstName : String
@@ -21,7 +21,9 @@ struct StudentInformation {
     let longitude : Double
     let createdAt : NSDate
     let updatedAt : NSDate
+    static var studentData = [StudentInformation]()
     
+    //MARK: Initialiaiser that takes a dictionary.
     init(dictionary : [String:AnyObject]) {
         
         let dateFormatter = NSDateFormatter()
